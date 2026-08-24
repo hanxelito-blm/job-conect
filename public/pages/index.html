@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobConnect - Portal Corporativo</title>
+    <link rel="stylesheet" href="../style/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- TOPBAR -->
+    <header class="topbar" id="topbar">
+        <div class="topbar-left">
+            <button class="sidebar-toggle" id="sidebarToggle" title="Menú">&#9776;</button>
+            <div class="logo">JobConnect</div>
+        </div>
+        <nav class="topbar-right hidden" id="topbarNav">
+            <button id="logoutBtn" class="btn btn-secondary">Cerrar Sesión</button>
+        </nav>
+    </header>
+
+    <!-- LAYOUT PRINCIPAL -->
+    <div class="app-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar hidden" id="sidebar">
+            <div class="sidebar-user" id="sidebarUser">
+                <div class="avatar-circle" id="avatarCircle">U</div>
+                <span id="sidebarUsername">Usuario</span>
+            </div>
+
+            <nav class="sidebar-nav">
+                <p class="sidebar-section-label">PRINCIPAL</p>
+                <button class="sidebar-btn active" data-target="dashboardSection">
+                    <span class="sidebar-icon"></span> Inicio
+                </button>
+
+                <p class="sidebar-section-label">MÓDULOS</p>
+                <button class="sidebar-btn" data-target="candidatesSection">
+                    <span class="sidebar-icon"></span> Candidatos
+                </button>
+                <button class="sidebar-btn" data-target="applicationsSection">
+                    <span class="sidebar-icon"></span> Postulaciones
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="log-badge" id="logBadge"> Bitácora: <span id="logCount">0</span></div>
+            </div>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="main-content" id="mainContent">
+
+            <!-- Sección de Login -->
+            <section id="loginSection" class="login-wrapper fade-in">
+                <div class="card">
+                    <div class="login-brand">
+                        <span class="login-logo">JobConnect</span>
+                        <p>Portal Corporativo</p>
+                    </div>
+                    <h2>Iniciar Sesión</h2>
+                    <form id="loginForm" novalidate>
+                        <div class="form-group">
+                            <label for="username">Usuario</label>
+                            <input type="text" id="username" name="username" placeholder="ej. emilys" required>
+                            <span class="error-msg" id="usernameError"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Contraseña</label>
+                            <input type="password" id="password" name="password" placeholder="••••••••" required>
+                            <span class="error-msg" id="passwordError"></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary full-width" id="loginSubmitBtn">
+                            <span class="btn-text">Ingresar</span>
+                            <span class="loader hidden"></span>
+                        </button>
+                    </form>
+                    <div id="loginAlert" class="alert hidden"></div>
+                </div>
+            </section>
+
+            <!-- VISTA: DASHBOARD HOME -->
+            <section id="dashboardSection" class="view-section hidden fade-in">
+                <div class="page-header">
+                    <h1>Panel de Control</h1>
+                    <p>Bienvenido de nuevo, <strong id="userWelcome">Usuario</strong></p>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon"></div>
+                        <div class="stat-info">
+                            <h3>Candidatos</h3>
+                            <p class="stat-value" id="statsCandidates">—</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"></div>
+                        <div class="stat-info">
+                            <h3>Postulaciones</h3>
+                            <p class="stat-value" id="statsApplications">—</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"></div>
+                        <div class="stat-info">
+                            <h3>Accesos</h3>
+                            <p class="stat-value accent" id="statsLogs">0</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VISTA: CANDIDATOS -->
+            <section id="candidatesSection" class="view-section hidden fade-in">
+                <div class="page-header">
+                    <div>
+                        <h1>Candidatos</h1>
+                        <p>Gestión del recurso <code>/users</code></p>
+                    </div>
+                    <button class="btn btn-primary fab-btn" id="btnNewCandidate">+ Nuevo Candidato</button>
+                </div>
+                <div class="table-card">
+                    <div class="loader-container hidden" id="candidatesLoader">
+                        <span class="spinner"></span> Cargando candidatos...
+                    </div>
+                    <table class="data-table" id="candidatesTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre Completo</th>
+                                <th>Correo</th>
+                                <th>Teléfono</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="candidatesTbody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- VISTA: POSTULACIONES -->
+            <section id="applicationsSection" class="view-section hidden fade-in">
+                <div class="page-header">
+                    <div>
+                        <h1>Postulaciones</h1>
+                        <p>Gestión del recurso <code>/posts</code></p>
+                    </div>
+                    <button class="btn btn-primary fab-btn" id="btnNewApplication">+ Nueva Postulación</button>
+                </div>
+                <div class="table-card">
+                    <div class="loader-container hidden" id="applicationsLoader">
+                        <span class="spinner"></span> Cargando postulaciones...
+                    </div>
+                    <table class="data-table" id="applicationsTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Título (Puesto)</th>
+                                <th>Descripción</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="applicationsTbody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- MODAL: CANDIDATO -->
+    <div class="modal hidden" id="candidateModal">
+        <div class="modal-content card">
+            <h2 id="candidateModalTitle">Candidato</h2>
+            <form id="candidateForm">
+                <input type="hidden" id="candidateId">
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <input type="text" id="candidateFirstName" required>
+                </div>
+                <div class="form-group">
+                    <label>Apellido</label>
+                    <input type="text" id="candidateLastName" required>
+                </div>
+                <div class="form-group">
+                    <label>Correo</label>
+                    <input type="email" id="candidateEmail" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-ghost" id="cancelCandidateBtn">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: POSTULACIÓN -->
+    <div class="modal hidden" id="applicationModal">
+        <div class="modal-content card">
+            <h2 id="applicationModalTitle">Postulación</h2>
+            <form id="applicationForm">
+                <input type="hidden" id="applicationId">
+                <div class="form-group">
+                    <label>Título / Puesto</label>
+                    <input type="text" id="appTitle" required>
+                </div>
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <input type="text" id="appBody" required>
+                </div>
+                <div class="form-group">
+                    <label>ID Candidato (userId)</label>
+                    <input type="number" id="appUserId" required min="1">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-ghost" id="cancelApplicationBtn">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="../js/index.js"></script>
+</body>
+</html>
