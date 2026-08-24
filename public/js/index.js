@@ -1,191 +1,181 @@
 // public/js/index.js
+import { api } from './services/apiService.js';
+import { CandidatesModule } from './components/candidatesModule.js';
+import { ApplicationsModule } from './components/applicationsModule.js';
 
-/**
- * Lógica modular para JobConnect
- * Arquitectura basada en separación de responsabilidades.
- */
-
-// ==========================================
-// CONSTANTES GLOBALES
-// ==========================================
-const API_AUTH_URL = 'https://dummyjson.com/auth/login';
 const TOKEN_KEY = 'jobConnectToken';
+const LOGS_KEY  = 'jobConnect_accessLogs';
 
-// ==========================================
-// GESTIÓN DEL DOM (UI)
-// ==========================================
-const DOMElements = {
-    loginSection: document.getElementById('loginSection'),
-    dashboardSection: document.getElementById('dashboardSection'),
-    loginForm: document.getElementById('loginForm'),
-    usernameInput: document.getElementById('username'),
-    passwordInput: document.getElementById('password'),
-    usernameError: document.getElementById('usernameError'),
-    passwordError: document.getElementById('passwordError'),
-    loginSubmitBtn: document.getElementById('loginSubmitBtn'),
-    loginAlert: document.getElementById('loginAlert'),
-    logoutBtn: document.getElementById('logoutBtn'),
-    userWelcome: document.getElementById('userWelcome')
+// =====================================================
+// DOM CACHE
+// =====================================================
+const $ = (id) => document.getElementById(id);
+
+const DOM = {
+    loginSection:    $('loginSection'),
+    sidebar:         $('sidebar'),
+    topbarNav:       $('topbarNav'),
+    logoutBtn:       $('logoutBtn'),
+    sidebarToggle:   $('sidebarToggle'),
+    mainContent:     $('mainContent'),
+    userWelcome:     $('userWelcome'),
+    sidebarUsername: $('sidebarUsername'),
+    avatarCircle:    $('avatarCircle'),
+    loginForm:       $('loginForm'),
+    usernameInput:   $('username'),
+    passwordInput:   $('password'),
+    loginSubmitBtn:  $('loginSubmitBtn'),
+    loginAlert:      $('loginAlert'),
+    logCount:        $('logCount'),
+    statsLogs:       $('statsLogs'),
+    logBadge:        $('logBadge'),
+    navBtns:         document.querySelectorAll('.sidebar-btn'),
+    viewSections:    document.querySelectorAll('.view-section'),
 };
 
-// ==========================================
-// FUNCIONES PURAS Y UTILIDADES
-// ==========================================
+// =====================================================
+// BITÁCORA DE ACCESOS
+// =====================================================
+function registerAccessLog(username) {
+    const logs = JSON.parse(localStorage.getItem(LOGS_KEY)) || [];
+    logs.unshift({
+        username,
+        date: new Date().toLocaleDateString(),
+        time: new Date().toLocaleTimeString(),
+        ip: `192.168.${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*255)}`
+    });
+    localStorage.setItem(LOGS_KEY, JSON.stringify(logs));
+    updateLogCount(logs.length);
+}
 
-/**
- * Valida si un campo está vacío
- * @param {string} value - Valor a validar
- * @returns {boolean} - true si es válido (no vacío)
- */
-const isNotEmpty = (value) => value.trim().length > 0;
+function updateLogCount(count) {
+    if (DOM.logCount)  DOM.logCount.textContent  = count;
+    if (DOM.statsLogs) DOM.statsLogs.textContent  = count;
+}
 
-/**
- * Limpia los mensajes de error en la UI
- */
-const clearErrors = () => {
-    DOMElements.usernameError.textContent = '';
-    DOMElements.passwordError.textContent = '';
-    DOMElements.loginAlert.classList.add('hidden');
-    DOMElements.loginAlert.textContent = '';
-};
+// =====================================================
+// AUTENTICACIÓN
+// =====================================================
+async function handleLoginSubmit(e) {
+    e.preventDefault();
+    DOM.loginAlert.classList.add('hidden');
 
-/**
- * Muestra el estado de carga en el botón
- * @param {boolean} isLoading 
- */
-const setLoadingState = (isLoading) => {
-    const btnText = DOMElements.loginSubmitBtn.querySelector('.btn-text');
-    const loader = DOMElements.loginSubmitBtn.querySelector('.loader');
-    
-    DOMElements.loginSubmitBtn.disabled = isLoading;
-    
-    if (isLoading) {
-        btnText.textContent = 'Verificando...';
-        loader.classList.remove('hidden');
-    } else {
+    const username = DOM.usernameInput.value.trim();
+    const password = DOM.passwordInput.value.trim();
+    if (!username || !password) return;
+
+    const btnText = DOM.loginSubmitBtn.querySelector('.btn-text');
+    const loader  = DOM.loginSubmitBtn.querySelector('.loader');
+    DOM.loginSubmitBtn.disabled = true;
+    btnText.textContent = 'Verificando...';
+    loader.classList.remove('hidden');
+
+    try {
+        const data = await api.post('/auth/login', { username, password });
+        localStorage.setItem(TOKEN_KEY, data.token);
+        registerAccessLog(username);
+        DOM.loginForm.reset();
+        checkAuthAndRoute();
+    } catch (err) {
+        DOM.loginAlert.textContent = err.message || 'Credenciales incorrectas';
+        DOM.loginAlert.classList.remove('hidden');
+        DOM.loginAlert.classList.add('alert-error');
+    } finally {
+        DOM.loginSubmitBtn.disabled = false;
         btnText.textContent = 'Ingresar';
         loader.classList.add('hidden');
     }
-};
+}
 
-/**
- * Alterna entre las vistas de Login y Dashboard
- */
-const toggleViews = () => {
-    const token = localStorage.getItem(TOKEN_KEY);
-    
-    if (token) {
-        DOMElements.loginSection.classList.add('hidden');
-        DOMElements.dashboardSection.classList.remove('hidden');
-        DOMElements.logoutBtn.classList.remove('hidden');
-        
-        // Simulación: Decodificaríamos el JWT para obtener el nombre, 
-        // aquí ponemos uno genérico para la demostración.
-        DOMElements.userWelcome.textContent = DOMElements.usernameInput.value || 'Miembro Corporativo';
+function handleLogout() {
+    localStorage.removeItem(TOKEN_KEY);
+    checkAuthAndRoute();
+}
+
+// =====================================================
+// SIDEBAR TOGGLE
+// =====================================================
+function handleSidebarToggle() {
+    const isMobile = window.innerWidth <= 768;
+
+    if (isMobile) {
+        DOM.sidebar.classList.toggle('open');
     } else {
-        DOMElements.loginSection.classList.remove('hidden');
-        DOMElements.dashboardSection.classList.add('hidden');
-        DOMElements.logoutBtn.classList.add('hidden');
-    }
-};
-
-// ==========================================
-// SERVICIOS (LÓGICA ASÍNCRONA)
-// ==========================================
-
-/**
- * Autentica al usuario contra la API
- * @param {string} username 
- * @param {string} password 
- * @returns {Promise<Object>} Datos del usuario y token
- */
-async function authenticateUser(username, password) {
-    try {
-        const response = await fetch(API_AUTH_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password })
-        });
-
-        if (!response.ok) {
-            throw new Error('Credenciales incorrectas');
-        }
-
-        return await response.json();
-    } catch (error) {
-        throw error;
+        DOM.sidebar.classList.toggle('collapsed');
+        DOM.mainContent.classList.toggle('full-width');
     }
 }
 
-// ==========================================
-// CONTROLADORES Y EVENTOS
-// ==========================================
+// =====================================================
+// ENRUTAMIENTO
+// =====================================================
+function checkAuthAndRoute() {
+    const token = localStorage.getItem(TOKEN_KEY);
 
-/**
- * Manejador del envío del formulario de login
- */
-const handleLoginSubmit = async (event) => {
-    event.preventDefault();
-    clearErrors();
+    if (token) {
+        DOM.loginSection.classList.add('hidden');
+        DOM.sidebar.classList.remove('hidden');
+        DOM.topbarNav.classList.remove('hidden');
 
-    const username = DOMElements.usernameInput.value;
-    const password = DOMElements.passwordInput.value;
+        const logs = JSON.parse(localStorage.getItem(LOGS_KEY)) || [];
+        const username = logs[0]?.username || 'Usuario';
 
-    // Validación temprana (Guard Clauses)
-    let hasErrors = false;
-    if (!isNotEmpty(username)) {
-        DOMElements.usernameError.textContent = 'El usuario es requerido.';
-        hasErrors = true;
+        DOM.userWelcome.textContent       = username;
+        DOM.sidebarUsername.textContent   = username;
+        DOM.avatarCircle.textContent      = username.charAt(0).toUpperCase();
+        updateLogCount(logs.length);
+
+        navigateTo('dashboardSection');
+    } else {
+        // No autenticado
+        DOM.loginSection.classList.remove('hidden');
+        DOM.sidebar.classList.add('hidden');
+        DOM.topbarNav.classList.add('hidden');
+        DOM.viewSections.forEach(s => s.classList.add('hidden'));
+        DOM.mainContent.classList.remove('full-width');
+        // Sin sidebar visible el main no necesita margen
+        DOM.mainContent.style.marginLeft = '0';
     }
-    if (!isNotEmpty(password)) {
-        DOMElements.passwordError.textContent = 'La contraseña es requerida.';
-        hasErrors = true;
-    }
+}
 
-    if (hasErrors) return; // Detener ejecución si hay errores
+function navigateTo(targetId) {
+    // Activar botón del sidebar
+    DOM.navBtns.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.target === targetId);
+    });
 
-    // Proceso asíncrono seguro
-    try {
-        setLoadingState(true);
-        const data = await authenticateUser(username, password);
-        
-        // Guardar Token
-        localStorage.setItem(TOKEN_KEY, data.token);
-        
-        // Actualizar UI
-        DOMElements.loginForm.reset();
-        toggleViews();
+    // Mostrar vista
+    DOM.viewSections.forEach(sec => {
+        sec.classList.toggle('hidden', sec.id !== targetId);
+    });
 
-    } catch (error) {
-        console.error('Error de autenticación:', error);
-        DOMElements.loginAlert.textContent = `Error: ${error.message}`;
-        DOMElements.loginAlert.classList.remove('hidden');
-        DOMElements.loginAlert.classList.add('alert-error');
-    } finally {
-        setLoadingState(false);
-    }
-};
+    // Resetear marginLeft (en caso de que se haya limpiado en logout)
+    DOM.mainContent.style.marginLeft = '';
 
-/**
- * Manejador de cierre de sesión
- */
-const handleLogout = () => {
-    localStorage.removeItem(TOKEN_KEY);
-    toggleViews();
-};
+    // Cargar datos de módulos al navegar
+    if (targetId === 'candidatesSection')   CandidatesModule.loadData();
+    if (targetId === 'applicationsSection') ApplicationsModule.loadData();
 
-// ==========================================
-// INICIALIZACIÓN
-// ==========================================
+    // Cerrar sidebar en mobile al navegar
+    if (window.innerWidth <= 768) DOM.sidebar.classList.remove('open');
+}
 
-const initApp = () => {
-    // Configurar Event Listeners
-    DOMElements.loginForm.addEventListener('submit', handleLoginSubmit);
-    DOMElements.logoutBtn.addEventListener('click', handleLogout);
-    
-    // Verificar estado inicial
-    toggleViews();
-};
+// =====================================================
+// INIT
+// =====================================================
+function initApp() {
+    DOM.loginForm.addEventListener('submit', handleLoginSubmit);
+    DOM.logoutBtn.addEventListener('click', handleLogout);
+    DOM.sidebarToggle.addEventListener('click', handleSidebarToggle);
 
-// Iniciar la app cuando el DOM esté listo
+    DOM.navBtns.forEach(btn => {
+        btn.addEventListener('click', () => navigateTo(btn.dataset.target));
+    });
+
+    CandidatesModule.init();
+    ApplicationsModule.init();
+
+    checkAuthAndRoute();
+}
+
 document.addEventListener('DOMContentLoaded', initApp);
