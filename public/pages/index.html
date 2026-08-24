@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobConnect - Portal Corporativo</title>
+    <!-- CSS Integrado -->
+    <link rel="stylesheet" href="../style/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">JobConnect</div>
+        <nav>
+            <button id="logoutBtn" class="btn btn-secondary hidden">Cerrar Sesión</button>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Sección de Login -->
+        <section id="loginSection" class="card">
+            <h2>Iniciar Sesión</h2>
+            <p>Ingresa a tu cuenta corporativa.</p>
+            <form id="loginForm" novalidate>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <input type="text" id="username" name="username" placeholder="ej. emilys" required>
+                    <span class="error-msg" id="usernameError"></span>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" name="password" placeholder="••••••••" required>
+                    <span class="error-msg" id="passwordError"></span>
+                </div>
+                <button type="submit" class="btn btn-primary" id="loginSubmitBtn">
+                    <span class="btn-text">Ingresar</span>
+                    <span class="loader hidden"></span>
+                </button>
+            </form>
+            <div id="loginAlert" class="alert hidden"></div>
+        </section>
+
+        <!-- Sección del Dashboard (oculta por defecto) -->
+        <section id="dashboardSection" class="dashboard-panel hidden">
+            <div class="dashboard-header">
+                <h2>Bienvenido, <span id="userWelcome">Usuario</span></h2>
+                <p>Aquí tienes el resumen de tu portal.</p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Proyectos</h3>
+                    <p class="stat-value">12 Activos</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Mensajes</h3>
+                    <p class="stat-value">5 Nuevos</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Alertas</h3>
+                    <p class="stat-value alert-text">2 Críticas</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- JS Modular -->
+    <script src="../auth.js"></script>
+    <script src="../js/index.js"></script>
+</body>
+</html>
