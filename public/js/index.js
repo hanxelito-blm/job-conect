@@ -13,6 +13,8 @@ const LOGS_KEY  = 'jobConnect_accessLogs';
 const $ = (id) => document.getElementById(id);
 
 const DOM = {
+    landingSection:  $('landingSection'),
+    landingEnterBtn: $('landingEnterBtn'),
     loginSection:    $('loginSection'),
     sidebar:         $('sidebar'),
     topbarNav:       $('topbarNav'),
@@ -93,6 +95,12 @@ function handleLogout() {
     checkAuthAndRoute();
 }
 
+function handleLandingEnter() {
+    DOM.landingSection.classList.add('hidden');
+    DOM.loginSection.classList.remove('hidden');
+    DOM.loginAlert.classList.add('hidden');
+}
+
 // =====================================================
 // SIDEBAR TOGGLE
 // =====================================================
@@ -114,6 +122,7 @@ function checkAuthAndRoute() {
     const token = localStorage.getItem(TOKEN_KEY);
 
     if (token) {
+        DOM.landingSection.classList.add('hidden');
         DOM.loginSection.classList.add('hidden');
         DOM.sidebar.classList.remove('hidden');
         DOM.topbarNav.classList.remove('hidden');
@@ -129,8 +138,8 @@ function checkAuthAndRoute() {
 
         navigateTo('dashboardSection');
     } else {
-        // No autenticado
-        DOM.loginSection.classList.remove('hidden');
+        DOM.landingSection.classList.remove('hidden');
+        DOM.loginSection.classList.add('hidden');
         DOM.sidebar.classList.add('hidden');
         DOM.topbarNav.classList.add('hidden');
         DOM.viewSections.forEach(s => s.classList.add('hidden'));
@@ -169,6 +178,7 @@ function initApp() {
     DOM.loginForm.addEventListener('submit', handleLoginSubmit);
     DOM.logoutBtn.addEventListener('click', handleLogout);
     DOM.sidebarToggle.addEventListener('click', handleSidebarToggle);
+    DOM.landingEnterBtn.addEventListener('click', handleLandingEnter);
 
     DOM.navBtns.forEach(btn => {
         btn.addEventListener('click', () => navigateTo(btn.dataset.target));
