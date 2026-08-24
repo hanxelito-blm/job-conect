@@ -2,6 +2,7 @@
 import { api } from './services/apiService.js';
 import { CandidatesModule } from './components/candidatesModule.js';
 import { ApplicationsModule } from './components/applicationsModule.js';
+import { LoginAnimation } from './components/loginAnimation.js';
 
 const TOKEN_KEY = 'jobConnectToken';
 const LOGS_KEY  = 'jobConnect_accessLogs';
@@ -125,6 +126,7 @@ function checkAuthAndRoute() {
         DOM.loginSection.classList.add('hidden');
         DOM.sidebar.classList.remove('hidden');
         DOM.topbarNav.classList.remove('hidden');
+        LoginAnimation.stop();  // Detener animación al entrar al dashboard
 
         const logs = JSON.parse(localStorage.getItem(LOGS_KEY)) || [];
         const username = logs[0]?.username || 'Usuario';
@@ -143,6 +145,7 @@ function checkAuthAndRoute() {
         DOM.viewSections.forEach(s => s.classList.add('hidden'));
         DOM.mainContent.classList.remove('full-width');
         DOM.mainContent.style.marginLeft = '0';
+        LoginAnimation.start(); // Arrancar animación en el login
     }
 }
 
