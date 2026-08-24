@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JobConnect - Autenticación</title>
+</head>
+<body>
+
+  <!-- ===================== PANTALLA: SELECCIÓN DE ROL ===================== -->
+  <section id="screen-role-select">
+    <h1>JobConnect</h1>
+    <p>Selecciona tu tipo de acceso</p>
+    <button id="btn-role-user" type="button">USUARIO</button>
+    <button id="btn-role-admin" type="button">ADMINISTRADOR</button>
+    <button id="btn-role-company" type="button">EMPRESA</button>
+  </section>
+
+  <!-- ===================== FORMULARIO: USUARIO ===================== -->
+  <section id="screen-form-user" hidden>
+    <h2>Acceso Usuario</h2>
+    <form id="form-user">
+      <label for="user-username">Usuario</label>
+      <input type="text" id="user-username" name="username" autocomplete="username" required>
+
+      <label for="user-password">Contraseña</label>
+      <input type="password" id="user-password" name="password" autocomplete="current-password" required>
+
+      <button type="submit" id="btn-login-user">Iniciar sesión</button>
+      <button type="button" class="btn-back" data-back="role-select">Regresar</button>
+    </form>
+  </section>
+
+  <!-- ===================== FORMULARIO: ADMINISTRADOR ===================== -->
+  <section id="screen-form-admin" hidden>
+    <h2>Acceso Administrador</h2>
+    <form id="form-admin">
+      <label for="admin-password">Contraseña privada de administrador</label>
+      <input type="password" id="admin-password" name="adminPassword" autocomplete="current-password" required>
+
+      <button type="submit" id="btn-login-admin">Iniciar sesión</button>
+      <button type="button" class="btn-back" data-back="role-select">Regresar</button>
+    </form>
+  </section>
+
+  <!-- ===================== FORMULARIO: EMPRESA ===================== -->
+  <section id="screen-form-company" hidden>
+    <h2>Acceso Empresa</h2>
+    <form id="form-company">
+      <label for="company-name">Nombre de la empresa</label>
+      <input type="text" id="company-name" name="companyName" autocomplete="organization" required>
+
+      <label for="company-password">Contraseña</label>
+      <input type="password" id="company-password" name="password" autocomplete="current-password" required>
+
+      <label for="company-employer-code">Código de empleador</label>
+      <input type="text" id="company-employer-code" name="employerCode" required>
+
+      <button type="submit" id="btn-login-company">Iniciar sesión</button>
+      <button type="button" class="btn-back" data-back="role-select">Regresar</button>
+    </form>
+  </section>
+
+  <!-- ===================== ÁREA DE MENSAJES ===================== -->
+  <div id="message-area" role="alert" aria-live="polite" hidden></div>
+
+  <!-- ===================== DASHBOARD (PROTEGIDO) ===================== -->
+  <section id="screen-dashboard" hidden>
+    <h2>Dashboard</h2> 
+    <p id="dashboard-welcome"></p>
+    <div id="dashboard-content">
+      <!-- Contenido protegido / módulos privados van aquí -->
+    </div>
+    <button id="btn-logout" type="button">Cerrar sesión</button>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
