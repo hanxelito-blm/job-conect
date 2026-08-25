@@ -1,3 +1,4 @@
+
 const express = require('express');
 const path = require('path');
 
@@ -11,7 +12,11 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'pages/login.html'));
 });
 
-const PORT = 3004;
+app.get('/dashboard', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'pages/index.html'));
+});
+
+const PORT = 3001;
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
