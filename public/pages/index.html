@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -21,24 +21,7 @@
             </div>
         </div>
         <nav class="topbar-right hidden" id="topbarNav">
-            <!-- Botón Tema -->
-            <button id="themeToggleBtn" class="btn-icon" title="Cambiar tema" aria-label="Cambiar tema">
-                <svg id="themeIcon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                </svg>
-            </button>
-            <!-- Botón Idioma -->
-            <button id="langToggleBtn" class="btn-icon" title="Cambiar idioma" aria-label="Cambiar idioma">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"/>
-                    <line x1="2" y1="12" x2="22" y2="12"/>
-                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-                </svg>
-                <span class="lang-label" data-i18n="lang.code">ES</span>
-            </button>
-            <button id="logoutBtn" class="btn btn-secondary">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-                <span data-i18n="topbar.logout">Cerrar Sesión</span>
+
             </button>
         </nav>
     </header>
@@ -54,44 +37,12 @@
             </div>
 
             <nav class="sidebar-nav">
-                <p class="sidebar-section-label" data-i18n="sidebar.principal">PRINCIPAL</p>
-                <button class="sidebar-btn active" data-target="dashboardSection">
-                    <span class="sidebar-icon">
-                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
-                    </span> <span data-i18n="sidebar.home">Inicio</span>
-                </button>
 
-                <p class="sidebar-section-label" data-i18n="sidebar.modules">MÓDULOS</p>
-                <button class="sidebar-btn" data-target="candidatesSection">
-                    <span class="sidebar-icon">
-                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                    </span> <span data-i18n="sidebar.candidates">Candidatos</span>
-                </button>
-                <button class="sidebar-btn" data-target="vacanciesSection">
-                    <span class="sidebar-icon">
-                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 12l9 4 9-4"/><path d="M3 17l9 4 9-4"/></svg>
-                    </span> <span>Vacantes</span>
-                </button>
-                <button class="sidebar-btn" data-target="companiesSection">
-                    <span class="sidebar-icon">
-                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V7l9-4 9 4v14"/><path d="M9 21v-8h6v8"/><path d="M3 7h18"/></svg>
-                    </span> <span>Empresas clientes</span>
                 </button>
                 <button class="sidebar-btn" data-target="applicationsSection">
                     <span class="sidebar-icon">
                         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-                    </span> <span data-i18n="sidebar.applications">Postulaciones</span>
-                </button>
-                <button class="sidebar-btn" data-target="interviewsSection">
-                    <span class="sidebar-icon">
-                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h8"/><path d="M8 14h5"/></svg>
-                    </span> <span>Entrevistas / notas</span>
-                </button>
-                <button class="sidebar-btn" data-target="tasksSection">
-                    <span class="sidebar-icon">
-                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 1"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-                    </span> <span>Tareas</span>
-                </button>
+   </button>
             </nav>
 
             <div class="sidebar-footer">
@@ -159,37 +110,12 @@
             </section>
 
             <!-- Sección de Login -->
-            <section id="loginSection" class="login-wrapper fade-in">
-                <!-- CANVAS ANIMACIÓN (exclusivo del login) -->
-                <canvas id="loginCanvas"></canvas>
-                <div class="login-card">
-                    <div class="login-brand">
-                        <span class="login-logo">
-                            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                            JobConnect
-                        </span>
-                        <p data-i18n="login.subtitle">Portal Corporativo</p>
-                    </div>
-                    <h2 data-i18n="login.title">Iniciar Sesión</h2>
-                    <form id="loginForm" novalidate>
-                        <div class="form-group">
-                            <label for="username" data-i18n="login.user">USUARIO</label>
-                            <div class="input-wrap">
-                                <svg class="input-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                                <input type="text" id="username" name="username" placeholder="emilys" required autocomplete="username">
+
                             </div>
                             <span class="error-msg" id="usernameError"></span>
                         </div>
                         <div class="form-group">
-                            <label for="password" data-i18n="login.pass">CONTRASEÑA</label>
-                            <div class="input-wrap">
-                                <svg class="input-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                                <input type="password" id="password" name="password" placeholder="••••••••" required autocomplete="current-password">
-                            </div>
-                            <span class="error-msg" id="passwordError"></span>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-login full-width" id="loginSubmitBtn">
-                            <span class="btn-text" data-i18n="login.btn">Ingresar</span>
+
                             <span class="loader hidden"></span>
                         </button>
                     </form>
@@ -200,8 +126,7 @@
             <!-- VISTA: DASHBOARD HOME -->
             <section id="dashboardSection" class="view-section hidden fade-in">
                 <div class="page-header">
-                    <h1 data-i18n="dash.title">Panel de Control</h1>
-                    <p><span data-i18n="dash.welcome">Bienvenido de nuevo,</span> <strong id="userWelcome">Usuario</strong></p>
+
                 </div>
                 <div class="stats-grid">
                     <div class="stat-card">
@@ -209,61 +134,19 @@
                             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                         </div>
                         <div class="stat-info">
-                            <h3 data-i18n="dash.candidates">Candidatos</h3>
+
                             <p class="stat-value" id="statsCandidates">—</p>
                         </div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-icon">
-                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 12l9 4 9-4"/><path d="M3 17l9 4 9-4"/></svg>
-                        </div>
-                        <div class="stat-info">
-                            <h3>Vacantes</h3>
-                            <p class="stat-value" id="statsVacancies">—</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V7l9-4 9 4v14"/><path d="M9 21v-8h6v8"/><path d="M3 7h18"/></svg>
-                        </div>
-                        <div class="stat-info">
-                            <h3>Empresas</h3>
-                            <p class="stat-value" id="statsCompanies">—</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-                        </div>
-                        <div class="stat-info">
-                            <h3 data-i18n="dash.applications">Postulaciones</h3>
+
                             <p class="stat-value" id="statsApplications">—</p>
                         </div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-icon">
-                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h8"/><path d="M8 14h5"/></svg>
-                        </div>
-                        <div class="stat-info">
-                            <h3>Entrevistas</h3>
-                            <p class="stat-value" id="statsInterviews">—</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 1"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-                        </div>
-                        <div class="stat-info">
-                            <h3>Tareas</h3>
-                            <p class="stat-value" id="statsTasks">—</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                        </div>
-                        <div class="stat-info">
-                            <h3 data-i18n="dash.access">Accesos</h3>
+
                             <p class="stat-value accent" id="statsLogs">0</p>
                         </div>
                     </div>
@@ -274,12 +157,7 @@
             <section id="candidatesSection" class="view-section hidden fade-in">
                 <div class="page-header">
                     <div>
-                        <h1 data-i18n="page.candidates">Candidatos</h1>
-                        <p data-i18n="page.candidates.sub">Gestión del recurso /users</p>
-                    </div>
-                    <button class="btn btn-primary fab-btn" id="btnNewCandidate">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                        <span data-i18n="btn.new.candidate">Nuevo Candidato</span>
+
                     </button>
                 </div>
                 <div class="table-card">
@@ -303,334 +181,3 @@
                 </div>
             </section>
 
-            <!-- VISTA: VACANTES -->
-            <section id="vacanciesSection" class="view-section hidden fade-in">
-                <div class="page-header">
-                    <div>
-                        <h1 data-i18n="page.vacancies">Vacantes</h1>
-                        <p data-i18n="page.vacancies.sub">Gestión del recurso /products</p>
-                    </div>
-                    <button class="btn btn-primary fab-btn" id="btnNewVacancy">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                        <span data-i18n="btn.new.vacancy">Nueva Vacante</span>
-                    </button>
-                </div>
-                <div class="table-card">
-                    <div class="loader-container hidden" id="vacanciesLoader">
-                        <span class="spinner"></span> <span data-i18n="loading.vacancies">Cargando vacantes...</span>
-                    </div>
-                    <div class="table-container">
-                        <table class="data-table" id="vacanciesTable">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th data-i18n="th.title">Título</th>
-                                    <th data-i18n="th.brand">Marca</th>
-                                    <th data-i18n="th.price">Precio</th>
-                                    <th data-i18n="th.actions">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="vacanciesTbody"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-
-            <!-- VISTA: EMPRESAS -->
-            <section id="companiesSection" class="view-section hidden fade-in">
-                <div class="page-header">
-                    <div>
-                        <h1 data-i18n="page.companies">Empresas clientes</h1>
-                        <p data-i18n="page.companies.sub">Gestión del recurso /carts</p>
-                    </div>
-                    <button class="btn btn-primary fab-btn" id="btnNewCompany">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                        <span data-i18n="btn.new.company">Nueva Empresa</span>
-                    </button>
-                </div>
-                <div class="table-card">
-                    <div class="loader-container hidden" id="companiesLoader">
-                        <span class="spinner"></span> <span data-i18n="loading.companies">Cargando empresas...</span>
-                    </div>
-                    <div class="table-container">
-                        <table class="data-table" id="companiesTable">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th data-i18n="th.userId">ID Usuario</th>
-                                    <th data-i18n="th.products">Productos</th>
-                                    <th data-i18n="th.total">Total</th>
-                                    <th data-i18n="th.actions">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="companiesTbody"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-
-            <!-- VISTA: POSTULACIONES -->
-            <section id="applicationsSection" class="view-section hidden fade-in">
-                <div class="page-header">
-                    <div>
-                        <h1 data-i18n="page.applications">Postulaciones</h1>
-                        <p data-i18n="page.applications.sub">Gestión del recurso /posts</p>
-                    </div>
-                    <button class="btn btn-primary fab-btn" id="btnNewApplication">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                        <span data-i18n="btn.new.application">Nueva Postulación</span>
-                    </button>
-                </div>
-                <div class="table-card">
-                    <div class="loader-container hidden" id="applicationsLoader">
-                        <span class="spinner"></span> <span data-i18n="loading.applications">Cargando postulaciones...</span>
-                    </div>
-                    <div class="table-container">
-                        <table class="data-table" id="applicationsTable">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th data-i18n="th.appTitle">Título (Puesto)</th>
-                                    <th data-i18n="th.description">Descripción</th>
-                                    <th data-i18n="th.status">Estado</th>
-                                    <th data-i18n="th.actions">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="applicationsTbody"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-
-            <!-- VISTA: ENTREVISTAS -->
-            <section id="interviewsSection" class="view-section hidden fade-in">
-                <div class="page-header">
-                    <div>
-                        <h1 data-i18n="page.interviews">Entrevistas / notas</h1>
-                        <p data-i18n="page.interviews.sub">Gestión del recurso /comments</p>
-                    </div>
-                    <button class="btn btn-primary fab-btn" id="btnNewInterview">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                        <span data-i18n="btn.new.interview">Nueva Entrevista</span>
-                    </button>
-                </div>
-                <div class="table-card">
-                    <div class="loader-container hidden" id="interviewsLoader">
-                        <span class="spinner"></span> <span data-i18n="loading.interviews">Cargando entrevistas...</span>
-                    </div>
-                    <div class="table-container">
-                        <table class="data-table" id="interviewsTable">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th data-i18n="th.note">Nota</th>
-                                    <th data-i18n="th.user">Usuario</th>
-                                    <th data-i18n="th.postId">Post ID</th>
-                                    <th data-i18n="th.actions">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="interviewsTbody"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-
-            <!-- VISTA: TAREAS -->
-            <section id="tasksSection" class="view-section hidden fade-in">
-                <div class="page-header">
-                    <div>
-                        <h1 data-i18n="page.tasks">Tareas</h1>
-                        <p data-i18n="page.tasks.sub">Gestión del recurso /todos</p>
-                    </div>
-                    <button class="btn btn-primary fab-btn" id="btnNewTask">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                        <span data-i18n="btn.new.task">Nueva Tarea</span>
-                    </button>
-                </div>
-                <div class="table-card">
-                    <div class="loader-container hidden" id="tasksLoader">
-                        <span class="spinner"></span> <span data-i18n="loading.tasks">Cargando tareas...</span>
-                    </div>
-                    <div class="table-container">
-                        <table class="data-table" id="tasksTable">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th data-i18n="th.task">Tarea</th>
-                                    <th data-i18n="th.status">Estado</th>
-                                    <th data-i18n="th.user">Usuario</th>
-                                    <th data-i18n="th.actions">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tasksTbody"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-
-        </main>
-    </div>
-
-    <!-- MODAL: CANDIDATO -->
-    <div class="modal hidden" id="candidateModal">
-        <div class="modal-content card">
-            <h2 id="candidateModalTitle">Candidato</h2>
-            <form id="candidateForm">
-                <input type="hidden" id="candidateId">
-                <div class="form-group">
-                    <label>Nombre</label>
-                    <input type="text" id="candidateFirstName" required>
-                </div>
-                <div class="form-group">
-                    <label>Apellido</label>
-                    <input type="text" id="candidateLastName" required>
-                </div>
-                <div class="form-group">
-                    <label>Correo</label>
-                    <input type="email" id="candidateEmail" required>
-                </div>
-                <div class="modal-actions">
-                    <button type="button" class="btn btn-ghost" id="cancelCandidateBtn">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- MODAL: VACANTE -->
-    <div class="modal hidden" id="vacancyModal">
-        <div class="modal-content card">
-            <h2 id="vacancyModalTitle">Vacante</h2>
-            <form id="vacancyForm">
-                <input type="hidden" id="vacancyId">
-                <div class="form-group">
-                    <label>Título</label>
-                    <input type="text" id="vacancyTitle" required>
-                </div>
-                <div class="form-group">
-                    <label>Marca</label>
-                    <input type="text" id="vacancyBrand" required>
-                </div>
-                <div class="form-group">
-                    <label>Precio</label>
-                    <input type="number" id="vacancyPrice" required min="0" step="0.01">
-                </div>
-                <div class="modal-actions">
-                    <button type="button" class="btn btn-ghost" id="cancelVacancyBtn">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- MODAL: EMPRESA -->
-    <div class="modal hidden" id="companyModal">
-        <div class="modal-content card">
-            <h2 id="companyModalTitle">Empresa</h2>
-            <form id="companyForm">
-                <input type="hidden" id="companyId">
-                <div class="form-group">
-                    <label>ID Usuario</label>
-                    <input type="number" id="companyUserId" required min="1">
-                </div>
-                <div class="form-group">
-                    <label>Total</label>
-                    <input type="number" id="companyTotal" required min="0" step="0.01">
-                </div>
-                <div class="form-group">
-                    <label>Total con descuento</label>
-                    <input type="number" id="companyDiscounted" required min="0" step="0.01">
-                </div>
-                <div class="modal-actions">
-                    <button type="button" class="btn btn-ghost" id="cancelCompanyBtn">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- MODAL: POSTULACIÓN -->
-    <div class="modal hidden" id="applicationModal">
-        <div class="modal-content card">
-            <h2 id="applicationModalTitle">Postulación</h2>
-            <form id="applicationForm">
-                <input type="hidden" id="applicationId">
-                <div class="form-group">
-                    <label>Título / Puesto</label>
-                    <input type="text" id="appTitle" required>
-                </div>
-                <div class="form-group">
-                    <label>Descripción</label>
-                    <input type="text" id="appBody" required>
-                </div>
-                <div class="form-group">
-                    <label>ID Candidato (userId)</label>
-                    <input type="number" id="appUserId" required min="1">
-                </div>
-                <div class="modal-actions">
-                    <button type="button" class="btn btn-ghost" id="cancelApplicationBtn">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- MODAL: ENTREVISTA -->
-    <div class="modal hidden" id="interviewModal">
-        <div class="modal-content card">
-            <h2 id="interviewModalTitle">Entrevista</h2>
-            <form id="interviewForm">
-                <input type="hidden" id="interviewId">
-                <div class="form-group">
-                    <label>ID Usuario</label>
-                    <input type="number" id="interviewUserId" required min="1">
-                </div>
-                <div class="form-group">
-                    <label>ID Post</label>
-                    <input type="number" id="interviewPostId" required min="1">
-                </div>
-                <div class="form-group">
-                    <label>Nota</label>
-                    <input type="text" id="interviewBody" required>
-                </div>
-                <div class="modal-actions">
-                    <button type="button" class="btn btn-ghost" id="cancelInterviewBtn">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- MODAL: TAREA -->
-    <div class="modal hidden" id="taskModal">
-        <div class="modal-content card">
-            <h2 id="taskModalTitle">Tarea</h2>
-            <form id="taskForm">
-                <input type="hidden" id="taskId">
-                <div class="form-group">
-                    <label>Tarea</label>
-                    <input type="text" id="taskTodo" required>
-                </div>
-                <div class="form-group">
-                    <label>ID Usuario</label>
-                    <input type="number" id="taskUserId" required min="1">
-                </div>
-                <div class="form-group">
-                    <label>
-                        <input type="checkbox" id="taskCompleted"> Completada
-                    </label>
-                </div>
-                <div class="modal-actions">
-                    <button type="button" class="btn btn-ghost" id="cancelTaskBtn">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- CONTENEDOR DE NOTIFICACIONES TOAST -->
-    <div id="toastContainer" class="toast-container"></div>
-
-    <script type="module" src="../js/index.js"></script>
-</body>
-</html>
