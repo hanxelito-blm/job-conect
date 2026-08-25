@@ -464,13 +464,27 @@
             <section id="candidatesSection" class="view-section hidden fade-in" aria-label="Módulo de candidatos">
                 <div class="page-header">
                     <div>
-                        <h1 data-i18n="page.candidates">Candidatos</h1>
-                        <p>Gestión del recurso /users</p>
+                        <p class="eyebrow">TALENT OPERATIONS / 04</p>
+                        <h1 data-i18n="page.candidates">Candidatos y postulaciones</h1>
+                        <p>Revisa el pipeline, conoce el contexto y decide con claridad.</p>
                     </div>
                     <button class="btn btn-primary fab-btn" id="btnNewCandidate" aria-label="Crear nuevo candidato">
                         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                         <span data-i18n="btn.new.candidate">Nuevo Candidato</span>
                     </button>
+                </div>
+                <div class="candidate-summary" aria-label="Resumen de postulaciones">
+                    <div><span class="summary-label">Postulaciones activas</span><strong id="candidateActiveCount">0</strong><span class="summary-note">en seguimiento</span></div>
+                    <div><span class="summary-label">En revisión</span><strong id="candidateReviewCount">0</strong><span class="summary-note">requieren lectura</span></div>
+                    <div><span class="summary-label">Entrevistas</span><strong id="candidateInterviewCount">0</strong><span class="summary-note">próximo paso</span></div>
+                    <div><span class="summary-label">Contratación</span><strong id="candidateAcceptedCount">0</strong><span class="summary-note">seleccionados</span></div>
+                </div>
+                <div class="candidate-toolbar" role="search" aria-label="Filtrar candidatos">
+                    <label class="search-field"><span class="sr-only">Buscar candidato o habilidad</span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="candidateSearch" type="search" placeholder="Buscar nombre, rol o habilidad..." autocomplete="off"></label>
+                    <label><span class="sr-only">Filtrar por vacante</span><select id="candidateVacancyFilter"><option value="">Todas las vacantes</option></select></label>
+                    <label><span class="sr-only">Filtrar por estado</span><select id="candidateStatusFilter"><option value="">Todos los estados</option><option value="Pendiente">Pendiente</option><option value="En revisión">En revisión</option><option value="Entrevistado">Entrevistado</option><option value="Aceptado">Aceptado</option><option value="Rechazado">Rechazado</option></select></label>
+                    <label><span class="sr-only">Filtrar desde fecha</span><input id="candidateDateFilter" type="date" title="Postulaciones desde"></label>
+                    <button class="btn btn-ghost candidate-clear" id="candidateClearFilters" type="button">Limpiar</button>
                 </div>
                 <div class="table-card">
                     <div class="loader-container hidden" id="candidatesLoader" role="status" aria-live="polite">
@@ -480,10 +494,10 @@
                         <table class="data-table" id="candidatesTable" aria-label="Lista de candidatos">
                             <thead>
                                 <tr>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">Nombre Completo</th>
-                                    <th scope="col">Correo</th>
-                                    <th scope="col">Teléfono</th>
+                                    <th scope="col">Candidato</th>
+                                    <th scope="col">Vacante / Empresa</th>
+                                    <th scope="col">Postulación</th>
+                                    <th scope="col">Estado</th>
                                     <th scope="col">Acciones</th>
                                 </tr>
                             </thead>
@@ -613,9 +627,9 @@
                             <thead>
                                 <tr>
                                     <th scope="col">ID</th>
-                                    <th scope="col">Nota</th>
-                                    <th scope="col">Usuario</th>
-                                    <th scope="col">Post ID</th>
+                                    <th scope="col">Candidato / Vacante</th>
+                                    <th scope="col">Entrevistador</th>
+                                    <th scope="col">Fecha y modalidad</th>
                                     <th scope="col">Acciones</th>
                                 </tr>
                             </thead>
@@ -662,6 +676,26 @@
     </div>
 
     <!-- ================== MODALES ================== -->
+
+    <!-- Drawer: Expediente del candidato -->
+    <div class="candidate-drawer-backdrop hidden" id="candidateDrawerBackdrop"></div>
+    <aside class="candidate-drawer" id="candidateDrawer" aria-labelledby="candidateDrawerName" aria-hidden="true" aria-describedby="candidateDrawerSummary">
+        <div class="drawer-header">
+            <span class="eyebrow">EXPEDIENTE / CANDIDATO</span>
+            <button class="btn-icon drawer-close" id="candidateDrawerClose" type="button" aria-label="Cerrar expediente" title="Cerrar expediente">×</button>
+        </div>
+        <div class="drawer-profile">
+            <div class="drawer-avatar" id="candidateDrawerAvatar">--</div>
+            <div><h2 id="candidateDrawerName">Candidato</h2><p id="candidateDrawerRole">Rol profesional</p><span class="status-badge" id="candidateDrawerStatus">En revisión</span></div>
+        </div>
+        <div class="drawer-scroll">
+            <section class="drawer-section"><h3>Postulación</h3><div class="drawer-job"><strong id="candidateDrawerVacancy">Vacante</strong><span id="candidateDrawerCompany">Empresa</span><small id="candidateDrawerDate">Fecha</small></div></section>
+            <section class="drawer-section"><h3>Contacto</h3><div class="contact-list"><a id="candidateDrawerEmail" href="#"></a><a id="candidateDrawerPhone" href="#"></a><span id="candidateDrawerLocation"></span><div class="professional-links"><a id="candidateDrawerLinkedin" href="#" target="_blank" rel="noreferrer">LinkedIn</a><a id="candidateDrawerGithub" href="#" target="_blank" rel="noreferrer">GitHub</a><a id="candidateDrawerPortfolio" href="#" target="_blank" rel="noreferrer">Portafolio</a></div></div></section>
+            <section class="drawer-section"><h3>Resumen profesional</h3><p id="candidateDrawerSummary"></p><div class="skill-list" id="candidateDrawerSkills"></div><p class="experience-copy" id="candidateDrawerExperience"></p></section>
+            <section class="drawer-section drawer-actions"><h3>Flujo de postulación</h3><label for="candidateDrawerStatusSelect">Estado actual</label><select id="candidateDrawerStatusSelect"><option>Pendiente</option><option>En revisión</option><option>Entrevistado</option><option>Aceptado</option><option>Rechazado</option></select><div class="drawer-button-row"><button class="btn btn-primary" id="candidateScheduleInterview" type="button">Agendar entrevista</button><a class="btn btn-secondary" id="candidateCvLink" href="#" target="_blank" rel="noreferrer">Abrir CV</a></div></section>
+            <section class="drawer-section"><label for="candidateDrawerNotes">Notas internas</label><textarea id="candidateDrawerNotes" rows="4" placeholder="Añade contexto para el equipo..."></textarea><button class="btn btn-ghost full-width" id="candidateSaveNotes" type="button">Guardar nota</button></section>
+        </div>
+    </aside>
 
     <!-- Modal: Candidato -->
     <div class="modal hidden" id="candidateModal" role="dialog" aria-modal="true" aria-labelledby="candidateModalTitle">

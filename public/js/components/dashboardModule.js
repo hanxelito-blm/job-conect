@@ -4,6 +4,7 @@ import { VacanciesModule } from './vacanciesModule.js';
 import { InterviewsModule } from './interviewsModule.js';
 import { CompaniesModule } from './companiesModule.js';
 import { CandidatesModule } from './candidatesModule.js';
+import { companies as seedCompanies, vacancies as seedVacancies, candidates as seedCandidates, interviews as seedInterviews } from '../mockData.js';
 
 export const DashboardModule = {
     state: {
@@ -137,6 +138,48 @@ export const DashboardModule = {
 
         this.state.loading = true;
         this.updateDateDisplay();
+
+        const companyById = (id) => seedCompanies.find((company) => company.id === id);
+        const vacancyById = (id) => seedVacancies.find((vacancy) => vacancy.id === id);
+        this.state.vacancies = seedVacancies.map((vacancy) => ({
+            id: vacancy.id,
+            title: vacancy.titulo,
+            company: companyById(vacancy.empresaId)?.nombre || 'Empresa',
+            category: vacancy.departamento,
+            applicants: vacancy.postulantesCount,
+            status: vacancy.estado,
+            salary: vacancy.rangoSalarial,
+            createdAt: vacancy.fechaPublicacion
+        }));
+        this.state.interviews = seedInterviews.map((interview) => {
+            const candidate = seedCandidates.find((item) => item.id === interview.candidatoId);
+            const vacancy = vacancyById(interview.vacanteId);
+            return {
+                id: interview.id,
+                candidate: candidate?.nombreCompleto || interview.candidatoId,
+                role: vacancy?.titulo || interview.vacanteId,
+                company: companyById(vacancy?.empresaId)?.nombre || 'Empresa',
+                time: interview.hora,
+                day: interview.fecha,
+                status: interview.estado,
+                note: interview.notas
+            };
+        });
+        this.state.companies = seedCompanies.map((company) => ({
+            id: company.id,
+            name: company.nombre,
+            sector: company.sector,
+            logo: company.nombre.split(' ').map((word) => word[0]).join('').slice(0, 2),
+            color: '#3ee6ab',
+            activeVacancies: company.vacantesActivasCount,
+            totalHires: seedCandidates.filter((candidate) => candidate.empresaId === company.id && candidate.estado === 'Contratado').length,
+            status: 'Verificada'
+        }));
+        this.state.candidates = seedCandidates;
+        this.state.isLoaded = true;
+        this.renderAll();
+        this.state.loading = false;
+        return;
 
         if (this.refreshBtn) {
             this.refreshBtn.classList.add('loading-spin');
