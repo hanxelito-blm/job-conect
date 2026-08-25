@@ -1,13 +1,7 @@
 // public/js/index.js
 import { api } from './services/apiService.js';
 import { CandidatesModule } from './components/candidatesModule.js';
-import { VacanciesModule } from './components/vacanciesModule.js';
-import { CompaniesModule } from './components/companiesModule.js';
-import { ApplicationsModule } from './components/applicationsModule.js';
-import { InterviewsModule } from './components/interviewsModule.js';
-import { TasksModule } from './components/tasksModule.js';
-import { LoginAnimation } from './components/loginAnimation.js';
-import { ThemeModule, LangModule } from './components/themeLanguage.js';
+
 
 const TOKEN_KEY = 'jobConnectToken';
 const LOGS_KEY  = 'jobConnect_accessLogs';
@@ -170,11 +164,7 @@ function navigateTo(targetId) {
 
     // Cargar datos de módulos al navegar
     if (targetId === 'candidatesSection')   CandidatesModule.loadData();
-    if (targetId === 'vacanciesSection')     VacanciesModule.loadData();
-    if (targetId === 'companiesSection')     CompaniesModule.loadData();
-    if (targetId === 'applicationsSection') ApplicationsModule.loadData();
-    if (targetId === 'interviewsSection')    InterviewsModule.loadData();
-    if (targetId === 'tasksSection')         TasksModule.loadData();
+
 
     // Cerrar sidebar en mobile al navegar
     if (window.innerWidth <= 768) DOM.sidebar.classList.remove('open');
@@ -194,15 +184,9 @@ function initApp() {
     });
 
     CandidatesModule.init();
-    VacanciesModule.init();
-    CompaniesModule.init();
-    ApplicationsModule.init();
-    InterviewsModule.init();
-    TasksModule.init();
-    ThemeModule.init();
-    LangModule.init();
+
 
     checkAuthAndRoute();
 }
 
-document.addEventListener('DOMContentLoaded', initApp);
+
