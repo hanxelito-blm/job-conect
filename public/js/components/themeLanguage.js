@@ -44,7 +44,9 @@ const I18N = {
         'dash.access':            'Accesos',
         // Pages
         'page.candidates':        'Candidatos',
-
+        'page.applications':      'Postulaciones',
+        'btn.new.candidate':      'Nuevo Candidato',
+        'btn.new.application':    'Nueva Postulación',
         // Login
         'login.title':            'Iniciar Sesión',
         'login.subtitle':         'Portal Corporativo',
@@ -56,6 +58,14 @@ const I18N = {
         'topbar.logout':          'Cerrar Sesión',
         // Landing
         'landing.enter':          'Entrar al sistema',
+        // Accesibilidad
+        'a11y.title':             'Ajuste Daltónico',
+        'a11y.normal':            'Normal',
+        'a11y.deuteranopia':      'Deuteranopía / Protanopía',
+        'a11y.tritanopia':        'Tritanopía',
+        'a11y.monochrome':        'Alto Contraste',
+        // Loading
+        'loading.candidates':     'Cargando candidatos...',
     },
     en: {
         'lang.code':              'EN',
@@ -93,4 +103,107 @@ const I18N = {
         'dash.access':            'Accesses',
         // Pages
         'page.candidates':        'Candidates',
+        'page.applications':      'Applications',
+        'btn.new.candidate':      'New Candidate',
+        'btn.new.application':    'New Application',
+        // Login
+        'login.title':            'Sign In',
+        'login.subtitle':         'Corporate Portal',
+        'login.user':             'USERNAME',
+        'login.pass':             'PASSWORD',
+        'login.btn':              'Sign In',
+        'login.verifying':        'Verifying...',
+        // Topbar
+        'topbar.logout':          'Log Out',
+        // Landing
+        'landing.enter':          'Enter the system',
+        // Accessibility
+        'a11y.title':             'Color Blindness',
+        'a11y.normal':            'Normal',
+        'a11y.deuteranopia':      'Deuteranopia / Protanopia',
+        'a11y.tritanopia':        'Tritanopia',
+        'a11y.monochrome':        'High Contrast',
+        // Loading
+        'loading.candidates':     'Loading candidates...',
+    }
+};
 
+// =====================================================
+// THEME MODULE
+// =====================================================
+export const ThemeModule = (() => {
+    const STORAGE_KEY = 'jobConnect_theme';
+    const DARK_CLASS  = '';
+    const LIGHT_CLASS = 'light-mode';
+
+    function apply(theme) {
+        if (theme === 'light') {
+            document.documentElement.classList.add(LIGHT_CLASS);
+        } else {
+            document.documentElement.classList.remove(LIGHT_CLASS);
+        }
+        localStorage.setItem(STORAGE_KEY, theme);
+        updateIcon(theme);
+    }
+
+    function updateIcon(theme) {
+        const icon = document.getElementById('themeIcon');
+        if (!icon) return;
+        icon.innerHTML = theme === 'light'
+            ? `<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>`
+            : `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>`;
+    }
+
+    function init() {
+        const saved = localStorage.getItem(STORAGE_KEY) || 'dark';
+        apply(saved);
+
+        const btn = document.getElementById('themeToggleBtn');
+        if (btn) {
+            btn.addEventListener('click', () => {
+                const current = document.documentElement.classList.contains(LIGHT_CLASS) ? 'light' : 'dark';
+                apply(current === 'light' ? 'dark' : 'light');
+            });
+        }
+    }
+
+    return { init, apply };
+})();
+
+// =====================================================
+// LANG MODULE
+// =====================================================
+export const LangModule = (() => {
+    const STORAGE_KEY = 'jobConnect_lang';
+    let currentLang = 'es';
+
+    function apply(lang) {
+        currentLang = lang;
+        localStorage.setItem(STORAGE_KEY, lang);
+        document.documentElement.lang = lang;
+        const dict = I18N[lang] || I18N.es;
+
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.dataset.i18n;
+            if (dict[key] !== undefined) el.textContent = dict[key];
+        });
+    }
+
+    function init() {
+        const saved = localStorage.getItem(STORAGE_KEY) || 'es';
+        apply(saved);
+
+        const btn = document.getElementById('langToggleBtn');
+        if (btn) {
+            btn.addEventListener('click', () => {
+                apply(currentLang === 'es' ? 'en' : 'es');
+            });
+        }
+    }
+
+    function t(key) {
+        return (I18N[currentLang] || I18N.es)[key] || key;
+    }
+
+    return { init, apply, t };
+})();
