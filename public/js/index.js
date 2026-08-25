@@ -3,6 +3,7 @@ import { api } from './services/apiService.js';
 import { CandidatesModule } from './components/candidatesModule.js';
 import { ApplicationsModule } from './components/applicationsModule.js';
 import { LoginAnimation } from './components/loginAnimation.js';
+import { ThemeModule, LangModule } from './components/themeLanguage.js';
 
 const TOKEN_KEY = 'jobConnectToken';
 const LOGS_KEY  = 'jobConnect_accessLogs';
@@ -186,6 +187,8 @@ function initApp() {
 
     CandidatesModule.init();
     ApplicationsModule.init();
+    ThemeModule.init();
+    LangModule.init();
 
     checkAuthAndRoute();
 }
