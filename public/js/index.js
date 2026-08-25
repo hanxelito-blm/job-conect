@@ -2,6 +2,15 @@
 import { api } from './services/apiService.js';
 import { Toast } from './services/toastService.js';
 import { CandidatesModule } from './components/candidatesModule.js';
+import { ApplicationsModule } from './components/applicationsModule.js';
+import { CompaniesModule } from './components/companiesModule.js';
+import { DashboardModule } from './components/dashboardModule.js';
+import { InterviewsModule } from './components/interviewsModule.js';
+import { LoginAnimation } from './components/loginAnimation.js';
+import { TasksModule } from './components/tasksModule.js';
+import { ThemeModule, LangModule } from './components/themeLanguage.js';
+import { AccessibilityModule } from './components/accessibilityModule.js';
+import { VacanciesModule } from './components/vacanciesModule.js';
 
 
 const TOKEN_KEY = 'jobConnectToken';
@@ -218,5 +227,10 @@ function initApp() {
 
     checkAuthAndRoute();
 }
+
+ThemeModule.init();
+LangModule.init();
+AccessibilityModule.init();
+initApp();
 
 

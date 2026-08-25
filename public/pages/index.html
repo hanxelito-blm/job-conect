@@ -1,27 +1,75 @@
-
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JobConnect - Portal Corporativo</title>
+    <meta name="description" content="JobConnect – Portal corporativo de gestión de talento, vacantes y entrevistas.">
+    <title>JobConnect – Portal Corporativo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style/style.css">
-
 </head>
 <body>
 
     <!-- TOPBAR -->
-    <header class="topbar" id="topbar">
+    <header class="topbar" id="topbar" role="banner">
         <div class="topbar-left">
-            <button class="sidebar-toggle" id="sidebarToggle" title="Menú" aria-label="Abrir menú">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            <button class="sidebar-toggle" id="sidebarToggle" title="Abrir/cerrar menú" aria-label="Abrir menú lateral" aria-expanded="false" aria-controls="sidebar">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                    <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
             </button>
-            <div class="logo">
-                <svg class="logo-mark" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <div class="logo" aria-label="JobConnect">
+                <svg class="logo-mark" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
                 JobConnect
             </div>
         </div>
-        <nav class="topbar-right hidden" id="topbarNav">
+        <nav class="topbar-right hidden" id="topbarNav" aria-label="Opciones globales">
+            <!-- Accesibilidad daltónica -->
+            <div class="a11y-wrapper" style="position:relative;">
+                <button id="a11yToggleBtn" class="btn-icon" title="Modo Accesibilidad" aria-label="Ajuste daltónico" aria-expanded="false" aria-haspopup="true">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10"/><path d="M12 2v20"/><path d="M2 12h10"/>
+                        <path d="M12 6a6 6 0 0 1 0 12"/>
+                    </svg>
+                </button>
+                <div id="a11yDropdown" class="a11y-dropdown hidden" role="menu" aria-label="Modos de accesibilidad visual">
+                    <p class="a11y-title">Ajuste Daltónico</p>
+                    <button class="a11y-option active" data-mode="normal" role="menuitem">Normal</button>
+                    <button class="a11y-option" data-mode="deuteranopia" role="menuitem">Deuteranopía / Protanopía</button>
+                    <button class="a11y-option" data-mode="tritanopia" role="menuitem">Tritanopía</button>
+                    <button class="a11y-option" data-mode="monochrome" role="menuitem">Alto Contraste</button>
+                </div>
+            </div>
 
+            <!-- Tema claro/oscuro -->
+            <button id="themeToggleBtn" class="btn-icon" title="Cambiar tema" aria-label="Cambiar entre tema claro y oscuro">
+                <svg id="themeIcon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </button>
+
+            <!-- Idioma -->
+            <button id="langToggleBtn" class="btn-icon" title="Cambiar idioma" aria-label="Cambiar idioma del portal">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="2" y1="12" x2="22" y2="12"/>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                </svg>
+                <span class="lang-label" data-i18n="lang.code">ES</span>
+            </button>
+
+            <!-- Cerrar sesión -->
+            <button id="logoutBtn" class="btn btn-secondary" aria-label="Cerrar sesión">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                    <polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+                </svg>
+                <span data-i18n="topbar.logout">Cerrar Sesión</span>
             </button>
         </nav>
     </header>
@@ -30,145 +78,413 @@
     <div class="app-layout">
 
         <!-- SIDEBAR -->
-        <!-- SIDEBAR -->
-        <aside class="sidebar hidden" id="sidebar">
+        <aside class="sidebar hidden" id="sidebar" aria-label="Menú de navegación">
             <div class="sidebar-user" id="sidebarUser">
-                <div class="avatar-circle" id="avatarCircle">U</div>
+                <div class="avatar-circle" id="avatarCircle" aria-hidden="true">U</div>
                 <div class="sidebar-user-meta">
                     <span id="sidebarUsername">Usuario</span>
                     <span class="user-role-badge">Admin</span>
                 </div>
             </div>
 
-            <nav class="sidebar-nav">
+            <nav class="sidebar-nav" aria-label="Secciones del portal">
+                <p class="sidebar-section-label" data-i18n="sidebar.principal">PRINCIPAL</p>
+                <button class="sidebar-btn active" data-target="dashboardSection" aria-current="page">
+                    <span class="sidebar-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+                    </span>
+                    <span data-i18n="sidebar.home">Inicio / Dashboard</span>
+                </button>
 
+                <p class="sidebar-section-label" data-i18n="sidebar.modules">MÓDULOS</p>
+                <button class="sidebar-btn" data-target="companiesSection" title="Gestión y directorio de empresas">
+                    <span class="sidebar-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V7l9-4 9 4v14"/><path d="M9 21v-8h6v8"/><path d="M3 7h18"/></svg>
+                    </span>
+                    <span data-i18n="sidebar.companies">Empresas</span>
+                </button>
+                <button class="sidebar-btn" data-target="vacanciesSection" title="Creación y flujo de ofertas laborales">
+                    <span class="sidebar-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                    </span>
+                    <span data-i18n="sidebar.vacancies">Vacantes</span>
+                </button>
+                <button class="sidebar-btn" data-target="interviewsSection" title="Calendario y seguimiento de candidatos">
+                    <span class="sidebar-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    </span>
+                    <span data-i18n="sidebar.interviews">Entrevistas</span>
                 </button>
                 <button class="sidebar-btn" data-target="candidatesSection" title="Gestión de candidatos y perfiles">
-                    <span class="sidebar-icon">
-
+                    <span class="sidebar-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </span>
+                    <span data-i18n="sidebar.candidates">Candidatos</span>
+                </button>
+                <button class="sidebar-btn" data-target="applicationsSection" title="Seguimiento de postulaciones en curso">
+                    <span class="sidebar-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    </span>
+                    <span data-i18n="sidebar.applications">Postulaciones</span>
+                </button>
+                <button class="sidebar-btn" data-target="tasksSection" title="Tareas y pendientes">
+                    <span class="sidebar-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 1"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                    </span>
+                    <span data-i18n="sidebar.tasks">Tareas</span>
+                </button>
             </nav>
 
             <div class="sidebar-footer">
-                <div class="log-badge" id="logBadge">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <div class="log-badge" id="logBadge" aria-live="polite">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                     <span data-i18n="sidebar.log">Bitácora</span>: <span id="logCount">0</span>
                 </div>
             </div>
         </aside>
 
         <!-- CONTENIDO PRINCIPAL -->
-        <main class="main-content" id="mainContent">
+        <main class="main-content" id="mainContent" role="main">
 
             <!-- LANDING -->
-            <section id="landingSection" class="landing">
-                <div class="landing-glow landing-glow-a"></div>
-                <div class="landing-glow landing-glow-b"></div>
-
+            <section id="landingSection" class="landing" aria-label="Bienvenida">
+                <div class="landing-glow landing-glow-a" aria-hidden="true"></div>
+                <div class="landing-glow landing-glow-b" aria-hidden="true"></div>
                 <div class="landing-inner">
                     <div class="landing-brand reveal-left">
                         <span class="landing-logo">
-                            <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                            </svg>
                             JobConnect
                         </span>
                     </div>
-
                     <h1 class="landing-title reveal-right">Conecta talento,<br>impulsa tu equipo.</h1>
                     <p class="landing-sub reveal-left">La plataforma moderna para gestionar candidatos y postulaciones en un solo lugar. Simple, rápida y profesional.</p>
-
                     <div class="landing-features">
                         <div class="landing-feature reveal-left">
-                            <span class="feature-icon">
-                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                            </span>
-                            <div>
-                                <h3>Candidatos</h3>
-                                <p>Centraliza perfiles y datos de contacto.</p>
-                            </div>
+                            <span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+                            <div><h3>Candidatos</h3><p>Centraliza perfiles y datos de contacto.</p></div>
                         </div>
                         <div class="landing-feature reveal-right">
-                            <span class="feature-icon">
-                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-                            </span>
-                            <div>
-                                <h3>Postulaciones</h3>
-                                <p>Da seguimiento a cada proceso en curso.</p>
-                            </div>
+                            <span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span>
+                            <div><h3>Postulaciones</h3><p>Da seguimiento a cada proceso en curso.</p></div>
                         </div>
                         <div class="landing-feature reveal-left">
-                            <span class="feature-icon">
-                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                            </span>
-                            <div>
-                                <h3>Seguro</h3>
-                                <p>Acceso protegido y bitácora de sesiones.</p>
-                            </div>
+                            <span class="feature-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+                            <div><h3>Seguro</h3><p>Acceso protegido y bitácora de sesiones.</p></div>
                         </div>
                     </div>
-
                     <button class="btn btn-primary btn-lg landing-cta reveal-right" id="landingEnterBtn">
                         <span class="btn-text">Entrar al sistema</span>
-                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
                     </button>
                 </div>
             </section>
 
-            <!-- Sección de Login -->
-
+            <!-- LOGIN -->
+            <section id="loginSection" class="login-wrapper fade-in hidden" aria-label="Iniciar sesión">
+                <canvas id="loginCanvas" aria-hidden="true"></canvas>
+                <div class="login-card" role="region" aria-label="Formulario de acceso">
+                    <div class="login-brand">
+                        <span class="login-logo">
+                            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                            </svg>
+                            JobConnect
+                        </span>
+                        <p data-i18n="login.subtitle">Portal Corporativo</p>
+                    </div>
+                    <h2 data-i18n="login.title">Iniciar Sesión</h2>
+                    <form id="loginForm" novalidate aria-label="Formulario de inicio de sesión">
+                        <div class="form-group">
+                            <label for="username" data-i18n="login.user">USUARIO</label>
+                            <div class="input-wrap">
+                                <svg class="input-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                <input type="text" id="username" name="username" placeholder="emilys" required autocomplete="username" aria-required="true" aria-describedby="usernameError">
                             </div>
-                            <span class="error-msg" id="usernameError"></span>
+                            <span class="error-msg" id="usernameError" role="alert" aria-live="polite"></span>
                         </div>
                         <div class="form-group">
-
-                            <span class="loader hidden"></span>
+                            <label for="password" data-i18n="login.pass">CONTRASEÑA</label>
+                            <div class="input-wrap">
+                                <svg class="input-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                <input type="password" id="password" name="password" placeholder="••••••••" required autocomplete="current-password" aria-required="true" aria-describedby="passwordError">
+                            </div>
+                            <span class="error-msg" id="passwordError" role="alert" aria-live="polite"></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-login full-width" id="loginSubmitBtn">
+                            <span class="btn-text" data-i18n="login.btn">Ingresar</span>
+                            <span class="loader hidden" aria-label="Cargando..." role="status"></span>
                         </button>
                     </form>
-                    <div id="loginAlert" class="alert hidden"></div>
+                    <div id="loginAlert" class="alert hidden" role="alert" aria-live="assertive"></div>
                 </div>
             </section>
 
-            <!-- VISTA: DASHBOARD HOME (ACTUALIZADA) -->
-            <section id="dashboardSection" class="view-section hidden fade-in">
-
+            <!-- DASHBOARD -->
+            <section id="dashboardSection" class="view-section hidden fade-in" aria-label="Panel principal">
+                <div class="dash-hero-header">
+                    <div class="dash-hero-info">
+                        <div class="dash-badge-live" aria-live="polite">
+                            <span class="live-pulse" aria-hidden="true"></span>
+                            <span id="dashDateDisplay">Cargando fecha...</span>
+                        </div>
+                        <h1 class="dash-main-title" data-i18n="dash.title">Panel de Control</h1>
+                        <p class="dash-main-sub">
+                            <span data-i18n="dash.welcome">Bienvenido de nuevo,</span>
+                            <strong id="userWelcome">Usuario</strong>.
+                            <span data-i18n="dash.subtitle">Visión general y analítica en tiempo real</span>
+                        </p>
+                    </div>
+                    <div class="dash-hero-actions">
+                        <button class="btn btn-secondary btn-icon-text" id="dashRefreshBtn" title="Recargar datos" aria-label="Recargar datos del dashboard">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                            <span data-i18n="dash.refresh">Actualizar</span>
+                        </button>
+                    </div>
                 </div>
 
-                <!-- KPI CARDS (Métricas Principales) -->
-                <div class="dash-kpi-grid">
-                    <!-- KPI 1: Vacantes Activas -->
-                    <div class="dash-kpi-card" data-dash-nav="vacanciesSection">
-                        <div class="kpi-card-glow kpi-glow-teal"></div>
+                <!-- KPI CARDS -->
+                <div class="dash-kpi-grid" role="region" aria-label="Métricas principales">
+                    <div class="dash-kpi-card" data-dash-nav="vacanciesSection" tabindex="0" role="button" aria-label="Ver vacantes activas">
+                        <div class="kpi-card-glow kpi-glow-teal" aria-hidden="true"></div>
                         <div class="kpi-card-header">
-                            <div class="kpi-icon-wrap kpi-icon-teal">
+                            <div class="kpi-icon-wrap kpi-icon-teal" aria-hidden="true">
                                 <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
                             </div>
                             <span class="kpi-pill kpi-pill-teal">En oferta</span>
                         </div>
+                        <div class="kpi-card-body">
+                            <h3 class="kpi-label" data-i18n="dash.kpi.vacancies">Vacantes Activas</h3>
+                            <div class="kpi-number-wrap">
+                                <span class="kpi-number" id="kpiVacanciesValue" aria-live="polite">—</span>
+                                <span class="kpi-trend positive" aria-label="Incremento del 8%">
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                                    +8%
+                                </span>
+                            </div>
+                            <div class="kpi-subtext" id="kpiVacanciesSub" aria-live="polite">Cargando información...</div>
+                        </div>
+                    </div>
 
+                    <div class="dash-kpi-card" data-dash-nav="interviewsSection" tabindex="0" role="button" aria-label="Ver entrevistas programadas">
+                        <div class="kpi-card-glow kpi-glow-emerald" aria-hidden="true"></div>
+                        <div class="kpi-card-header">
+                            <div class="kpi-icon-wrap kpi-icon-emerald" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                            </div>
+                            <span class="kpi-pill kpi-pill-emerald">Agenda</span>
+                        </div>
+                        <div class="kpi-card-body">
+                            <h3 class="kpi-label" data-i18n="dash.kpi.interviews">Entrevistas Programadas</h3>
+                            <div class="kpi-number-wrap">
+                                <span class="kpi-number" id="kpiInterviewsValue" aria-live="polite">—</span>
+                                <span class="kpi-trend positive" aria-label="Incremento del 14%">
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                                    +14%
+                                </span>
+                            </div>
+                            <div class="kpi-subtext" id="kpiInterviewsSub" aria-live="polite">Cargando agenda...</div>
+                        </div>
+                    </div>
+
+                    <div class="dash-kpi-card" data-dash-nav="companiesSection" tabindex="0" role="button" aria-label="Ver empresas registradas">
+                        <div class="kpi-card-glow kpi-glow-cyan" aria-hidden="true"></div>
+                        <div class="kpi-card-header">
+                            <div class="kpi-icon-wrap kpi-icon-cyan" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V7l9-4 9 4v14"/><path d="M9 21v-8h6v8"/><path d="M3 7h18"/></svg>
+                            </div>
+                            <span class="kpi-pill kpi-pill-cyan">Socios</span>
+                        </div>
+                        <div class="kpi-card-body">
+                            <h3 class="kpi-label" data-i18n="dash.kpi.companies">Empresas Registradas</h3>
+                            <div class="kpi-number-wrap">
+                                <span class="kpi-number" id="kpiCompaniesValue" aria-live="polite">—</span>
+                                <span class="kpi-trend positive" aria-label="+3 este mes">
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                                    +3 mes
+                                </span>
+                            </div>
+                            <div class="kpi-subtext" id="kpiCompaniesSub" aria-live="polite">Cargando empresas...</div>
+                        </div>
+                    </div>
+
+                    <div class="dash-kpi-card" data-dash-nav="candidatesSection" tabindex="0" role="button" aria-label="Ver candidatos totales">
+                        <div class="kpi-card-glow kpi-glow-mint" aria-hidden="true"></div>
+                        <div class="kpi-card-header">
+                            <div class="kpi-icon-wrap kpi-icon-mint" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            </div>
+                            <span class="kpi-pill kpi-pill-mint">Talento</span>
+                        </div>
+                        <div class="kpi-card-body">
+                            <h3 class="kpi-label" data-i18n="dash.kpi.candidates">Candidatos Totales</h3>
+                            <div class="kpi-number-wrap">
+                                <span class="kpi-number" id="kpiCandidatesValue" aria-live="polite">—</span>
+                                <span class="kpi-trend neutral"><span class="dot-indicator" aria-hidden="true"></span> Activos</span>
+                            </div>
+                            <div class="kpi-subtext" id="kpiCandidatesSub" aria-live="polite">Cargando talento...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ACCESOS RÁPIDOS -->
+                <div class="dash-quick-section" role="region" aria-label="Accesos rápidos">
+                    <div class="quick-header">
+                        <div class="quick-title-wrap">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                            <h2 class="quick-title-text" data-i18n="dash.quick.title">Accesos Rápidos</h2>
+                        </div>
+                        <span class="quick-subtitle">Acciones operativas directas</span>
+                    </div>
+                    <div class="quick-buttons-row">
+                        <button class="btn-quick-action action-vacancy" id="qaNewVacancy" aria-label="Publicar nueva vacante">
+                            <span class="quick-btn-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+                            <span class="quick-btn-text" data-i18n="dash.quick.newVacancy">Publicar nueva vacante</span>
+                        </button>
+                        <button class="btn-quick-action action-interview" id="qaNewInterview" aria-label="Agendar entrevista">
+                            <span class="quick-btn-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg></span>
+                            <span class="quick-btn-text" data-i18n="dash.quick.newInterview">Agendar entrevista</span>
+                        </button>
+                        <button class="btn-quick-action action-company" id="qaNewCompany" aria-label="Registrar empresa">
+                            <span class="quick-btn-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 21V7l9-4 9 4v14"/><path d="M9 21v-8h6v8"/><line x1="19" y1="12" x2="19" y2="18"/><line x1="16" y1="15" x2="22" y2="15"/></svg></span>
+                            <span class="quick-btn-text" data-i18n="dash.quick.newCompany">Registrar empresa</span>
+                        </button>
+                        <button class="btn-quick-action action-candidate" id="qaNewCandidate" aria-label="Añadir nuevo candidato">
+                            <span class="quick-btn-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="16" y1="11" x2="22" y2="11"/></svg></span>
+                            <span class="quick-btn-text" data-i18n="dash.quick.newCandidate">Nuevo candidato</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- GRID PRINCIPAL -->
+                <div class="dash-main-grid">
+                    <div class="dash-col-primary">
+                        <!-- Widget Vacantes -->
+                        <div class="dash-widget-card">
+                            <div class="widget-header">
+                                <div>
+                                    <h2 class="widget-title" data-i18n="dash.section.vacancies">Últimas Vacantes Publicadas</h2>
+                                    <p class="widget-sub">Estado y volumen de postulaciones por posición</p>
+                                </div>
+                                <button class="btn-widget-link" data-dash-nav="vacanciesSection" aria-label="Ver todas las vacantes">
+                                    <span data-i18n="dash.btn.viewAll">Ver todas</span>
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                                </button>
+                            </div>
+                            <div class="dash-table-container">
+                                <table class="dash-table" aria-label="Últimas vacantes publicadas">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Vacante &amp; Empresa</th>
+                                            <th scope="col">Categoría</th>
+                                            <th scope="col">Postulantes</th>
+                                            <th scope="col">Estado</th>
+                                            <th scope="col" class="text-right">Acción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="dashVacanciesTbody">
+                                        <tr><td colspan="5" class="table-loading-cell"><span class="spinner" aria-hidden="true"></span> Cargando vacantes...</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
 
+                        <!-- Widget Empresas -->
+                        <div class="dash-widget-card">
+                            <div class="widget-header">
+                                <div>
+                                    <h2 class="widget-title" data-i18n="dash.section.companies">Directorio y Actividad de Empresas</h2>
+                                    <p class="widget-sub">Empresas clientes con mayor volumen de contratación</p>
+                                </div>
+                                <button class="btn-widget-link" data-dash-nav="companiesSection" aria-label="Ver todas las empresas">
+                                    <span data-i18n="dash.btn.viewAll">Ver todas</span>
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                                </button>
+                            </div>
+                            <div class="dash-companies-grid" id="dashCompaniesGrid" aria-live="polite">
+                                <div class="table-loading-cell"><span class="spinner" aria-hidden="true"></span> Cargando empresas...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dash-col-secondary">
+                        <!-- Widget Entrevistas -->
+                        <div class="dash-widget-card">
+                            <div class="widget-header">
+                                <div>
+                                    <h2 class="widget-title" data-i18n="dash.section.interviews">Próximas Entrevistas</h2>
+                                    <p class="widget-sub">Seguimiento de candidatos agendados</p>
+                                </div>
+                                <button class="btn-widget-link" data-dash-nav="interviewsSection" aria-label="Ver todas las entrevistas">
+                                    <span data-i18n="dash.btn.viewAll">Ver todas</span>
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                                </button>
+                            </div>
+                            <div class="agenda-list" id="dashInterviewsList" aria-live="polite">
+                                <div class="table-loading-cell"><span class="spinner" aria-hidden="true"></span> Cargando entrevistas...</div>
+                            </div>
+                        </div>
+
+                        <!-- Widget Pipeline -->
+                        <div class="dash-widget-card dash-pipeline-card">
+                            <div class="widget-header">
+                                <div>
+                                    <h2 class="widget-title">Flujo de Reclutamiento</h2>
+                                    <p class="widget-sub">Distribución del embudo de selección</p>
+                                </div>
+                            </div>
+                            <div class="pipeline-stages" role="list" aria-label="Etapas del proceso de selección">
+                                <div class="pipeline-stage" role="listitem">
+                                    <div class="stage-info"><span class="stage-name">1. Postulaciones Recibidas</span><span class="stage-count">48 perfiles</span></div>
+                                    <div class="stage-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" aria-label="100%"><div class="stage-fill" style="width:100%"></div></div>
+                                </div>
+                                <div class="pipeline-stage" role="listitem">
+                                    <div class="stage-info"><span class="stage-name">2. En Evaluación Técnica</span><span class="stage-count">24 candidatos</span></div>
+                                    <div class="stage-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" aria-label="50%"><div class="stage-fill" style="width:50%"></div></div>
+                                </div>
+                                <div class="pipeline-stage" role="listitem">
+                                    <div class="stage-info"><span class="stage-name">3. Entrevistas Finales</span><span class="stage-count">12 entrevistas</span></div>
+                                    <div class="stage-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" aria-label="25%"><div class="stage-fill" style="width:25%"></div></div>
+                                </div>
+                                <div class="pipeline-stage" role="listitem">
+                                    <div class="stage-info"><span class="stage-name">4. Ofertas Formalizadas</span><span class="stage-count">6 contrataciones</span></div>
+                                    <div class="stage-bar" role="progressbar" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100" aria-label="12%"><div class="stage-fill" style="width:12.5%"></div></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- VISTA: CANDIDATOS -->
-            <section id="candidatesSection" class="view-section hidden fade-in">
+            <!-- CANDIDATOS -->
+            <section id="candidatesSection" class="view-section hidden fade-in" aria-label="Módulo de candidatos">
                 <div class="page-header">
                     <div>
-
+                        <h1 data-i18n="page.candidates">Candidatos</h1>
+                        <p>Gestión del recurso /users</p>
+                    </div>
+                    <button class="btn btn-primary fab-btn" id="btnNewCandidate" aria-label="Crear nuevo candidato">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        <span data-i18n="btn.new.candidate">Nuevo Candidato</span>
                     </button>
                 </div>
                 <div class="table-card">
-                    <div class="loader-container hidden" id="candidatesLoader">
-                        <span class="spinner"></span> <span data-i18n="loading.candidates">Cargando candidatos...</span>
+                    <div class="loader-container hidden" id="candidatesLoader" role="status" aria-live="polite">
+                        <span class="spinner" aria-hidden="true"></span> Cargando candidatos...
                     </div>
                     <div class="table-container">
-                        <table class="data-table" id="candidatesTable">
+                        <table class="data-table" id="candidatesTable" aria-label="Lista de candidatos">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th data-i18n="th.fullName">Nombre Completo</th>
-                                    <th data-i18n="th.email">Correo</th>
-                                    <th data-i18n="th.phone">Teléfono</th>
-                                    <th data-i18n="th.actions">Acciones</th>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Nombre Completo</th>
+                                    <th scope="col">Correo</th>
+                                    <th scope="col">Teléfono</th>
+                                    <th scope="col">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody id="candidatesTbody"></tbody>
@@ -177,3 +493,309 @@
                 </div>
             </section>
 
+            <!-- VACANTES -->
+            <section id="vacanciesSection" class="view-section hidden fade-in" aria-label="Módulo de vacantes">
+                <div class="page-header">
+                    <div>
+                        <h1>Vacantes</h1>
+                        <p>Gestión del recurso /products</p>
+                    </div>
+                    <button class="btn btn-primary fab-btn" id="btnNewVacancy" aria-label="Crear nueva vacante">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        Nueva Vacante
+                    </button>
+                </div>
+                <div class="table-card">
+                    <div class="loader-container hidden" id="vacanciesLoader" role="status" aria-live="polite">
+                        <span class="spinner" aria-hidden="true"></span> Cargando vacantes...
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table" id="vacanciesTable" aria-label="Lista de vacantes">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Título</th>
+                                    <th scope="col">Marca</th>
+                                    <th scope="col">Precio</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="vacanciesTbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- EMPRESAS -->
+            <section id="companiesSection" class="view-section hidden fade-in" aria-label="Módulo de empresas">
+                <div class="page-header">
+                    <div>
+                        <h1>Empresas Clientes</h1>
+                        <p>Gestión del recurso /carts</p>
+                    </div>
+                    <button class="btn btn-primary fab-btn" id="btnNewCompany" aria-label="Registrar nueva empresa">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        Nueva Empresa
+                    </button>
+                </div>
+                <div class="table-card">
+                    <div class="loader-container hidden" id="companiesLoader" role="status" aria-live="polite">
+                        <span class="spinner" aria-hidden="true"></span> Cargando empresas...
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table" id="companiesTable" aria-label="Lista de empresas">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">ID Usuario</th>
+                                    <th scope="col">Productos</th>
+                                    <th scope="col">Total</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="companiesTbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- POSTULACIONES -->
+            <section id="applicationsSection" class="view-section hidden fade-in" aria-label="Módulo de postulaciones">
+                <div class="page-header">
+                    <div>
+                        <h1 data-i18n="page.applications">Postulaciones</h1>
+                        <p>Gestión del recurso /posts</p>
+                    </div>
+                    <button class="btn btn-primary fab-btn" id="btnNewApplication" aria-label="Crear nueva postulación">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        <span data-i18n="btn.new.application">Nueva Postulación</span>
+                    </button>
+                </div>
+                <div class="table-card">
+                    <div class="loader-container hidden" id="applicationsLoader" role="status" aria-live="polite">
+                        <span class="spinner" aria-hidden="true"></span> Cargando postulaciones...
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table" id="applicationsTable" aria-label="Lista de postulaciones">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Título (Puesto)</th>
+                                    <th scope="col">Descripción</th>
+                                    <th scope="col">Estado</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="applicationsTbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ENTREVISTAS -->
+            <section id="interviewsSection" class="view-section hidden fade-in" aria-label="Módulo de entrevistas">
+                <div class="page-header">
+                    <div>
+                        <h1>Entrevistas / Notas</h1>
+                        <p>Gestión del recurso /comments</p>
+                    </div>
+                    <button class="btn btn-primary fab-btn" id="btnNewInterview" aria-label="Crear nueva entrevista">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        Nueva Entrevista
+                    </button>
+                </div>
+                <div class="table-card">
+                    <div class="loader-container hidden" id="interviewsLoader" role="status" aria-live="polite">
+                        <span class="spinner" aria-hidden="true"></span> Cargando entrevistas...
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table" id="interviewsTable" aria-label="Lista de entrevistas">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Nota</th>
+                                    <th scope="col">Usuario</th>
+                                    <th scope="col">Post ID</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="interviewsTbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAREAS -->
+            <section id="tasksSection" class="view-section hidden fade-in" aria-label="Módulo de tareas">
+                <div class="page-header">
+                    <div>
+                        <h1>Tareas</h1>
+                        <p>Gestión del recurso /todos</p>
+                    </div>
+                    <button class="btn btn-primary fab-btn" id="btnNewTask" aria-label="Crear nueva tarea">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                        Nueva Tarea
+                    </button>
+                </div>
+                <div class="table-card">
+                    <div class="loader-container hidden" id="tasksLoader" role="status" aria-live="polite">
+                        <span class="spinner" aria-hidden="true"></span> Cargando tareas...
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table" id="tasksTable" aria-label="Lista de tareas">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Tarea</th>
+                                    <th scope="col">Estado</th>
+                                    <th scope="col">Usuario</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tasksTbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- ================== MODALES ================== -->
+
+    <!-- Modal: Candidato -->
+    <div class="modal hidden" id="candidateModal" role="dialog" aria-modal="true" aria-labelledby="candidateModalTitle">
+        <div class="modal-content card">
+            <h2 id="candidateModalTitle">Candidato</h2>
+            <form id="candidateForm" novalidate>
+                <input type="hidden" id="candidateId">
+                <div class="form-group">
+                    <label for="candidateFirstName">Nombre <span aria-hidden="true">*</span></label>
+                    <input type="text" id="candidateFirstName" required aria-required="true" placeholder="Ej. María">
+                </div>
+                <div class="form-group">
+                    <label for="candidateLastName">Apellido <span aria-hidden="true">*</span></label>
+                    <input type="text" id="candidateLastName" required aria-required="true" placeholder="Ej. García">
+                </div>
+                <div class="form-group">
+                    <label for="candidateEmail">Correo electrónico <span aria-hidden="true">*</span></label>
+                    <input type="email" id="candidateEmail" required aria-required="true" placeholder="ejemplo@correo.com">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-ghost" id="cancelCandidateBtn">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Vacante -->
+    <div class="modal hidden" id="vacancyModal" role="dialog" aria-modal="true" aria-labelledby="vacancyModalTitle">
+        <div class="modal-content card">
+            <h2 id="vacancyModalTitle">Vacante</h2>
+            <form id="vacancyForm" novalidate>
+                <input type="hidden" id="vacancyId">
+                <div class="form-group">
+                    <label for="vacancyTitle">Título <span aria-hidden="true">*</span></label>
+                    <input type="text" id="vacancyTitle" required aria-required="true" placeholder="Ej. Desarrollador Full Stack">
+                </div>
+                <div class="form-group">
+                    <label for="vacancyBrand">Empresa / Marca <span aria-hidden="true">*</span></label>
+                    <input type="text" id="vacancyBrand" required aria-required="true" placeholder="Ej. TechCorp">
+                </div>
+                <div class="form-group">
+                    <label for="vacancyPrice">Salario (USD) <span aria-hidden="true">*</span></label>
+                    <input type="number" id="vacancyPrice" required aria-required="true" min="0" step="0.01" placeholder="Ej. 2500">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-ghost" id="cancelVacancyBtn">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Empresa -->
+    <div class="modal hidden" id="companyModal" role="dialog" aria-modal="true" aria-labelledby="companyModalTitle">
+        <div class="modal-content card">
+            <h2 id="companyModalTitle">Empresa</h2>
+            <form id="companyForm" novalidate>
+                <input type="hidden" id="companyId">
+                <div class="form-group">
+                    <label for="companyUserId">ID Usuario <span aria-hidden="true">*</span></label>
+                    <input type="number" id="companyUserId" required aria-required="true" min="1" placeholder="Ej. 5">
+                </div>
+                <div class="form-group">
+                    <label for="companyTotal">Total ($) <span aria-hidden="true">*</span></label>
+                    <input type="number" id="companyTotal" required aria-required="true" min="0" step="0.01" placeholder="0.00">
+                </div>
+                <div class="form-group">
+                    <label for="companyDiscounted">Total con descuento ($)</label>
+                    <input type="number" id="companyDiscounted" min="0" step="0.01" placeholder="0.00">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-ghost" id="cancelCompanyBtn">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Postulación -->
+    <div class="modal hidden" id="applicationModal" role="dialog" aria-modal="true" aria-labelledby="applicationModalTitle">
+        <div class="modal-content card">
+            <h2 id="applicationModalTitle">Postulación</h2>
+            <form id="applicationForm" novalidate>
+                <input type="hidden" id="applicationId">
+                <div class="form-group">
+                    <label for="appTitle">Puesto / Título <span aria-hidden="true">*</span></label>
+                    <input type="text" id="appTitle" required aria-required="true" placeholder="Ej. Analista de Datos">
+                </div>
+                <div class="form-group">
+                    <label for="appBody">Descripción <span aria-hidden="true">*</span></label>
+                    <input type="text" id="appBody" required aria-required="true" placeholder="Breve descripción del puesto...">
+                </div>
+                <div class="form-group">
+                    <label for="appUserId">ID Candidato <span aria-hidden="true">*</span></label>
+                    <input type="number" id="appUserId" required aria-required="true" min="1" placeholder="Ej. 3">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-ghost" id="cancelApplicationBtn">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Entrevista -->
+    <div class="modal hidden" id="interviewModal" role="dialog" aria-modal="true" aria-labelledby="interviewModalTitle">
+        <div class="modal-content card">
+            <h2 id="interviewModalTitle">Entrevista / Nota</h2>
+            <form id="interviewForm" novalidate>
+                <input type="hidden" id="interviewId">
+                <div class="form-group">
+                    <label for="interviewBody">Nota / Observaciones <span aria-hidden="true">*</span></label>
+                    <input type="text" id="interviewBody" required aria-required="true" placeholder="Ej. Candidato con excelente perfil técnico...">
+                </div>
+                <div class="form-group">
+                    <label for="interviewUserId">ID Candidato <span aria-hidden="true">*</span></label>
+                    <input type="number" id="interviewUserId" required aria-required="true" min="1" placeholder="Ej. 1">
+                </div>
+                <div class="form-group">
+                    <label for="interviewPostId">ID Postulación <span aria-hidden="true">*</span></label>
+                    <input type="number" id="interviewPostId" required aria-required="true" min="1" placeholder="Ej. 1">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-ghost" id="cancelInterviewBtn">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast container (creado dinámicamente por toastService.js) -->
+    <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="false"></div>
+
+    <script type="module" src="../js/index.js"></script>
+</body>
+</html>
