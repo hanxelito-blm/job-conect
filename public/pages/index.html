@@ -162,105 +162,22 @@
                 </div>
                 <div class="table-card">
                     <div class="loader-container hidden" id="candidatesLoader">
-                        <span class="spinner"></span> Cargando candidatos...
+                        <span class="spinner"></span> <span data-i18n="loading.candidates">Cargando candidatos...</span>
                     </div>
-                    <table class="data-table" id="candidatesTable">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nombre Completo</th>
-                                <th>Correo</th>
-                                <th>Teléfono</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="candidatesTbody"></tbody>
-                    </table>
+                    <div class="table-container">
+                        <table class="data-table" id="candidatesTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th data-i18n="th.fullName">Nombre Completo</th>
+                                    <th data-i18n="th.email">Correo</th>
+                                    <th data-i18n="th.phone">Teléfono</th>
+                                    <th data-i18n="th.actions">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="candidatesTbody"></tbody>
+                        </table>
+                    </div>
                 </div>
             </section>
-
-n
-            <!-- VISTA: POSTULACIONES -->
-            <section id="applicationsSection" class="view-section hidden fade-in">
-                <div class="page-header">
-                    <div>
-
-                    </button>
-                </div>
-                <div class="table-card">
-                    <div class="loader-container hidden" id="applicationsLoader">
-                        <span class="spinner"></span> Cargando postulaciones...
-                    </div>
-                    <table class="data-table" id="applicationsTable">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Título (Puesto)</th>
-                                <th>Descripción</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="applicationsTbody"></tbody>
-                    </table>
-                </div>
-            </section>
-
-}
-        </main>
-    </div>
-
-    <!-- MODAL: CANDIDATO -->
-    <div class="modal hidden" id="candidateModal">
-        <div class="modal-content card">
-            <h2 id="candidateModalTitle">Candidato</h2>
-            <form id="candidateForm">
-                <input type="hidden" id="candidateId">
-                <div class="form-group">
-                    <label>Nombre</label>
-                    <input type="text" id="candidateFirstName" required>
-                </div>
-                <div class="form-group">
-                    <label>Apellido</label>
-                    <input type="text" id="candidateLastName" required>
-                </div>
-                <div class="form-group">
-                    <label>Correo</label>
-                    <input type="email" id="candidateEmail" required>
-                </div>
-                <div class="modal-actions">
-                    <button type="button" class="btn btn-ghost" id="cancelCandidateBtn">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-
-    <!-- MODAL: POSTULACIÓN -->
-    <div class="modal hidden" id="applicationModal">
-        <div class="modal-content card">
-            <h2 id="applicationModalTitle">Postulación</h2>
-            <form id="applicationForm">
-                <input type="hidden" id="applicationId">
-                <div class="form-group">
-                    <label>Título / Puesto</label>
-                    <input type="text" id="appTitle" required>
-                </div>
-                <div class="form-group">
-                    <label>Descripción</label>
-                    <input type="text" id="appBody" required>
-                </div>
-                <div class="form-group">
-                    <label>ID Candidato (userId)</label>
-                    <input type="number" id="appUserId" required min="1">
-                </div>
-                <div class="modal-actions">
-                    <button type="button" class="btn btn-ghost" id="cancelApplicationBtn">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
 
