@@ -192,7 +192,7 @@ function navigateTo(targetId) {
 
     DOM.mainContent.style.marginLeft = '';
 
-    if (targetId === 'dashboardSection')    syncDashboardStats();
+
     if (targetId === 'candidatesSection')   CandidatesModule.loadData();
 
 
@@ -212,6 +212,7 @@ function initApp() {
         btn.addEventListener('click', () => navigateTo(btn.dataset.target));
     });
 
+    DashboardModule.init();
     CandidatesModule.init();
 
 
