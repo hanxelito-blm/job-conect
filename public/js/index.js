@@ -1,8 +1,7 @@
 // public/js/index.js
 import { api } from './services/apiService.js';
 import { CandidatesModule } from './components/candidatesModule.js';
-import { ApplicationsModule } from './components/applicationsModule.js';
-import { LoginAnimation } from './components/loginAnimation.js';
+
 
 const TOKEN_KEY = 'jobConnectToken';
 const LOGS_KEY  = 'jobConnect_accessLogs';
@@ -165,7 +164,7 @@ function navigateTo(targetId) {
 
     // Cargar datos de módulos al navegar
     if (targetId === 'candidatesSection')   CandidatesModule.loadData();
-    if (targetId === 'applicationsSection') ApplicationsModule.loadData();
+
 
     // Cerrar sidebar en mobile al navegar
     if (window.innerWidth <= 768) DOM.sidebar.classList.remove('open');
@@ -185,9 +184,9 @@ function initApp() {
     });
 
     CandidatesModule.init();
-    ApplicationsModule.init();
+
 
     checkAuthAndRoute();
 }
 
-document.addEventListener('DOMContentLoaded', initApp);
+
