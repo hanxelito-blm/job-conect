@@ -6,8 +6,10 @@ import { CompaniesModule } from './components/companiesModule.js';
 import { ApplicationsModule } from './components/applicationsModule.js';
 import { InterviewsModule } from './components/interviewsModule.js';
 import { TasksModule } from './components/tasksModule.js';
+import { DashboardModule } from './components/dashboardModule.js';
 import { LoginAnimation } from './components/loginAnimation.js';
 import { ThemeModule, LangModule } from './components/themeLanguage.js';
+import { AccessibilityModule } from './components/accessibilityModule.js';
 
 const TOKEN_KEY = 'jobConnectToken';
 const LOGS_KEY  = 'jobConnect_accessLogs';
@@ -169,6 +171,7 @@ function navigateTo(targetId) {
     DOM.mainContent.style.marginLeft = '';
 
     // Cargar datos de módulos al navegar
+    if (targetId === 'dashboardSection')   DashboardModule.loadData();
     if (targetId === 'candidatesSection')   CandidatesModule.loadData();
     if (targetId === 'vacanciesSection')     VacanciesModule.loadData();
     if (targetId === 'companiesSection')     CompaniesModule.loadData();
@@ -193,6 +196,7 @@ function initApp() {
         btn.addEventListener('click', () => navigateTo(btn.dataset.target));
     });
 
+    DashboardModule.init();
     CandidatesModule.init();
     VacanciesModule.init();
     CompaniesModule.init();
@@ -201,6 +205,7 @@ function initApp() {
     TasksModule.init();
     ThemeModule.init();
     LangModule.init();
+    AccessibilityModule.init();
 
     checkAuthAndRoute();
 }

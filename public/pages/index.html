@@ -21,6 +21,24 @@
             </div>
         </div>
         <nav class="topbar-right hidden" id="topbarNav">
+            <!-- Botón Accesibilidad (Daltonismo) -->
+            <div class="a11y-wrapper" style="position: relative;">
+                <button id="a11yToggleBtn" class="btn-icon" title="Modo Accesibilidad" aria-label="Modo Accesibilidad" aria-expanded="false" aria-haspopup="true">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/>
+                        <path d="M12 2v20"/>
+                        <path d="M12 12h10"/>
+                    </svg>
+                </button>
+                <div id="a11yDropdown" class="a11y-dropdown hidden">
+                    <p class="a11y-title" data-i18n="a11y.title">Ajuste Daltónico</p>
+                    <button class="a11y-option active" data-mode="normal" data-i18n="a11y.normal">Normal</button>
+                    <button class="a11y-option" data-mode="deuteranopia" data-i18n="a11y.deuteranopia">Deuteranopía / Protanopía</button>
+                    <button class="a11y-option" data-mode="tritanopia" data-i18n="a11y.tritanopia">Tritanopía</button>
+                    <button class="a11y-option" data-mode="monochrome" data-i18n="a11y.monochrome">Alto Contraste</button>
+                </div>
+            </div>
+
             <!-- Botón Tema -->
             <button id="themeToggleBtn" class="btn-icon" title="Cambiar tema" aria-label="Cambiar tema">
                 <svg id="themeIcon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -47,10 +65,14 @@
     <div class="app-layout">
 
         <!-- SIDEBAR -->
+        <!-- SIDEBAR -->
         <aside class="sidebar hidden" id="sidebar">
             <div class="sidebar-user" id="sidebarUser">
                 <div class="avatar-circle" id="avatarCircle">U</div>
-                <span id="sidebarUsername">Usuario</span>
+                <div class="sidebar-user-meta">
+                    <span id="sidebarUsername">Usuario</span>
+                    <span class="user-role-badge">Admin</span>
+                </div>
             </div>
 
             <nav class="sidebar-nav">
@@ -58,46 +80,46 @@
                 <button class="sidebar-btn active" data-target="dashboardSection">
                     <span class="sidebar-icon">
                         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
-                    </span> <span data-i18n="sidebar.home">Inicio</span>
+                    </span> <span data-i18n="sidebar.home">Inicio / Dashboard</span>
                 </button>
 
                 <p class="sidebar-section-label" data-i18n="sidebar.modules">MÓDULOS</p>
-                <button class="sidebar-btn" data-target="candidatesSection">
+                <button class="sidebar-btn" data-target="companiesSection" title="Gestión y directorio de empresas registradas">
+                    <span class="sidebar-icon">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V7l9-4 9 4v14"/><path d="M9 21v-8h6v8"/><path d="M3 7h18"/></svg>
+                    </span> <span data-i18n="sidebar.companies">Empresas</span>
+                </button>
+                <button class="sidebar-btn" data-target="vacanciesSection" title="Creación, estado y flujo de ofertas laborales">
+                    <span class="sidebar-icon">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                    </span> <span data-i18n="sidebar.vacancies">Vacantes</span>
+                </button>
+                <button class="sidebar-btn" data-target="interviewsSection" title="Calendario, programación y seguimiento de candidatos">
+                    <span class="sidebar-icon">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    </span> <span data-i18n="sidebar.interviews">Entrevistas</span>
+                </button>
+                <button class="sidebar-btn" data-target="candidatesSection" title="Gestión de candidatos y perfiles">
                     <span class="sidebar-icon">
                         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                     </span> <span data-i18n="sidebar.candidates">Candidatos</span>
                 </button>
-                <button class="sidebar-btn" data-target="vacanciesSection">
-                    <span class="sidebar-icon">
-                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 12l9 4 9-4"/><path d="M3 17l9 4 9-4"/></svg>
-                    </span> <span>Vacantes</span>
-                </button>
-                <button class="sidebar-btn" data-target="companiesSection">
-                    <span class="sidebar-icon">
-                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V7l9-4 9 4v14"/><path d="M9 21v-8h6v8"/><path d="M3 7h18"/></svg>
-                    </span> <span>Empresas clientes</span>
-                </button>
-                <button class="sidebar-btn" data-target="applicationsSection">
+                <button class="sidebar-btn" data-target="applicationsSection" title="Seguimiento de postulaciones en curso">
                     <span class="sidebar-icon">
                         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
                     </span> <span data-i18n="sidebar.applications">Postulaciones</span>
                 </button>
-                <button class="sidebar-btn" data-target="interviewsSection">
-                    <span class="sidebar-icon">
-                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h8"/><path d="M8 14h5"/></svg>
-                    </span> <span>Entrevistas / notas</span>
-                </button>
-                <button class="sidebar-btn" data-target="tasksSection">
+                <button class="sidebar-btn" data-target="tasksSection" title="Tareas y pendientes">
                     <span class="sidebar-icon">
                         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 1"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-                    </span> <span>Tareas</span>
+                    </span> <span data-i18n="sidebar.tasks">Tareas</span>
                 </button>
             </nav>
 
             <div class="sidebar-footer">
                 <div class="log-badge" id="logBadge">
                     <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                    Bitácora: <span id="logCount">0</span>
+                    <span data-i18n="sidebar.log">Bitácora</span>: <span id="logCount">0</span>
                 </div>
             </div>
         </aside>
@@ -197,75 +219,270 @@
                 </div>
             </section>
 
-            <!-- VISTA: DASHBOARD HOME -->
+            <!-- VISTA: DASHBOARD HOME (ACTUALIZADA) -->
             <section id="dashboardSection" class="view-section hidden fade-in">
-                <div class="page-header">
-                    <h1 data-i18n="dash.title">Panel de Control</h1>
-                    <p><span data-i18n="dash.welcome">Bienvenido de nuevo,</span> <strong id="userWelcome">Usuario</strong></p>
+                <!-- Header del Dashboard -->
+                <div class="dash-hero-header">
+                    <div class="dash-hero-info">
+                        <div class="dash-badge-live">
+                            <span class="live-pulse"></span>
+                            <span id="dashDateDisplay">Cargando fecha...</span>
+                        </div>
+                        <h1 class="dash-main-title" data-i18n="dash.title">Panel de Control</h1>
+                        <p class="dash-main-sub">
+                            <span data-i18n="dash.welcome">Bienvenido de nuevo,</span> <strong id="userWelcome">Usuario</strong>.
+                            <span data-i18n="dash.subtitle">Visión general y analítica en tiempo real</span>
+                        </p>
+                    </div>
+                    <div class="dash-hero-actions">
+                        <button class="btn btn-secondary btn-icon-text" id="dashRefreshBtn" title="Recargar datos">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                            <span data-i18n="dash.refresh">Actualizar</span>
+                        </button>
+                    </div>
                 </div>
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+
+                <!-- KPI CARDS (Métricas Principales) -->
+                <div class="dash-kpi-grid">
+                    <!-- KPI 1: Vacantes Activas -->
+                    <div class="dash-kpi-card" data-dash-nav="vacanciesSection">
+                        <div class="kpi-card-glow kpi-glow-teal"></div>
+                        <div class="kpi-card-header">
+                            <div class="kpi-icon-wrap kpi-icon-teal">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                            </div>
+                            <span class="kpi-pill kpi-pill-teal">En oferta</span>
                         </div>
-                        <div class="stat-info">
-                            <h3 data-i18n="dash.candidates">Candidatos</h3>
-                            <p class="stat-value" id="statsCandidates">—</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 12l9 4 9-4"/><path d="M3 17l9 4 9-4"/></svg>
-                        </div>
-                        <div class="stat-info">
-                            <h3>Vacantes</h3>
-                            <p class="stat-value" id="statsVacancies">—</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V7l9-4 9 4v14"/><path d="M9 21v-8h6v8"/><path d="M3 7h18"/></svg>
-                        </div>
-                        <div class="stat-info">
-                            <h3>Empresas</h3>
-                            <p class="stat-value" id="statsCompanies">—</p>
+                        <div class="kpi-card-body">
+                            <h3 class="kpi-label" data-i18n="dash.kpi.vacancies">Vacantes Activas</h3>
+                            <div class="kpi-number-wrap">
+                                <span class="kpi-number" id="kpiVacanciesValue">—</span>
+                                <span class="kpi-trend positive">
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                                    +8%
+                                </span>
+                            </div>
+                            <div class="kpi-subtext" id="kpiVacanciesSub">Cargando información...</div>
                         </div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+
+                    <!-- KPI 2: Entrevistas Programadas -->
+                    <div class="dash-kpi-card" data-dash-nav="interviewsSection">
+                        <div class="kpi-card-glow kpi-glow-emerald"></div>
+                        <div class="kpi-card-header">
+                            <div class="kpi-icon-wrap kpi-icon-emerald">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                            </div>
+                            <span class="kpi-pill kpi-pill-emerald">Agenda</span>
                         </div>
-                        <div class="stat-info">
-                            <h3 data-i18n="dash.applications">Postulaciones</h3>
-                            <p class="stat-value" id="statsApplications">—</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h8"/><path d="M8 14h5"/></svg>
-                        </div>
-                        <div class="stat-info">
-                            <h3>Entrevistas</h3>
-                            <p class="stat-value" id="statsInterviews">—</p>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 1"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-                        </div>
-                        <div class="stat-info">
-                            <h3>Tareas</h3>
-                            <p class="stat-value" id="statsTasks">—</p>
+                        <div class="kpi-card-body">
+                            <h3 class="kpi-label" data-i18n="dash.kpi.interviews">Entrevistas Programadas</h3>
+                            <div class="kpi-number-wrap">
+                                <span class="kpi-number" id="kpiInterviewsValue">—</span>
+                                <span class="kpi-trend positive">
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                                    +14%
+                                </span>
+                            </div>
+                            <div class="kpi-subtext" id="kpiInterviewsSub">Cargando agenda...</div>
                         </div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+
+                    <!-- KPI 3: Empresas Registradas -->
+                    <div class="dash-kpi-card" data-dash-nav="companiesSection">
+                        <div class="kpi-card-glow kpi-glow-cyan"></div>
+                        <div class="kpi-card-header">
+                            <div class="kpi-icon-wrap kpi-icon-cyan">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V7l9-4 9 4v14"/><path d="M9 21v-8h6v8"/><path d="M3 7h18"/></svg>
+                            </div>
+                            <span class="kpi-pill kpi-pill-cyan">Socios</span>
                         </div>
-                        <div class="stat-info">
-                            <h3 data-i18n="dash.access">Accesos</h3>
-                            <p class="stat-value accent" id="statsLogs">0</p>
+                        <div class="kpi-card-body">
+                            <h3 class="kpi-label" data-i18n="dash.kpi.companies">Empresas Registradas</h3>
+                            <div class="kpi-number-wrap">
+                                <span class="kpi-number" id="kpiCompaniesValue">—</span>
+                                <span class="kpi-trend positive">
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                                    +3 mes
+                                </span>
+                            </div>
+                            <div class="kpi-subtext" id="kpiCompaniesSub">Cargando empresas...</div>
                         </div>
+                    </div>
+
+                    <!-- KPI 4: Candidatos y Postulaciones -->
+                    <div class="dash-kpi-card" data-dash-nav="candidatesSection">
+                        <div class="kpi-card-glow kpi-glow-mint"></div>
+                        <div class="kpi-card-header">
+                            <div class="kpi-icon-wrap kpi-icon-mint">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            </div>
+                            <span class="kpi-pill kpi-pill-mint">Talento</span>
+                        </div>
+                        <div class="kpi-card-body">
+                            <h3 class="kpi-label" data-i18n="dash.kpi.candidates">Candidatos Totales</h3>
+                            <div class="kpi-number-wrap">
+                                <span class="kpi-number" id="kpiCandidatesValue">—</span>
+                                <span class="kpi-trend neutral">
+                                    <span class="dot-indicator"></span> Activos
+                                </span>
+                            </div>
+                            <div class="kpi-subtext" id="kpiCandidatesSub">Cargando talento...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN: ACCESOS RÁPIDOS (Quick Actions) -->
+                <div class="dash-quick-section">
+                    <div class="quick-header">
+                        <div class="quick-title-wrap">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                            <h3 data-i18n="dash.quick.title">Accesos Rápidos</h3>
+                        </div>
+                        <span class="quick-subtitle">Acciones operativas directas</span>
+                    </div>
+                    <div class="quick-buttons-row">
+                        <button class="btn-quick-action action-vacancy" id="qaNewVacancy">
+                            <span class="quick-btn-icon">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                            </span>
+                            <span class="quick-btn-text" data-i18n="dash.quick.newVacancy">Publicar nueva vacante</span>
+                        </button>
+                        <button class="btn-quick-action action-interview" id="qaNewInterview">
+                            <span class="quick-btn-icon">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg>
+                            </span>
+                            <span class="quick-btn-text" data-i18n="dash.quick.newInterview">Agendar entrevista</span>
+                        </button>
+                        <button class="btn-quick-action action-company" id="qaNewCompany">
+                            <span class="quick-btn-icon">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 21V7l9-4 9 4v14"/><path d="M9 21v-8h6v8"/><line x1="19" y1="12" x2="19" y2="18"/><line x1="16" y1="15" x2="22" y2="15"/></svg>
+                            </span>
+                            <span class="quick-btn-text" data-i18n="dash.quick.newCompany">Registrar empresa</span>
+                        </button>
+                        <button class="btn-quick-action action-candidate" id="qaNewCandidate">
+                            <span class="quick-btn-icon">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="16" y1="11" x2="22" y2="11"/></svg>
+                            </span>
+                            <span class="quick-btn-text" data-i18n="dash.quick.newCandidate">Nuevo candidato</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- MAIN DASHBOARD CONTENT GRID (2 COLUMNAS) -->
+                <div class="dash-main-grid">
+                    <!-- COLUMNA IZQUIERDA (Principal): Vacantes & Empresas -->
+                    <div class="dash-col-primary">
+                        
+                        <!-- WIDGET 1: ÚLTIMAS VACANTES PUBLICADAS -->
+                        <div class="dash-widget-card">
+                            <div class="widget-header">
+                                <div>
+                                    <h3 class="widget-title" data-i18n="dash.section.vacancies">Últimas Vacantes Publicadas</h3>
+                                    <p class="widget-sub">Estado y volumen de postulaciones por posición</p>
+                                </div>
+                                <button class="btn-widget-link" data-dash-nav="vacanciesSection">
+                                    <span data-i18n="dash.btn.viewAll">Ver todas</span>
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                                </button>
+                            </div>
+                            <div class="dash-table-container">
+                                <table class="dash-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Vacante & Empresa</th>
+                                            <th>Categoría</th>
+                                            <th>Postulantes</th>
+                                            <th>Estado</th>
+                                            <th class="text-right">Acción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="dashVacanciesTbody">
+                                        <tr><td colspan="5" class="table-loading-cell"><span class="spinner"></span> Cargando vacantes...</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- WIDGET 2: DIRECTORIO Y ACTIVIDAD DE EMPRESAS -->
+                        <div class="dash-widget-card">
+                            <div class="widget-header">
+                                <div>
+                                    <h3 class="widget-title" data-i18n="dash.section.companies">Directorio y Actividad de Empresas</h3>
+                                    <p class="widget-sub">Empresas clientes con mayor volumen de contratación</p>
+                                </div>
+                                <button class="btn-widget-link" data-dash-nav="companiesSection">
+                                    <span data-i18n="dash.btn.viewAll">Ver todas</span>
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                                </button>
+                            </div>
+                            <div class="dash-companies-grid" id="dashCompaniesGrid">
+                                <div class="table-loading-cell"><span class="spinner"></span> Cargando empresas...</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- COLUMNA DERECHA (Lateral): Próximas Entrevistas & Pipeline -->
+                    <div class="dash-col-secondary">
+
+                        <!-- WIDGET 3: PRÓXIMAS ENTREVISTAS (AGENDA / TIMELINE) -->
+                        <div class="dash-widget-card">
+                            <div class="widget-header">
+                                <div>
+                                    <h3 class="widget-title" data-i18n="dash.section.interviews">Próximas Entrevistas</h3>
+                                    <p class="widget-sub">Seguimiento de candidatos agendados</p>
+                                </div>
+                                <button class="btn-widget-link" data-dash-nav="interviewsSection">
+                                    <span data-i18n="dash.btn.viewAll">Ver todas</span>
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                                </button>
+                            </div>
+                            <div class="agenda-list" id="dashInterviewsList">
+                                <div class="table-loading-cell"><span class="spinner"></span> Cargando entrevistas...</div>
+                            </div>
+                        </div>
+
+                        <!-- WIDGET 4: PIPELINE DE SELECCIÓN -->
+                        <div class="dash-widget-card dash-pipeline-card">
+                            <div class="widget-header">
+                                <div>
+                                    <h3 class="widget-title">Flujo de Reclutamiento</h3>
+                                    <p class="widget-sub">Distribución del embudo de selección</p>
+                                </div>
+                            </div>
+                            <div class="pipeline-stages">
+                                <div class="pipeline-stage">
+                                    <div class="stage-info">
+                                        <span class="stage-name">1. Postulaciones Recibidas</span>
+                                        <span class="stage-count">48 perfiles</span>
+                                    </div>
+                                    <div class="stage-bar"><div class="stage-fill" style="width: 100%;"></div></div>
+                                </div>
+                                <div class="pipeline-stage">
+                                    <div class="stage-info">
+                                        <span class="stage-name">2. En Evaluación Técnica</span>
+                                        <span class="stage-count">24 candidatos</span>
+                                    </div>
+                                    <div class="stage-bar"><div class="stage-fill" style="width: 50%;"></div></div>
+                                </div>
+                                <div class="pipeline-stage">
+                                    <div class="stage-info">
+                                        <span class="stage-name">3. Entrevistas Finales</span>
+                                        <span class="stage-count">12 entrevistas</span>
+                                    </div>
+                                    <div class="stage-bar"><div class="stage-fill" style="width: 25%;"></div></div>
+                                </div>
+                                <div class="pipeline-stage">
+                                    <div class="stage-info">
+                                        <span class="stage-name">4. Ofertas Formalizadas</span>
+                                        <span class="stage-count">6 contrataciones</span>
+                                    </div>
+                                    <div class="stage-bar"><div class="stage-fill" style="width: 12.5%;"></div></div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </section>
