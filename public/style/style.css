@@ -980,6 +980,120 @@ html.light-mode .btn-login {
 .alert-error { background: rgba(231,111,81,0.1); color: var(--accent); border: 1px solid rgba(231,111,81,0.3); }
 
 /* =====================================================
+   NOTIFICACIONES TOAST FLOTANTES
+   ===================================================== */
+.toast-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 9999;
+    max-width: 380px;
+    width: calc(100vw - 48px);
+    pointer-events: none;
+}
+.toast {
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    background: rgba(10, 25, 21, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+html.light-mode .toast {
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.14);
+}
+.toast-success {
+    border-left: 4px solid var(--primary);
+}
+.toast-success .toast-icon {
+    color: var(--primary);
+}
+.toast-error {
+    border-left: 4px solid #ff5656;
+}
+.toast-error .toast-icon {
+    color: #ff5656;
+}
+.toast-info {
+    border-left: 4px solid #3b82f6;
+}
+.toast-info .toast-icon {
+    color: #3b82f6;
+}
+.toast-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.toast-message {
+    flex: 1;
+    line-height: 1.4;
+}
+.toast-close {
+    background: transparent;
+    border: none;
+    color: var(--text-soft);
+    font-size: 1.2rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 4px;
+    opacity: 0.7;
+    transition: opacity 0.15s ease;
+}
+.toast-close:hover {
+    opacity: 1;
+    color: var(--text);
+}
+.toast-fade-out {
+    animation: toastFadeOut 0.25s ease-in forwards;
+}
+@keyframes toastFadeOut {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(12px); }
+}
+
+/* =====================================================
+   TABLAS & CONTENEDOR RESPONSIVE
+   ===================================================== */
+.table-card {
+    background: rgba(16, 30, 27, 0.8);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.empty-state-cell, .error-state-cell {
+    padding: 3rem 1.5rem !important;
+    text-align: center;
+    color: var(--text-soft);
+}
+.empty-state-cell svg, .error-state-cell svg {
+    margin: 0 auto 12px;
+    color: var(--text-soft);
+    opacity: 0.6;
+}
+.error-state-cell {
+    color: #ff9c9c;
+}
+
+/* =====================================================
    LOADER / SPINNER
    ===================================================== */
 .loader-container { padding: 2.5rem; text-align: center; color: var(--text-muted); display: flex; align-items: center; justify-content: center; gap: 0.75rem; }
@@ -1009,4 +1123,6 @@ html.light-mode .btn-login {
     .sidebar.open { transform: translateX(0); }
     .main-content { margin-left: 0; padding: 1.5rem 1rem; }
     .page-header { flex-direction: column; align-items: flex-start; }
+    .toast-container { right: 12px; bottom: 12px; width: calc(100vw - 24px); }
 }
+

@@ -284,20 +284,22 @@
                 </div>
                 <div class="table-card">
                     <div class="loader-container hidden" id="candidatesLoader">
-                        <span class="spinner"></span> Cargando candidatos...
+                        <span class="spinner"></span> <span data-i18n="loading.candidates">Cargando candidatos...</span>
                     </div>
-                    <table class="data-table" id="candidatesTable">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nombre Completo</th>
-                                <th>Correo</th>
-                                <th>Teléfono</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="candidatesTbody"></tbody>
-                    </table>
+                    <div class="table-container">
+                        <table class="data-table" id="candidatesTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th data-i18n="th.fullName">Nombre Completo</th>
+                                    <th data-i18n="th.email">Correo</th>
+                                    <th data-i18n="th.phone">Teléfono</th>
+                                    <th data-i18n="th.actions">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="candidatesTbody"></tbody>
+                        </table>
+                    </div>
                 </div>
             </section>
 
@@ -305,30 +307,32 @@
             <section id="vacanciesSection" class="view-section hidden fade-in">
                 <div class="page-header">
                     <div>
-                        <h1>Vacantes</h1>
-                        <p>Gestión del recurso /products</p>
+                        <h1 data-i18n="page.vacancies">Vacantes</h1>
+                        <p data-i18n="page.vacancies.sub">Gestión del recurso /products</p>
                     </div>
                     <button class="btn btn-primary fab-btn" id="btnNewVacancy">
                         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                        Nueva Vacante
+                        <span data-i18n="btn.new.vacancy">Nueva Vacante</span>
                     </button>
                 </div>
                 <div class="table-card">
                     <div class="loader-container hidden" id="vacanciesLoader">
-                        <span class="spinner"></span> Cargando vacantes...
+                        <span class="spinner"></span> <span data-i18n="loading.vacancies">Cargando vacantes...</span>
                     </div>
-                    <table class="data-table" id="vacanciesTable">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Título</th>
-                                <th>Marca</th>
-                                <th>Precio</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="vacanciesTbody"></tbody>
-                    </table>
+                    <div class="table-container">
+                        <table class="data-table" id="vacanciesTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th data-i18n="th.title">Título</th>
+                                    <th data-i18n="th.brand">Marca</th>
+                                    <th data-i18n="th.price">Precio</th>
+                                    <th data-i18n="th.actions">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="vacanciesTbody"></tbody>
+                        </table>
+                    </div>
                 </div>
             </section>
 
@@ -336,30 +340,32 @@
             <section id="companiesSection" class="view-section hidden fade-in">
                 <div class="page-header">
                     <div>
-                        <h1>Empresas clientes</h1>
-                        <p>Gestión del recurso /carts</p>
+                        <h1 data-i18n="page.companies">Empresas clientes</h1>
+                        <p data-i18n="page.companies.sub">Gestión del recurso /carts</p>
                     </div>
                     <button class="btn btn-primary fab-btn" id="btnNewCompany">
                         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                        Nueva Empresa
+                        <span data-i18n="btn.new.company">Nueva Empresa</span>
                     </button>
                 </div>
                 <div class="table-card">
                     <div class="loader-container hidden" id="companiesLoader">
-                        <span class="spinner"></span> Cargando empresas...
+                        <span class="spinner"></span> <span data-i18n="loading.companies">Cargando empresas...</span>
                     </div>
-                    <table class="data-table" id="companiesTable">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>ID Usuario</th>
-                                <th>Productos</th>
-                                <th>Total</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="companiesTbody"></tbody>
-                    </table>
+                    <div class="table-container">
+                        <table class="data-table" id="companiesTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th data-i18n="th.userId">ID Usuario</th>
+                                    <th data-i18n="th.products">Productos</th>
+                                    <th data-i18n="th.total">Total</th>
+                                    <th data-i18n="th.actions">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="companiesTbody"></tbody>
+                        </table>
+                    </div>
                 </div>
             </section>
 
@@ -377,20 +383,22 @@
                 </div>
                 <div class="table-card">
                     <div class="loader-container hidden" id="applicationsLoader">
-                        <span class="spinner"></span> Cargando postulaciones...
+                        <span class="spinner"></span> <span data-i18n="loading.applications">Cargando postulaciones...</span>
                     </div>
-                    <table class="data-table" id="applicationsTable">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Título (Puesto)</th>
-                                <th>Descripción</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="applicationsTbody"></tbody>
-                    </table>
+                    <div class="table-container">
+                        <table class="data-table" id="applicationsTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th data-i18n="th.appTitle">Título (Puesto)</th>
+                                    <th data-i18n="th.description">Descripción</th>
+                                    <th data-i18n="th.status">Estado</th>
+                                    <th data-i18n="th.actions">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="applicationsTbody"></tbody>
+                        </table>
+                    </div>
                 </div>
             </section>
 
@@ -398,30 +406,32 @@
             <section id="interviewsSection" class="view-section hidden fade-in">
                 <div class="page-header">
                     <div>
-                        <h1>Entrevistas / notas</h1>
-                        <p>Gestión del recurso /comments</p>
+                        <h1 data-i18n="page.interviews">Entrevistas / notas</h1>
+                        <p data-i18n="page.interviews.sub">Gestión del recurso /comments</p>
                     </div>
                     <button class="btn btn-primary fab-btn" id="btnNewInterview">
                         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                        Nueva Entrevista
+                        <span data-i18n="btn.new.interview">Nueva Entrevista</span>
                     </button>
                 </div>
                 <div class="table-card">
                     <div class="loader-container hidden" id="interviewsLoader">
-                        <span class="spinner"></span> Cargando entrevistas...
+                        <span class="spinner"></span> <span data-i18n="loading.interviews">Cargando entrevistas...</span>
                     </div>
-                    <table class="data-table" id="interviewsTable">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nota</th>
-                                <th>Usuario</th>
-                                <th>Post ID</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="interviewsTbody"></tbody>
-                    </table>
+                    <div class="table-container">
+                        <table class="data-table" id="interviewsTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th data-i18n="th.note">Nota</th>
+                                    <th data-i18n="th.user">Usuario</th>
+                                    <th data-i18n="th.postId">Post ID</th>
+                                    <th data-i18n="th.actions">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="interviewsTbody"></tbody>
+                        </table>
+                    </div>
                 </div>
             </section>
 
@@ -429,30 +439,32 @@
             <section id="tasksSection" class="view-section hidden fade-in">
                 <div class="page-header">
                     <div>
-                        <h1>Tareas</h1>
-                        <p>Gestión del recurso /todos</p>
+                        <h1 data-i18n="page.tasks">Tareas</h1>
+                        <p data-i18n="page.tasks.sub">Gestión del recurso /todos</p>
                     </div>
                     <button class="btn btn-primary fab-btn" id="btnNewTask">
                         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                        Nueva Tarea
+                        <span data-i18n="btn.new.task">Nueva Tarea</span>
                     </button>
                 </div>
                 <div class="table-card">
                     <div class="loader-container hidden" id="tasksLoader">
-                        <span class="spinner"></span> Cargando tareas...
+                        <span class="spinner"></span> <span data-i18n="loading.tasks">Cargando tareas...</span>
                     </div>
-                    <table class="data-table" id="tasksTable">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Tarea</th>
-                                <th>Estado</th>
-                                <th>Usuario</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tasksTbody"></tbody>
-                    </table>
+                    <div class="table-container">
+                        <table class="data-table" id="tasksTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th data-i18n="th.task">Tarea</th>
+                                    <th data-i18n="th.status">Estado</th>
+                                    <th data-i18n="th.user">Usuario</th>
+                                    <th data-i18n="th.actions">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tasksTbody"></tbody>
+                        </table>
+                    </div>
                 </div>
             </section>
 
@@ -615,6 +627,9 @@
             </form>
         </div>
     </div>
+
+    <!-- CONTENEDOR DE NOTIFICACIONES TOAST -->
+    <div id="toastContainer" class="toast-container"></div>
 
     <script type="module" src="../js/index.js"></script>
 </body>
