@@ -202,7 +202,15 @@ function navigateTo(targetId) {
     DOM.mainContent.style.marginLeft = '';
 
 
-    if (targetId === 'candidatesSection')   CandidatesModule.loadData();
+    const moduleLoaders = {
+        candidatesSection: () => CandidatesModule.loadData(),
+        vacanciesSection: () => VacanciesModule.loadData(),
+        companiesSection: () => CompaniesModule.loadData(),
+        applicationsSection: () => ApplicationsModule.loadData(),
+        interviewsSection: () => InterviewsModule.loadData(),
+        tasksSection: () => TasksModule.loadData()
+    };
+    moduleLoaders[targetId]?.();
 
 
     if (window.innerWidth <= 768) DOM.sidebar.classList.remove('open');
@@ -223,6 +231,12 @@ function initApp() {
 
     DashboardModule.init();
     CandidatesModule.init();
+    VacanciesModule.init();
+    CompaniesModule.init();
+    ApplicationsModule.init();
+    InterviewsModule.init();
+    TasksModule.init();
+    DashboardModule.loadData();
 
 
     checkAuthAndRoute();
@@ -232,5 +246,6 @@ ThemeModule.init();
 LangModule.init();
 AccessibilityModule.init();
 initApp();
+console.log(estoesunaprueba);
 
 

@@ -1,6 +1,7 @@
 // public/js/components/vacanciesModule.js
 import { api } from '../services/apiService.js';
 import { Toast } from '../services/toastService.js';
+import { vacancies as seedVacancies, companies as seedCompanies } from '../mockData.js';
 
 export const VacanciesModule = {
     state: {
@@ -40,8 +41,14 @@ export const VacanciesModule = {
         if (this.loader) this.loader.classList.remove('hidden');
 
         try {
-            const data = await api.get('/products?limit=10');
-            this.state.items = data.products || [];
+            this.state.items = seedVacancies.map((vacancy) => ({
+                ...vacancy,
+                title: vacancy.titulo,
+                brand: seedCompanies.find((company) => company.id === vacancy.empresaId)?.nombre || 'Empresa',
+                category: vacancy.departamento,
+                price: Number(vacancy.rangoSalarial.match(/[\d,]+/)?.[0].replace(',', '') || 0),
+                applicants: vacancy.postulantesCount
+            }));
             this.render();
             this.updateStats();
         } catch (error) {

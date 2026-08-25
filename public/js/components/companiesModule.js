@@ -1,6 +1,7 @@
 // public/js/components/companiesModule.js
 import { api } from '../services/apiService.js';
 import { Toast } from '../services/toastService.js';
+import { companies as seedCompanies } from '../mockData.js';
 
 export const CompaniesModule = {
     state: {
@@ -40,8 +41,13 @@ export const CompaniesModule = {
         if (this.loader) this.loader.classList.remove('hidden');
 
         try {
-            const data = await api.get('/carts?limit=10');
-            this.state.items = data.carts || [];
+            this.state.items = seedCompanies.map((company) => ({
+                ...company,
+                userId: company.id,
+                products: Array.from({ length: company.vacantesActivasCount }, (_, index) => ({ id: `${company.id}-vac-${index + 1}` })),
+                total: company.vacantesActivasCount,
+                discountedTotal: company.vacantesActivasCount
+            }));
             this.render();
             this.updateStats();
         } catch (error) {

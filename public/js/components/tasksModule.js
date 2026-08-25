@@ -1,6 +1,7 @@
 // public/js/components/tasksModule.js
 import { api } from '../services/apiService.js';
 import { Toast } from '../services/toastService.js';
+import { tasks as seedTasks } from '../mockData.js';
 
 export const TasksModule = {
     state: {
@@ -40,8 +41,12 @@ export const TasksModule = {
         if (this.loader) this.loader.classList.remove('hidden');
 
         try {
-            const data = await api.get('/todos?limit=10');
-            this.state.items = data.todos || [];
+            this.state.items = seedTasks.map((task) => ({
+                ...task,
+                todo: task.titulo,
+                userId: task.responsable,
+                completed: task.completada
+            }));
             this.render();
             this.updateStats();
         } catch (error) {

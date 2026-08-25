@@ -1,6 +1,7 @@
 // public/js/components/applicationsModule.js
 import { api } from '../services/apiService.js';
 import { Toast } from '../services/toastService.js';
+import { applications as seedApplications, candidates as seedCandidates, vacancies as seedVacancies } from '../mockData.js';
 
 export const ApplicationsModule = {
     state: {
@@ -41,8 +42,13 @@ export const ApplicationsModule = {
 
         if (this.loader) this.loader.classList.remove('hidden');
         try {
-            const data = await api.get('/posts?limit=10');
-            this.state.posts = data.posts || [];
+            this.state.posts = seedApplications.map((application) => ({
+                ...application,
+                title: seedVacancies.find((vacancy) => vacancy.id === application.vacanteId)?.titulo || application.vacanteId,
+                body: application.cartaPresentacion,
+                userId: application.candidatoId,
+                candidateName: seedCandidates.find((candidate) => candidate.id === application.candidatoId)?.nombreCompleto || application.candidatoId
+            }));
             this.render();
             this.updateStats();
         } catch (error) {
@@ -89,11 +95,11 @@ export const ApplicationsModule = {
         
         this.state.posts.forEach(post => {
             const tr = document.createElement('tr');
-            const estado = post.reactions && post.reactions.likes > 10 ? 'Aceptada' : (post.reactions && post.reactions.likes > 5 ? 'En Revisión' : 'Pendiente');
+            const estado = post.estado || 'Postulado';
             
             tr.innerHTML = `
                 <td>${post.id}</td>
-                <td><strong>${post.title}</strong><br><small>Ref: ID Usuario ${post.userId}</small></td>
+                <td><strong>${post.title}</strong><br><small>${post.candidateName || `Ref: ${post.userId}`}</small></td>
                 <td>${(post.body || '').substring(0, 50)}${(post.body || '').length > 50 ? '...' : ''}</td>
                 <td><span style="color:var(--primary); font-weight:bold;">${estado}</span></td>
                 <td>

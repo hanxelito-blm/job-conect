@@ -1,6 +1,7 @@
 // public/js/components/interviewsModule.js
 import { api } from '../services/apiService.js';
 import { Toast } from '../services/toastService.js';
+import { interviews as seedInterviews, candidates as seedCandidates, vacancies as seedVacancies } from '../mockData.js';
 
 export const InterviewsModule = {
     state: {
@@ -40,8 +41,14 @@ export const InterviewsModule = {
         if (this.loader) this.loader.classList.remove('hidden');
 
         try {
-            const data = await api.get('/comments?limit=10');
-            this.state.items = data.comments || [];
+            this.state.items = seedInterviews.map((interview) => ({
+                ...interview,
+                candidateName: seedCandidates.find((candidate) => candidate.id === interview.candidatoId)?.nombreCompleto || interview.candidatoId,
+                vacancyTitle: seedVacancies.find((vacancy) => vacancy.id === interview.vacanteId)?.titulo || interview.vacanteId,
+                userId: interview.candidatoId,
+                postId: interview.vacanteId,
+                body: interview.notas
+            }));
             this.render();
             this.updateStats();
         } catch (error) {
@@ -88,14 +95,14 @@ export const InterviewsModule = {
 
         this.state.items.forEach((item) => {
             const tr = document.createElement('tr');
-            const userName = item.user?.username || `Usuario ${item.userId || 'N/A'}`;
+            const userName = item.candidateName || item.user?.username || `Usuario ${item.userId || 'N/A'}`;
             tr.innerHTML = `
                 <td>${item.id}</td>
-                <td>${(item.body || '').substring(0, 60)}${(item.body || '').length > 60 ? '...' : ''}</td>
-                <td>${userName}</td>
-                <td>${item.postId || 'N/A'}</td>
+                <td><strong>${userName}</strong><br><small>${item.vacancyTitle || item.postId || 'N/A'}</small></td>
+                <td>${item.entrevistador || userName}</td>
+                <td>${item.fecha || item.postId || 'N/A'}${item.hora ? `<br><small>${item.hora} · ${item.modalidad}</small>` : ''}</td>
                 <td>
-                    <button class="btn btn-small btn-primary edit-btn" data-id="${item.id}">Editar</button>
+                    <span class="status-badge badge-green">${item.estado || 'Programada'}</span>
                     <button class="btn btn-small btn-secondary delete-btn" data-id="${item.id}">Eliminar</button>
                 </td>
             `;
