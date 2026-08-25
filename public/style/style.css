@@ -980,6 +980,120 @@ html.light-mode .btn-login {
 .alert-error { background: rgba(231,111,81,0.1); color: var(--accent); border: 1px solid rgba(231,111,81,0.3); }
 
 /* =====================================================
+   NOTIFICACIONES TOAST FLOTANTES
+   ===================================================== */
+.toast-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 9999;
+    max-width: 380px;
+    width: calc(100vw - 48px);
+    pointer-events: none;
+}
+.toast {
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    background: rgba(10, 25, 21, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+html.light-mode .toast {
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.14);
+}
+.toast-success {
+    border-left: 4px solid var(--primary);
+}
+.toast-success .toast-icon {
+    color: var(--primary);
+}
+.toast-error {
+    border-left: 4px solid #ff5656;
+}
+.toast-error .toast-icon {
+    color: #ff5656;
+}
+.toast-info {
+    border-left: 4px solid #3b82f6;
+}
+.toast-info .toast-icon {
+    color: #3b82f6;
+}
+.toast-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.toast-message {
+    flex: 1;
+    line-height: 1.4;
+}
+.toast-close {
+    background: transparent;
+    border: none;
+    color: var(--text-soft);
+    font-size: 1.2rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 4px;
+    opacity: 0.7;
+    transition: opacity 0.15s ease;
+}
+.toast-close:hover {
+    opacity: 1;
+    color: var(--text);
+}
+.toast-fade-out {
+    animation: toastFadeOut 0.25s ease-in forwards;
+}
+@keyframes toastFadeOut {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(12px); }
+}
+
+/* =====================================================
+   TABLAS & CONTENEDOR RESPONSIVE
+   ===================================================== */
+.table-card {
+    background: rgba(16, 30, 27, 0.8);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.empty-state-cell, .error-state-cell {
+    padding: 3rem 1.5rem !important;
+    text-align: center;
+    color: var(--text-soft);
+}
+.empty-state-cell svg, .error-state-cell svg {
+    margin: 0 auto 12px;
+    color: var(--text-soft);
+    opacity: 0.6;
+}
+.error-state-cell {
+    color: #ff9c9c;
+}
+
+/* =====================================================
    LOADER / SPINNER
    ===================================================== */
 .loader-container { padding: 2.5rem; text-align: center; color: var(--text-muted); display: flex; align-items: center; justify-content: center; gap: 0.75rem; }
@@ -1816,112 +1930,4 @@ html.light-mode .stage-bar {
     }
 }
 @media (max-width: 768px) {
-    .dash-hero-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    .dash-kpi-grid {
-        grid-template-columns: 1fr;
-    }
-    .quick-buttons-row {
-        grid-template-columns: 1fr;
-    }
-    .dash-companies-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* =====================================================
-   ACCESSIBILITY: A11Y DROPDOWN & COLORBLIND MODES
-   ===================================================== */
-.a11y-dropdown {
-    position: absolute;
-    top: 120%;
-    right: 0;
-    width: max-content;
-    background: var(--panel-strong);
-    border: 1px solid var(--border-strong);
-    border-radius: var(--radius-sm);
-    padding: 10px;
-    box-shadow: var(--shadow);
-    z-index: 100;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-.a11y-dropdown.hidden {
-    display: none;
-}
-.a11y-title {
-    margin: 0 0 5px 5px;
-    font-size: 0.8rem;
-    color: var(--text-soft);
-    font-weight: bold;
-    text-transform: uppercase;
-}
-.a11y-option {
-    background: transparent;
-    border: none;
-    color: var(--text);
-    padding: 8px 12px;
-    text-align: left;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.85rem;
-}
-.a11y-option:hover {
-    background: var(--primary-soft);
-}
-.a11y-option.active {
-    background: var(--primary);
-    color: var(--bg);
-    font-weight: bold;
-}
-
-/* MODES */
-/* Deuteranopía / Protanopía: Avoid red/green reliance. Use Blue/Yellow contrast */
-html[data-colorblind="deuteranopia"] {
-    --primary: #3b82f6; /* Blue */
-    --primary-2: #2563eb;
-    --primary-3: #1d4ed8;
-    --primary-soft: rgba(59, 130, 246, 0.14);
-}
-html[data-colorblind="deuteranopia"] .badge-red {
-    background: rgba(234, 179, 8, 0.12);
-    color: #eab308; /* Yellow instead of red */
-}
-html[data-colorblind="deuteranopia"] .kpi-glow-emerald,
-html[data-colorblind="deuteranopia"] .kpi-icon-emerald,
-html[data-colorblind="deuteranopia"] .kpi-pill-emerald {
-    background-color: rgba(59, 130, 246, 0.12); color: #3b82f6; border-color: rgba(59, 130, 246, 0.2);
-}
-
-/* Tritanopía: Avoid blue/yellow reliance. Use Red/Cyan contrast */
-html[data-colorblind="tritanopia"] {
-    --primary: #ef4444; /* Red */
-    --primary-2: #dc2626;
-    --primary-3: #b91c1c;
-    --primary-soft: rgba(239, 68, 68, 0.14);
-}
-html[data-colorblind="tritanopia"] .badge-yellow {
-    background: rgba(6, 182, 212, 0.12);
-    color: #06b6d4; /* Cyan instead of yellow */
-}
-html[data-colorblind="tritanopia"] .kpi-glow-cyan,
-html[data-colorblind="tritanopia"] .kpi-icon-cyan,
-html[data-colorblind="tritanopia"] .kpi-pill-cyan {
-    background-color: rgba(239, 68, 68, 0.12); color: #ef4444; border-color: rgba(239, 68, 68, 0.2);
-}
-
-/* High Contrast / Monochrome */
-html[data-colorblind="monochrome"] {
-    --primary: #ffffff;
-    --primary-2: #e5e5e5;
-    --primary-3: #a3a3a3;
-    --primary-soft: rgba(255, 255, 255, 0.14);
-    filter: grayscale(100%) contrast(120%);
-}
-html[data-colorblind="monochrome"] body {
-    background: #000;
-}
 

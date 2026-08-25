@@ -1,15 +1,8 @@
 // public/js/index.js
 import { api } from './services/apiService.js';
+import { Toast } from './services/toastService.js';
 import { CandidatesModule } from './components/candidatesModule.js';
-import { VacanciesModule } from './components/vacanciesModule.js';
-import { CompaniesModule } from './components/companiesModule.js';
-import { ApplicationsModule } from './components/applicationsModule.js';
-import { InterviewsModule } from './components/interviewsModule.js';
-import { TasksModule } from './components/tasksModule.js';
-import { DashboardModule } from './components/dashboardModule.js';
-import { LoginAnimation } from './components/loginAnimation.js';
-import { ThemeModule, LangModule } from './components/themeLanguage.js';
-import { AccessibilityModule } from './components/accessibilityModule.js';
+
 
 const TOKEN_KEY = 'jobConnectToken';
 const LOGS_KEY  = 'jobConnect_accessLogs';
@@ -72,33 +65,40 @@ async function handleLoginSubmit(e) {
 
     const username = DOM.usernameInput.value.trim();
     const password = DOM.passwordInput.value.trim();
-    if (!username || !password) return;
+    if (!username || !password) {
+        Toast.show('Por favor ingresa usuario y contraseña.', 'error');
+        return;
+    }
 
     const btnText = DOM.loginSubmitBtn.querySelector('.btn-text');
     const loader  = DOM.loginSubmitBtn.querySelector('.loader');
     DOM.loginSubmitBtn.disabled = true;
-    btnText.textContent = 'Verificando...';
-    loader.classList.remove('hidden');
+    if (btnText) btnText.textContent = 'Verificando...';
+    if (loader) loader.classList.remove('hidden');
 
     try {
         const data = await api.post('/auth/login', { username, password });
         localStorage.setItem(TOKEN_KEY, data.token);
         registerAccessLog(username);
         DOM.loginForm.reset();
+        Toast.show(`¡Bienvenido de nuevo, ${username}!`, 'success');
         checkAuthAndRoute();
     } catch (err) {
-        DOM.loginAlert.textContent = err.message || 'Credenciales incorrectas';
+        const msg = err.message || 'Credenciales incorrectas';
+        DOM.loginAlert.textContent = msg;
         DOM.loginAlert.classList.remove('hidden');
         DOM.loginAlert.classList.add('alert-error');
+        Toast.show(msg, 'error');
     } finally {
         DOM.loginSubmitBtn.disabled = false;
-        btnText.textContent = 'Ingresar';
-        loader.classList.add('hidden');
+        if (btnText) btnText.textContent = 'Ingresar';
+        if (loader) loader.classList.add('hidden');
     }
 }
 
 function handleLogout() {
     localStorage.removeItem(TOKEN_KEY);
+    Toast.show('Sesión cerrada correctamente.', 'info');
     checkAuthAndRoute();
 }
 
@@ -123,6 +123,31 @@ function handleSidebarToggle() {
 }
 
 // =====================================================
+// SINCRONIZACIÓN DE DASHBOARD
+// =====================================================
+async function syncDashboardStats() {
+    try {
+        await Promise.allSettled([
+            CandidatesModule.loadData(),
+            VacanciesModule.loadData(),
+            CompaniesModule.loadData(),
+            ApplicationsModule.loadData(),
+            InterviewsModule.loadData(),
+            TasksModule.loadData()
+        ]);
+
+        CandidatesModule.updateStats();
+        VacanciesModule.updateStats();
+        CompaniesModule.updateStats();
+        ApplicationsModule.updateStats();
+        InterviewsModule.updateStats();
+        TasksModule.updateStats();
+    } catch (err) {
+        console.error('Error sincronizando estadísticas del Dashboard:', err);
+    }
+}
+
+// =====================================================
 // ENRUTAMIENTO
 // =====================================================
 function checkAuthAndRoute() {
@@ -133,7 +158,7 @@ function checkAuthAndRoute() {
         DOM.loginSection.classList.add('hidden');
         DOM.sidebar.classList.remove('hidden');
         DOM.topbarNav.classList.remove('hidden');
-        LoginAnimation.stop();  // Detener animación al entrar al dashboard
+        LoginAnimation.stop();
 
         const logs = JSON.parse(localStorage.getItem(LOGS_KEY)) || [];
         const username = logs[0]?.username || 'Usuario';
@@ -152,34 +177,25 @@ function checkAuthAndRoute() {
         DOM.viewSections.forEach(s => s.classList.add('hidden'));
         DOM.mainContent.classList.remove('full-width');
         DOM.mainContent.style.marginLeft = '0';
-        LoginAnimation.start(); // Arrancar animación en el login
+        LoginAnimation.start();
     }
 }
 
 function navigateTo(targetId) {
-    // Activar botón del sidebar
     DOM.navBtns.forEach(btn => {
         btn.classList.toggle('active', btn.dataset.target === targetId);
     });
 
-    // Mostrar vista
     DOM.viewSections.forEach(sec => {
         sec.classList.toggle('hidden', sec.id !== targetId);
     });
 
-    // Resetear marginLeft (en caso de que se haya limpiado en logout)
     DOM.mainContent.style.marginLeft = '';
 
-    // Cargar datos de módulos al navegar
-    if (targetId === 'dashboardSection')   DashboardModule.loadData();
-    if (targetId === 'candidatesSection')   CandidatesModule.loadData();
-    if (targetId === 'vacanciesSection')     VacanciesModule.loadData();
-    if (targetId === 'companiesSection')     CompaniesModule.loadData();
-    if (targetId === 'applicationsSection') ApplicationsModule.loadData();
-    if (targetId === 'interviewsSection')    InterviewsModule.loadData();
-    if (targetId === 'tasksSection')         TasksModule.loadData();
 
-    // Cerrar sidebar en mobile al navegar
+    if (targetId === 'candidatesSection')   CandidatesModule.loadData();
+
+
     if (window.innerWidth <= 768) DOM.sidebar.classList.remove('open');
 }
 
@@ -198,16 +214,9 @@ function initApp() {
 
     DashboardModule.init();
     CandidatesModule.init();
-    VacanciesModule.init();
-    CompaniesModule.init();
-    ApplicationsModule.init();
-    InterviewsModule.init();
-    TasksModule.init();
-    ThemeModule.init();
-    LangModule.init();
-    AccessibilityModule.init();
+
 
     checkAuthAndRoute();
 }
 
-document.addEventListener('DOMContentLoaded', initApp);
+
