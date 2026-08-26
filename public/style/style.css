@@ -134,6 +134,7 @@ html.light-mode .btn-icon:hover { color: #fff; }
 
 
 * { box-sizing: border-box; }
+a { text-decoration: none; color: inherit; }
 html, body { margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
@@ -209,6 +210,16 @@ svg { display: block; }
     z-index: 15;
 }
 .sidebar.collapsed { transform: translateX(-100%); }
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 14;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+}
+.sidebar.open ~ .sidebar-overlay { display: block; }
 .sidebar-user {
     display: flex;
     align-items: center;
@@ -625,6 +636,18 @@ svg { display: block; }
     .page-header { flex-direction: column; align-items: flex-start; }
     .landing-inner { padding: 18px 0; }
     .card { padding: 24px 18px; }
+    .dash-hero-header { flex-direction: column; align-items: flex-start; }
+    .dash-kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    .kpi-number { font-size: 1.6rem; }
+    .kpi-icon-wrap { width: 36px; height: 36px; }
+    .dash-quick-section { padding: 1rem; }
+    .quick-buttons-row { gap: 8px; }
+    .btn-quick-action { padding: 10px 12px; font-size: 0.82rem; }
+    .quick-btn-icon { width: 28px; height: 28px; }
+    .dash-main-grid { gap: 1rem; }
+    .dash-widget-card { padding: 1.15rem; }
+    .topbar-right { gap: 4px; }
+    .topbar-right .btn-icon { width: 32px; height: 32px; }
 }
 @media (prefers-reduced-motion: reduce) {
     * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
@@ -850,17 +873,20 @@ html.light-mode .btn-login {
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
     cursor: pointer;
     font-size: 0.85rem;
     color: var(--text-soft);
     user-select: none;
+    padding: 0;
+    min-height: 24px;
 }
 .remember-row input[type="checkbox"] {
     position: absolute;
     opacity: 0;
     width: 0;
     height: 0;
+    pointer-events: none;
 }
 .remember-check {
     position: relative;
@@ -871,6 +897,7 @@ html.light-mode .btn-login {
     background: rgba(4, 13, 11, 0.5);
     flex-shrink: 0;
     transition: all 0.2s ease;
+    margin-top: -1px;
 }
 .remember-check::after {
     content: '';
@@ -919,7 +946,6 @@ html.light-mode .remember-check {
 }
 .btn-link:hover {
     background: var(--primary-soft);
-    text-decoration: underline;
 }
 .demo-users-section {
     margin-top: 20px;
@@ -1321,7 +1347,7 @@ textarea:focus-visible {
    ===================================================== */
 .dash-kpi-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 1.25rem;
     margin-bottom: 2rem;
 }
@@ -2069,8 +2095,18 @@ html.light-mode .stage-bar {
         grid-template-columns: 1fr;
     }
 }
-@media (max-width: 768px) {
-
+@media (max-width: 480px) {
+    .dash-kpi-grid { grid-template-columns: 1fr; }
+    .view-section { padding: 16px 12px; }
+    .dash-hero-header { gap: 0.75rem; margin-bottom: 1.25rem; }
+    .dash-main-title { font-size: 1.4rem; }
+    .kpi-number { font-size: 1.4rem; }
+    .kpi-label { font-size: 0.72rem; }
+    .dash-widget-card { padding: 1rem; }
+    .widget-title { font-size: 1rem; }
+    .quick-buttons-row { gap: 6px; }
+    .btn-quick-action { padding: 8px 10px; font-size: 0.78rem; gap: 8px; }
+    .quick-btn-icon { width: 24px; height: 24px; }
 }
 
 /* =====================================================
