@@ -29,12 +29,43 @@ export const CompaniesModule = {
         this.totalInput = document.getElementById('companyTotal');
         this.discountedInput = document.getElementById('companyDiscounted');
         this.modalTitle = document.getElementById('companyModalTitle');
+
+        this.searchInput = document.getElementById('companiesSearch');
+        this.sectorFilter = document.getElementById('companiesSectorFilter');
+        this.clearFiltersBtn = document.getElementById('companiesClearFilters');
     },
 
     bindEvents() {
         if (this.btnNew) this.btnNew.addEventListener('click', () => this.openModal());
         if (this.cancelBtn) this.cancelBtn.addEventListener('click', () => this.closeModal());
         if (this.form) this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+        if (this.searchInput) this.searchInput.addEventListener('input', () => this.render());
+        if (this.sectorFilter) this.sectorFilter.addEventListener('change', () => this.render());
+        if (this.clearFiltersBtn) this.clearFiltersBtn.addEventListener('click', () => this.clearFilters());
+    },
+
+    canEdit() {
+        const role = localStorage.getItem('jobconnect_role') || 'candidato';
+        return role === 'reclutador' || role === 'administrador';
+    },
+
+    clearFilters() {
+        if (this.searchInput) this.searchInput.value = '';
+        if (this.sectorFilter) this.sectorFilter.value = '';
+        this.render();
+    },
+
+    getFilteredItems() {
+        const searchText = (this.searchInput ? this.searchInput.value : '').toLowerCase().trim();
+        const sectorValue = this.sectorFilter ? this.sectorFilter.value : '';
+
+        return this.state.items.filter((item) => {
+            const matchesSearch = !searchText || 
+                (item.nombre || '').toLowerCase().includes(searchText) ||
+                (item.id || '').toLowerCase().includes(searchText);
+            const matchesSector = !sectorValue || item.sector === sectorValue;
+            return matchesSearch && matchesSector;
+        });
     },
 
     async loadData(force = false) {
@@ -81,6 +112,13 @@ export const CompaniesModule = {
         if (!this.tbody) return;
         this.tbody.innerHTML = '';
 
+        const filteredItems = this.getFilteredItems();
+        const editable = this.canEdit();
+
+        if (this.btnNew) this.btnNew.classList.toggle('hidden', !editable);
+
+        const searchText = this.searchInput ? this.searchInput.value.trim() : '';
+
         if (this.state.items.length === 0) {
             this.tbody.innerHTML = `
                 <tr>
@@ -93,16 +131,28 @@ export const CompaniesModule = {
             return;
         }
 
-        this.state.items.forEach((item) => {
+        if (searchText && filteredItems.length === 0) {
+            this.tbody.innerHTML = `
+                <tr>
+                    <td colspan="5" class="empty-state-cell">
+                        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                        <p>No se encontraron empresas que coincidan con "${searchText}".</p>
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        filteredItems.forEach((item) => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td>${item.id}</td>
-                <td>ID Usuario: ${item.userId}</td>
-                <td>${item.products ? item.products.length : 0} productos</td>
-                <td>$${Number(item.total || 0).toFixed(2)}</td>
+                <td><strong>${item.nombre || 'Sin nombre'}</strong><br><small>${item.sector || 'General'}</small></td>
+                <td>${item.ubicacion || 'N/A'}</td>
+                <td>${item.vacantesActivasCount || 0} vacantes</td>
                 <td>
-                    <button class="btn btn-small btn-primary edit-btn" data-id="${item.id}">Editar</button>
-                    <button class="btn btn-small btn-secondary delete-btn" data-id="${item.id}">Eliminar</button>
+                    ${editable ? `<button class="btn btn-small btn-primary edit-btn" data-id="${item.id}">Editar</button>` : ''}
+                    ${editable ? `<button class="btn btn-small btn-secondary delete-btn" data-id="${item.id}">Eliminar</button>` : ''}
                 </td>
             `;
             this.tbody.appendChild(tr);

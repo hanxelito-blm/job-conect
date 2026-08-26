@@ -33,6 +33,7 @@
     --transition: 180ms ease;
 }
 
+html.light-mode body,
 body.light-theme {
     --bg-primary: #f4f8f6;
     --bg-secondary: #ffffff;

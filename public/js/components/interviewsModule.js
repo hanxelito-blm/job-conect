@@ -29,12 +29,71 @@ export const InterviewsModule = {
         this.postIdInput = document.getElementById('interviewPostId');
         this.bodyInput = document.getElementById('interviewBody');
         this.modalTitle = document.getElementById('interviewModalTitle');
+
+        this.searchInput = document.getElementById('interviewsSearch');
+        this.vacancyFilter = document.getElementById('interviewsVacancyFilter');
+        this.modalityFilter = document.getElementById('interviewsModalityFilter');
+        this.statusFilter = document.getElementById('interviewsStatusFilter');
+        this.dateFilter = document.getElementById('interviewsDateFilter');
+        this.clearFiltersBtn = document.getElementById('interviewsClearFilters');
     },
 
     bindEvents() {
         if (this.btnNew) this.btnNew.addEventListener('click', () => this.openModal());
         if (this.cancelBtn) this.cancelBtn.addEventListener('click', () => this.closeModal());
         if (this.form) this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+
+        if (this.searchInput) this.searchInput.addEventListener('input', () => this.render());
+        [this.vacancyFilter, this.modalityFilter, this.statusFilter].forEach(control => {
+            if (control) control.addEventListener('change', () => this.render());
+        });
+        if (this.dateFilter) this.dateFilter.addEventListener('change', () => this.render());
+        if (this.clearFiltersBtn) this.clearFiltersBtn.addEventListener('click', () => this.clearFilters());
+    },
+
+    populateVacancyFilter() {
+        if (!this.vacancyFilter) return;
+        const uniqueTitles = [...new Set(this.state.items.map(item => item.vacancyTitle).filter(Boolean))];
+        this.vacancyFilter.innerHTML = '<option value="">Todas las vacantes</option>';
+        uniqueTitles.forEach(title => {
+            const option = document.createElement('option');
+            option.value = title;
+            option.textContent = title;
+            this.vacancyFilter.appendChild(option);
+        });
+    },
+
+    clearFilters() {
+        if (this.searchInput) this.searchInput.value = '';
+        if (this.vacancyFilter) this.vacancyFilter.value = '';
+        if (this.modalityFilter) this.modalityFilter.value = '';
+        if (this.statusFilter) this.statusFilter.value = '';
+        if (this.dateFilter) this.dateFilter.value = '';
+        this.render();
+    },
+
+    getFilteredItems() {
+        let items = [...this.state.items];
+        const searchText = this.searchInput ? this.searchInput.value.trim().toLowerCase() : '';
+        const vacancyValue = this.vacancyFilter ? this.vacancyFilter.value : '';
+        const modalityValue = this.modalityFilter ? this.modalityFilter.value : '';
+        const statusValue = this.statusFilter ? this.statusFilter.value : '';
+        const dateValue = this.dateFilter ? this.dateFilter.value : '';
+
+        if (searchText) {
+            items = items.filter(item => {
+                const name = (item.candidateName || '').toLowerCase();
+                const body = (item.body || '').toLowerCase();
+                return name.includes(searchText) || body.includes(searchText);
+            });
+        }
+
+        if (vacancyValue) items = items.filter(item => item.vacancyTitle === vacancyValue);
+        if (modalityValue) items = items.filter(item => item.modalidad === modalityValue);
+        if (statusValue) items = items.filter(item => (item.estado || 'Programada') === statusValue);
+        if (dateValue) items = items.filter(item => item.fecha >= dateValue);
+
+        return items;
     },
 
     async loadData(force = false) {
@@ -50,6 +109,7 @@ export const InterviewsModule = {
                 postId: interview.vacanteId,
                 body: interview.notas
             }));
+            this.populateVacancyFilter();
             this.render();
             this.updateStats();
         } catch (error) {
@@ -82,19 +142,27 @@ export const InterviewsModule = {
         if (!this.tbody) return;
         this.tbody.innerHTML = '';
 
-        if (this.state.items.length === 0) {
+        const filteredItems = this.getFilteredItems();
+
+        const hasActiveFilters = (this.searchInput && this.searchInput.value.trim()) ||
+            (this.vacancyFilter && this.vacancyFilter.value);
+
+        if (filteredItems.length === 0) {
+            const message = hasActiveFilters
+                ? 'No se encontraron entrevistas con los filtros aplicados.'
+                : 'No hay entrevistas o notas registradas.';
             this.tbody.innerHTML = `
                 <tr>
                     <td colspan="5" class="empty-state-cell">
                         <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                        <p>No hay entrevistas o notas registradas.</p>
+                        <p>${message}</p>
                     </td>
                 </tr>
             `;
             return;
         }
 
-        this.state.items.forEach((item) => {
+        filteredItems.forEach((item) => {
             const tr = document.createElement('tr');
             const userName = item.candidateName || item.user?.username || `Usuario ${item.userId || 'N/A'}`;
             tr.innerHTML = `

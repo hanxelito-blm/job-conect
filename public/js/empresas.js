@@ -1660,10 +1660,9 @@ function setTheme(theme) {
 }
 
 function applyTheme(theme) {
-    document.body.classList.toggle(
-        "light-theme",
-        theme === "light"
-    );
+    const isLight = theme === "light";
+    document.documentElement.classList.toggle("light-mode", isLight);
+    document.body.classList.toggle("light-theme", isLight);
 
     document.querySelectorAll("[data-setting-theme]").forEach(button => {
         button.classList.toggle(

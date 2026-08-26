@@ -9,6 +9,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style/style.css">
+    <link rel="stylesheet" href="../vendor/driver.js/driver.css">
+    <link rel="stylesheet" href="../vendor/sweetalert2/sweetalert2.min.css">
+    <link rel="stylesheet" href="../style/driver-overrides.css">
 </head>
 <body>
 
@@ -63,6 +66,15 @@
                     <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
                 </svg>
                 <span class="lang-label" data-i18n="lang.code">ES</span>
+            </button>
+
+            <!-- Tour guiado -->
+            <button id="tourGuideBtn" class="btn-icon" title="Iniciar guía" aria-label="Iniciar tour guiado">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                    <line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
             </button>
 
             <!-- Cerrar sesión -->
@@ -135,6 +147,24 @@
                     </span>
                     <span data-i18n="sidebar.tasks">Tareas</span>
                 </button>
+                <button class="sidebar-btn" data-target="trackingSection" title="Seguimiento de candidatos en el pipeline">
+                    <span class="sidebar-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                    </span>
+                    <span data-i18n="sidebar.tracking">Seguimiento</span>
+                </button>
+                <button class="sidebar-btn" data-target="profileSection" title="Mi perfil personal">
+                    <span class="sidebar-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </span>
+                    <span data-i18n="sidebar.profile">Mi Perfil</span>
+                </button>
+                <button class="sidebar-btn" data-target="myApplicationsSection" title="Mis postulaciones y seguimiento">
+                    <span class="sidebar-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    </span>
+                    <span data-i18n="sidebar.myApplications">Mis Postulaciones</span>
+                </button>
             </nav>
 
             <div class="sidebar-footer">
@@ -189,40 +219,93 @@
             <section id="loginSection" class="login-wrapper fade-in hidden" aria-label="Iniciar sesión">
                 <canvas id="loginCanvas" aria-hidden="true"></canvas>
                 <div class="login-card" role="region" aria-label="Formulario de acceso">
-                    <div class="login-brand">
-                        <span class="login-logo">
-                            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
-                                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                            </svg>
-                            JobConnect
-                        </span>
-                        <p data-i18n="login.subtitle">Portal Corporativo</p>
+                    <!-- Screen: Role Selector -->
+                    <div id="loginRoleSelect">
+                        <div class="login-brand">
+                            <span class="login-logo">
+                                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                </svg>
+                                JobConnect
+                            </span>
+                            <p data-i18n="login.subtitle">Portal Corporativo</p>
+                        </div>
+                        <h2 data-i18n="login.selectRole">¿Quién eres?</h2>
+                        <p class="role-select-hint" data-i18n="login.selectRole">Selecciona tu perfil para continuar</p>
+                        <div class="role-grid">
+                            <button class="role-card" data-role="candidato" type="button">
+                                <span class="role-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                </span>
+                                <strong>Candidato</strong>
+                                <small>Busco empleo</small>
+                            </button>
+                            <button class="role-card" data-role="empresa" type="button">
+                                <span class="role-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V7l9-4 9 4v14"/><path d="M9 21v-8h6v8"/><path d="M3 7h18"/></svg>
+                                </span>
+                                <strong>Empresa</strong>
+                                <small>Contrato talento</small>
+                            </button>
+                            <button class="role-card" data-role="reclutador" type="button">
+                                <span class="role-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                                </span>
+                                <strong>Reclutador</strong>
+                                <small>Gestiono candidatos</small>
+                            </button>
+                            <button class="role-card" data-role="administrador" type="button">
+                                <span class="role-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                </span>
+                                <strong>Administrador</strong>
+                                <small>Control total</small>
+                            </button>
+                        </div>
                     </div>
-                    <h2 data-i18n="login.title">Iniciar Sesión</h2>
-                    <form id="loginForm" novalidate aria-label="Formulario de inicio de sesión">
-                        <div class="form-group">
-                            <label for="username" data-i18n="login.user">USUARIO</label>
-                            <div class="input-wrap">
-                                <svg class="input-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                                <input type="text" id="username" name="username" placeholder="emilys" required autocomplete="username" aria-required="true" aria-describedby="usernameError">
-                            </div>
-                            <span class="error-msg" id="usernameError" role="alert" aria-live="polite"></span>
-                        </div>
-                        <div class="form-group">
-                            <label for="password" data-i18n="login.pass">CONTRASEÑA</label>
-                            <div class="input-wrap">
-                                <svg class="input-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                                <input type="password" id="password" name="password" placeholder="••••••••" required autocomplete="current-password" aria-required="true" aria-describedby="passwordError">
-                            </div>
-                            <span class="error-msg" id="passwordError" role="alert" aria-live="polite"></span>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-login full-width" id="loginSubmitBtn">
-                            <span class="btn-text" data-i18n="login.btn">Ingresar</span>
-                            <span class="loader hidden" aria-label="Cargando..." role="status"></span>
+
+                    <!-- Screen: Login Form -->
+                    <div id="loginFormScreen" class="hidden">
+                        <button class="btn-back-role" id="btnBackToRoles" type="button" aria-label="Volver a selección de rol">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+                            Volver
                         </button>
-                    </form>
-                    <div id="loginAlert" class="alert hidden" role="alert" aria-live="assertive"></div>
+                        <div class="login-brand">
+                            <span class="login-logo">
+                                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                </svg>
+                                JobConnect
+                            </span>
+                            <p id="loginRoleLabel" class="login-role-badge">Candidato</p>
+                        </div>
+                        <h2 data-i18n="login.title">Iniciar Sesión</h2>
+                        <form id="loginForm" novalidate aria-label="Formulario de inicio de sesión">
+                            <div class="form-group">
+                                <label for="username" data-i18n="login.user">USUARIO</label>
+                                <div class="input-wrap">
+                                    <svg class="input-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                    <input type="text" id="username" name="username" placeholder="emilys" required autocomplete="username" aria-required="true" aria-describedby="usernameError">
+                                </div>
+                                <span class="error-msg" id="usernameError" role="alert" aria-live="polite"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" data-i18n="login.pass">CONTRASEÑA</label>
+                                <div class="input-wrap">
+                                    <svg class="input-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                    <input type="password" id="password" name="password" placeholder="••••••••" required autocomplete="current-password" aria-required="true" aria-describedby="passwordError">
+                                </div>
+                                <span class="error-msg" id="passwordError" role="alert" aria-live="polite"></span>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-login full-width" id="loginSubmitBtn">
+                                <span class="btn-text" data-i18n="login.btn">Ingresar</span>
+                                <span class="loader hidden" aria-label="Cargando..." role="status"></span>
+                            </button>
+                        </form>
+                        <div id="loginAlert" class="alert hidden" role="alert" aria-live="assertive"></div>
+                    </div>
                 </div>
             </section>
 
@@ -481,12 +564,12 @@
                     <div><span class="summary-label">Entrevistas</span><strong id="candidateInterviewCount">0</strong><span class="summary-note">próximo paso</span></div>
                     <div><span class="summary-label">Contratación</span><strong id="candidateAcceptedCount">0</strong><span class="summary-note">seleccionados</span></div>
                 </div>
-                <div class="candidate-toolbar" role="search" aria-label="Filtrar candidatos">
+                <div class="module-toolbar" role="search" aria-label="Filtrar candidatos">
                     <label class="search-field"><span class="sr-only">Buscar candidato o habilidad</span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="candidateSearch" type="search" placeholder="Buscar nombre, rol o habilidad..." autocomplete="off"></label>
                     <label><span class="sr-only">Filtrar por vacante</span><select id="candidateVacancyFilter"><option value="">Todas las vacantes</option></select></label>
                     <label><span class="sr-only">Filtrar por estado</span><select id="candidateStatusFilter"><option value="">Todos los estados</option><option value="Pendiente">Pendiente</option><option value="En revisión">En revisión</option><option value="Entrevistado">Entrevistado</option><option value="Aceptado">Aceptado</option><option value="Rechazado">Rechazado</option></select></label>
                     <label><span class="sr-only">Filtrar desde fecha</span><input id="candidateDateFilter" type="date" title="Postulaciones desde"></label>
-                    <button class="btn btn-ghost candidate-clear" id="candidateClearFilters" type="button">Limpiar</button>
+                    <button class="btn btn-ghost module-clear" id="candidateClearFilters" type="button">Limpiar</button>
                 </div>
                 <div class="table-card">
                     <div class="loader-container hidden" id="candidatesLoader" role="status" aria-live="polite">
@@ -521,6 +604,13 @@
                         Nueva Vacante
                     </button>
                 </div>
+                <div class="module-toolbar" role="search" aria-label="Filtrar vacantes">
+                    <label class="search-field"><span class="sr-only">Buscar vacante</span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="vacancySearch" type="search" placeholder="Buscar por título o empresa..." autocomplete="off"></label>
+                    <label><span class="sr-only">Filtrar por departamento</span><select id="vacancyDeptFilter"><option value="">Todos los departamentos</option></select></label>
+                    <label><span class="sr-only">Filtrar por estado</span><select id="vacancyStatusFilter"><option value="">Todos los estados</option><option value="Activa">Activa</option><option value="Pausada">Pausada</option><option value="Cerrada">Cerrada</option></select></label>
+                    <label><span class="sr-only">Filtrar por ubicación</span><select id="vacancyLocationFilter"><option value="">Todas las ubicaciones</option><option value="Remoto">Remoto</option><option value="Hibrido">Híbrido</option><option value="Presencial">Presencial</option></select></label>
+                    <button class="btn btn-ghost module-clear" id="vacancyClearFilters" type="button">Limpiar</button>
+                </div>
                 <div class="table-card">
                     <div class="loader-container hidden" id="vacanciesLoader" role="status" aria-live="polite">
                         <span class="spinner" aria-hidden="true"></span> Cargando vacantes...
@@ -531,8 +621,8 @@
                                 <tr>
                                     <th scope="col">ID</th>
                                     <th scope="col">Título</th>
-                                    <th scope="col">Marca</th>
-                                    <th scope="col">Precio</th>
+                                    <th scope="col">Empresa</th>
+                                    <th scope="col">Estado</th>
                                     <th scope="col">Acciones</th>
                                 </tr>
                             </thead>
@@ -554,6 +644,11 @@
                         Nueva Empresa
                     </button>
                 </div>
+                <div class="module-toolbar" role="search" aria-label="Filtrar empresas">
+                    <label class="search-field"><span class="sr-only">Buscar empresa</span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="companiesSearch" type="search" placeholder="Buscar por nombre de empresa..." autocomplete="off"></label>
+                    <label><span class="sr-only">Filtrar por sector</span><select id="companiesSectorFilter"><option value="">Todos los sectores</option><option value="Tecnologia">Tecnología</option><option value="E-commerce">E-commerce</option><option value="Finanzas">Finanzas</option><option value="Salud">Salud</option><option value="Educacion">Educación</option></select></label>
+                    <button class="btn btn-ghost module-clear" id="companiesClearFilters" type="button">Limpiar</button>
+                </div>
                 <div class="table-card">
                     <div class="loader-container hidden" id="companiesLoader" role="status" aria-live="polite">
                         <span class="spinner" aria-hidden="true"></span> Cargando empresas...
@@ -563,9 +658,9 @@
                             <thead>
                                 <tr>
                                     <th scope="col">ID</th>
-                                    <th scope="col">ID Usuario</th>
-                                    <th scope="col">Productos</th>
-                                    <th scope="col">Total</th>
+                                    <th scope="col">Empresa</th>
+                                    <th scope="col">Ubicación</th>
+                                    <th scope="col">Vacantes</th>
                                     <th scope="col">Acciones</th>
                                 </tr>
                             </thead>
@@ -587,6 +682,12 @@
                         <span data-i18n="btn.new.application">Nueva Postulación</span>
                     </button>
                 </div>
+                <div class="module-toolbar" role="search" aria-label="Filtrar postulaciones">
+                    <label class="search-field"><span class="sr-only">Buscar postulación</span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="applicationsSearch" type="search" placeholder="Buscar por título o candidato..." autocomplete="off"></label>
+                    <label><span class="sr-only">Filtrar por vacante</span><select id="applicationsVacancyFilter"><option value="">Todas las vacantes</option></select></label>
+                    <label><span class="sr-only">Filtrar por estado</span><select id="applicationsStatusFilter"><option value="">Todos los estados</option><option value="Postulado">Postulado</option><option value="En revisión">En revisión</option><option value="Entrevista">Entrevista</option><option value="Aceptado">Aceptado</option><option value="Rechazado">Rechazado</option></select></label>
+                    <button class="btn btn-ghost module-clear" id="applicationsClearFilters" type="button">Limpiar</button>
+                </div>
                 <div class="table-card">
                     <div class="loader-container hidden" id="applicationsLoader" role="status" aria-live="polite">
                         <span class="spinner" aria-hidden="true"></span> Cargando postulaciones...
@@ -596,8 +697,8 @@
                             <thead>
                                 <tr>
                                     <th scope="col">ID</th>
-                                    <th scope="col">Título (Puesto)</th>
-                                    <th scope="col">Descripción</th>
+                                    <th scope="col">Candidato</th>
+                                    <th scope="col">Vacante</th>
                                     <th scope="col">Estado</th>
                                     <th scope="col">Acciones</th>
                                 </tr>
@@ -619,6 +720,14 @@
                         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                         Nueva Entrevista
                     </button>
+                </div>
+                <div class="module-toolbar" role="search" aria-label="Filtrar entrevistas">
+                    <label class="search-field"><span class="sr-only">Buscar entrevista</span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="interviewsSearch" type="search" placeholder="Buscar por candidato o notas..." autocomplete="off"></label>
+                    <label><span class="sr-only">Filtrar por vacante</span><select id="interviewsVacancyFilter"><option value="">Todas las vacantes</option></select></label>
+                    <label><span class="sr-only">Filtrar por modalidad</span><select id="interviewsModalityFilter"><option value="">Todas las modalidades</option><option value="Google Meet">Google Meet</option><option value="Zoom">Zoom</option><option value="Presencial">Presencial</option><option value="Teams">Teams</option></select></label>
+                    <label><span class="sr-only">Filtrar por estado</span><select id="interviewsStatusFilter"><option value="">Todos los estados</option><option value="Programada">Programada</option><option value="Completada">Completada</option><option value="Cancelada">Cancelada</option></select></label>
+                    <label><span class="sr-only">Filtrar desde fecha</span><input id="interviewsDateFilter" type="date" title="Entrevistas desde"></label>
+                    <button class="btn btn-ghost module-clear" id="interviewsClearFilters" type="button">Limpiar</button>
                 </div>
                 <div class="table-card">
                     <div class="loader-container hidden" id="interviewsLoader" role="status" aria-live="polite">
@@ -653,6 +762,12 @@
                         Nueva Tarea
                     </button>
                 </div>
+                <div class="module-toolbar" role="search" aria-label="Filtrar tareas">
+                    <label class="search-field"><span class="sr-only">Buscar tarea</span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="tasksSearch" type="search" placeholder="Buscar tarea..." autocomplete="off"></label>
+                    <label><span class="sr-only">Filtrar por estado</span><select id="tasksStatusFilter"><option value="">Todas</option><option value="pending">Pendientes</option><option value="completed">Completadas</option></select></label>
+                    <label><span class="sr-only">Filtrar por prioridad</span><select id="tasksPriorityFilter"><option value="">Todas las prioridades</option><option value="Alta">Alta</option><option value="Media">Media</option><option value="Baja">Baja</option></select></label>
+                    <button class="btn btn-ghost module-clear" id="tasksClearFilters" type="button">Limpiar</button>
+                </div>
                 <div class="table-card">
                     <div class="loader-container hidden" id="tasksLoader" role="status" aria-live="polite">
                         <span class="spinner" aria-hidden="true"></span> Cargando tareas...
@@ -664,7 +779,7 @@
                                     <th scope="col">ID</th>
                                     <th scope="col">Tarea</th>
                                     <th scope="col">Estado</th>
-                                    <th scope="col">Usuario</th>
+                                    <th scope="col">Prioridad</th>
                                     <th scope="col">Acciones</th>
                                 </tr>
                             </thead>
@@ -672,6 +787,152 @@
                         </table>
                     </div>
                 </div>
+            </section>
+
+            <!-- TRACKING -->
+            <section id="trackingSection" class="view-section hidden fade-in" aria-label="Módulo de seguimiento">
+                <div class="page-header">
+                    <div>
+                        <p class="eyebrow">TALENT OPERATIONS / 05</p>
+                        <h1>Seguimiento de Candidatos</h1>
+                        <p>Pipeline de reclutamiento y progreso de candidatos</p>
+                    </div>
+                </div>
+
+                <!-- Pipeline Visual -->
+                <div class="tracking-pipeline-card">
+                    <div class="widget-header">
+                        <div>
+                            <h2 class="widget-title">Pipeline de Reclutamiento</h2>
+                            <p class="widget-sub">Distribución actual del embudo de selección</p>
+                        </div>
+                    </div>
+                    <div class="tracking-pipeline" id="trackingPipeline"></div>
+                    <div class="tracking-stats" id="trackingStats"></div>
+                </div>
+
+                <!-- Filters -->
+                <div class="module-toolbar" role="search" aria-label="Filtrar seguimiento">
+                    <label class="search-field"><span class="sr-only">Buscar candidato</span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="trackingSearch" type="search" placeholder="Buscar por nombre o vacante..." autocomplete="off"></label>
+                    <label><span class="sr-only">Filtrar por etapa</span><select id="trackingStageFilter"><option value="">Todas las etapas</option><option value="postulado">Postulado</option><option value="en-revision">En Revisión</option><option value="entrevista">Entrevista</option><option value="evaluacion">Evaluación</option><option value="oferta">Oferta</option><option value="contratado">Contratado</option></select></label>
+                    <label><span class="sr-only">Filtrar por empresa</span><select id="trackingCompanyFilter"><option value="">Todas las empresas</option></select></label>
+                    <button class="btn btn-ghost module-clear" id="trackingClearFilters" type="button">Limpiar</button>
+                </div>
+
+                <!-- Table -->
+                <div class="table-card">
+                    <div class="table-container">
+                        <table class="data-table" id="trackingTable" aria-label="Pipeline de seguimiento">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Candidato</th>
+                                    <th scope="col">Vacante / Empresa</th>
+                                    <th scope="col">Etapa</th>
+                                    <th scope="col">Fecha postulación</th>
+                                    <th scope="col">Entrevista</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="trackingTbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MI PERFIL -->
+            <section id="profileSection" class="view-section hidden fade-in" aria-label="Mi perfil">
+                <div class="page-header">
+                    <div>
+                        <p class="eyebrow">MI CUENTA / PERFIL</p>
+                        <h1 data-i18n="profile.title">Mi Perfil</h1>
+                        <p data-i18n="profile.subtitle">Administra tu información personal y profesional</p>
+                    </div>
+                </div>
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <div class="profile-avatar" id="profileAvatar">--</div>
+                        <div class="profile-header-info">
+                            <h2 id="profileDisplayName">Candidato</h2>
+                            <p id="profileDisplayRole">Rol profesional</p>
+                        </div>
+                    </div>
+                    <form id="profileForm" novalidate>
+                        <div class="profile-form">
+                            <div class="form-group">
+                                <label for="profileFirstName" data-i18n="profile.firstName">Nombre</label>
+                                <input type="text" id="profileFirstName" placeholder="Tu nombre">
+                            </div>
+                            <div class="form-group">
+                                <label for="profileLastName" data-i18n="profile.lastName">Apellido</label>
+                                <input type="text" id="profileLastName" placeholder="Tu apellido">
+                            </div>
+                            <div class="form-group">
+                                <label for="profileEmail" data-i18n="profile.email">Correo electrónico</label>
+                                <input type="email" id="profileEmail" placeholder="correo@ejemplo.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="profilePhone" data-i18n="profile.phone">Teléfono</label>
+                                <input type="tel" id="profilePhone" placeholder="+52 55 0000 0000">
+                            </div>
+                            <div class="form-group">
+                                <label for="profileTitle" data-i18n="profile.titleField">Título profesional</label>
+                                <input type="text" id="profileTitle" placeholder="Ej. Frontend Developer">
+                            </div>
+                            <div class="form-group">
+                                <label for="profileLocation" data-i18n="profile.location">Ubicación</label>
+                                <input type="text" id="profileLocation" placeholder="Ciudad de México">
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="profileSummary" data-i18n="profile.summary">Resumen profesional</label>
+                                <textarea id="profileSummary" rows="3" placeholder="Breve descripción de tu experiencia y habilidades..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="profileLinkedin" data-i18n="profile.linkedin">LinkedIn URL</label>
+                                <input type="url" id="profileLinkedin" placeholder="https://linkedin.com/in/tu-perfil">
+                            </div>
+                            <div class="form-group">
+                                <label for="profileGithub" data-i18n="profile.github">GitHub URL</label>
+                                <input type="url" id="profileGithub" placeholder="https://github.com/tu-usuario">
+                            </div>
+                            <div class="form-group">
+                                <label for="profilePortfolio" data-i18n="profile.portfolio">Portafolio URL</label>
+                                <input type="url" id="profilePortfolio" placeholder="https://tu-portafolio.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="profileCvUrl" data-i18n="profile.cvUrl">URL del CV</label>
+                                <input type="url" id="profileCvUrl" placeholder="https://example.com/cv.pdf">
+                            </div>
+                            <div class="form-group full-width">
+                                <label data-i18n="profile.skills">Habilidades</label>
+                                <div class="profile-skills" id="profileSkills"></div>
+                                <div style="display:flex; gap:8px; margin-top:8px;">
+                                    <input type="text" id="profileSkillInput" data-i18n-placeholder="profile.addSkillPlaceholder" placeholder="Agregar habilidad..." style="flex:1;">
+                                    <button type="button" class="btn btn-ghost" id="profileAddSkillBtn" data-i18n="profile.addSkill">Agregar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile-actions">
+                            <button type="submit" class="btn btn-primary" data-i18n="profile.save">Guardar cambios</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- MIS POSTULACIONES -->
+            <section id="myApplicationsSection" class="view-section hidden fade-in" aria-label="Mis postulaciones">
+                <div class="page-header">
+                    <div>
+                        <p class="eyebrow">MI CUENTA / SEGUIMIENTO</p>
+                        <h1 data-i18n="myApps.title">Mis Postulaciones</h1>
+                        <p data-i18n="myApps.subtitle">Seguimiento en tiempo real de tus aplicaciones</p>
+                    </div>
+                </div>
+                <div class="module-toolbar" role="search" aria-label="Filtrar mis postulaciones">
+                    <label class="search-field"><span class="sr-only">Buscar postulación</span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="myAppsSearch" type="search" placeholder="Buscar por vacante o empresa..." autocomplete="off"></label>
+                    <label><span class="sr-only">Filtrar por estado</span><select id="myAppsStatusFilter"><option value="">Todos los estados</option><option value="Postulado">Postulado</option><option value="En revisión">En revisión</option><option value="Entrevista">Entrevista</option><option value="Aceptado">Aceptado</option><option value="Contratado">Contratado</option><option value="Rechazado">Rechazado</option></select></label>
+                    <button class="btn btn-ghost module-clear" id="myAppsClearFilters" type="button">Limpiar</button>
+                </div>
+                <div class="my-apps-timeline" id="myAppsTimeline"></div>
             </section>
 
         </main>
@@ -851,6 +1112,8 @@
         </div>
     </div>
 
+    <script src="../vendor/sweetalert2/sweetalert2.min.js"></script>
+    <script src="../vendor/driver.js/driver.js"></script>
     <script type="module" src="../js/index.js"></script>
 </body>
 </html>

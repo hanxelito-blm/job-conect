@@ -1,0 +1,117 @@
+/* driver-overrides.css - Tema personalizado para Driver.js en JobConnect */
+
+.driver-popover {
+    background: var(--panel-strong) !important;
+    color: var(--text) !important;
+    border: 1px solid var(--border-strong) !important;
+    border-radius: 14px !important;
+    box-shadow: var(--shadow) !important;
+    max-width: 340px;
+    padding: 0 !important;
+}
+
+.driver-popover-title {
+    color: var(--text) !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    padding: 16px 20px 0 !important;
+}
+
+.driver-popover-description {
+    color: var(--text-soft) !important;
+    font-size: 0.88rem !important;
+    line-height: 1.5 !important;
+    padding: 6px 20px 0 !important;
+}
+
+.driver-popover-footer {
+    padding: 12px 20px 16px !important;
+    border-top: 1px solid var(--border) !important;
+    margin-top: 12px !important;
+}
+
+.driver-popover-footer-btn {
+    background: var(--primary-soft) !important;
+    color: var(--primary) !important;
+    border: 1px solid var(--border-strong) !important;
+    border-radius: 8px !important;
+    padding: 7px 14px !important;
+    font-weight: 600 !important;
+    font-size: 0.82rem !important;
+    cursor: pointer !important;
+    transition: background 0.2s ease !important;
+}
+
+.driver-popover-footer-btn:hover {
+    background: var(--primary) !important;
+    color: #031912 !important;
+}
+
+.driver-popover-next-btn {
+    background: linear-gradient(135deg, var(--primary), var(--primary-2)) !important;
+    color: #031912 !important;
+}
+
+.driver-popover-close-btn {
+    color: var(--text-soft) !important;
+    font-size: 1.3rem !important;
+    top: 8px !important;
+    right: 8px !important;
+}
+
+.driver-popover-close-btn:hover {
+    color: var(--primary) !important;
+}
+
+.driver-popover-progress-text {
+    color: var(--text-soft) !important;
+    font-size: 0.75rem !important;
+}
+
+.driver-overlay {
+    background: rgba(0, 0, 0, 0.55) !important;
+}
+
+/* Light mode overrides */
+html.light-mode .driver-popover {
+    background: #ffffff !important;
+    color: var(--text) !important;
+    border-color: rgba(26, 138, 106, 0.25) !important;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12) !important;
+}
+
+html.light-mode .driver-popover-title {
+    color: #0d1f1a !important;
+}
+
+html.light-mode .driver-popover-description {
+    color: #3a5a4e !important;
+}
+
+html.light-mode .driver-popover-footer {
+    border-top-color: rgba(26, 138, 106, 0.15) !important;
+}
+
+html.light-mode .driver-popover-footer-btn {
+    background: rgba(26, 138, 106, 0.08) !important;
+    color: #1a8a6a !important;
+    border-color: rgba(26, 138, 106, 0.25) !important;
+}
+
+html.light-mode .driver-popover-footer-btn:hover {
+    background: #1a8a6a !important;
+    color: #ffffff !important;
+}
+
+html.light-mode .driver-popover-next-btn {
+    background: linear-gradient(135deg, #1a8a6a, #14705a) !important;
+    color: #ffffff !important;
+}
+
+html.light-mode .driver-popover-close-btn {
+    color: #3a5a4e !important;
+}
+
+html.light-mode .driver-overlay {
+    background: rgba(0, 0, 0, 0.45) !important;
+}
