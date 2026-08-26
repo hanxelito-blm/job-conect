@@ -10,12 +10,14 @@ export const AccessibilityModule = (() => {
 
     const MODES = {
         normal: 'Normal',
-        deuteranopia: 'Deuteranopía / Protanopía',
+        protanopia: 'Protanopía',
+        deuteranopia: 'Deuteranopía',
         tritanopia: 'Tritanopía',
         monochrome: 'Alto Contraste / Acromático'
     };
 
     function apply(mode) {
+        if (!Object.prototype.hasOwnProperty.call(MODES, mode)) mode = 'normal';
         currentMode = mode;
         
         // Remove existing colorblind attributes
@@ -29,6 +31,12 @@ export const AccessibilityModule = (() => {
         
         // Update UI dropdown active states
         updateDropdownUI();
+        const button = document.getElementById('a11yToggleBtn');
+        if (button) {
+            button.setAttribute('aria-label', `Ajuste daltónico: ${MODES[mode]}`);
+            button.setAttribute('title', `Ajuste daltónico: ${MODES[mode]}`);
+            button.dataset.mode = mode;
+        }
     }
 
     function updateDropdownUI() {
@@ -59,6 +67,13 @@ export const AccessibilityModule = (() => {
                 a11yToggleBtn.setAttribute('aria-expanded', !a11yDropdown.classList.contains('hidden'));
             });
 
+            a11yToggleBtn.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    a11yToggleBtn.click();
+                }
+            });
+
             // Close dropdown when clicking outside
             document.addEventListener('click', (e) => {
                 if (!a11yDropdown.contains(e.target) && e.target !== a11yToggleBtn) {
@@ -76,6 +91,12 @@ export const AccessibilityModule = (() => {
                         apply(mode);
                         a11yDropdown.classList.add('hidden');
                         a11yToggleBtn.setAttribute('aria-expanded', 'false');
+                    }
+                });
+                opt.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        opt.click();
                     }
                 });
             });

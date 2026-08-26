@@ -1,6 +1,7 @@
 // public/js/components/applicationsModule.js
 import { api } from '../services/apiService.js';
 import { Toast } from '../services/toastService.js';
+import { Confirmation } from '../services/confirmationService.js';
 import { applications as seedApplications, candidates as seedCandidates, vacancies as seedVacancies } from '../mockData.js';
 
 export const ApplicationsModule = {
@@ -246,17 +247,8 @@ export const ApplicationsModule = {
     },
 
     async handleDelete(id) {
-        const result = await Swal.fire({
-            title: '¿Estás seguro?',
-            text: 'Esta postulación será eliminada permanentemente.',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3ee6ab',
-            cancelButtonColor: '#374151',
-            confirmButtonText: 'Sí, eliminar',
-            cancelButtonText: 'Cancelar'
-        });
-        if (!result.isConfirmed) return;
+        const post = this.state.posts.find((application) => application.id == id);
+        if (!await Confirmation.confirm({ type: 'postulación', name: post?.candidateName || post?.title || 'Postulación', id })) return;
 
         try {
             await api.delete(`/posts/${id}`);

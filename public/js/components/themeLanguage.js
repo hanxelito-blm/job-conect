@@ -259,11 +259,13 @@ export const ThemeModule = (() => {
     const LIGHT_CLASS = 'light-mode';
 
     function apply(theme) {
+        theme = theme === 'light' ? 'light' : 'dark';
         if (theme === 'light') {
             document.documentElement.classList.add(LIGHT_CLASS);
         } else {
             document.documentElement.classList.remove(LIGHT_CLASS);
         }
+        document.documentElement.dataset.theme = theme;
         localStorage.setItem(STORAGE_KEY, theme);
         updateIcon(theme);
     }

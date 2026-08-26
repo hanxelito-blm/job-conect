@@ -709,6 +709,30 @@ html.light-mode .candidate-summary > div, html.light-mode .candidate-drawer { ba
 @media (max-width: 860px) { .module-toolbar { flex-wrap: wrap; } .module-toolbar label:not(.search-field) { flex: 1 1 180px; } .search-field { flex-basis: 100%; } }
 @media (max-width: 600px) { .candidate-summary { grid-template-columns: repeat(2, 1fr); } .candidate-summary > div { padding: 13px 14px; } .candidate-summary strong { font-size: 1.45rem; } .module-toolbar label:not(.search-field) { flex-basis: 100%; } .module-toolbar .module-clear { width: 100%; } .data-table th, .data-table td { padding: 12px 13px; } .data-table th:nth-child(3), .data-table td:nth-child(3) { display: none; } .drawer-header, .drawer-profile, .drawer-scroll { padding-left: 18px; padding-right: 18px; } }
 
+/* =====================================================
+    CONFIRMACION DE ELIMINACION
+    ===================================================== */
+.delete-confirmation { position: fixed; inset: 0; z-index: 70; display: grid; place-items: center; padding: 20px; background: rgba(3, 8, 7, 0.66); backdrop-filter: blur(8px); animation: deleteBackdropIn 0.2s ease both; }
+.delete-confirmation-card { width: min(430px, 100%); padding: 30px; border: 1px solid rgba(255, 137, 137, 0.28); border-radius: 18px; background: var(--panel-strong); box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45); animation: deleteModalIn 0.24s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.delete-confirmation-icon { display: grid; place-items: center; width: 50px; height: 50px; margin-bottom: 18px; border: 1px solid rgba(255, 112, 112, 0.3); border-radius: 50%; color: #ff8787; background: rgba(255, 112, 112, 0.12); }
+.delete-confirmation-eyebrow { color: #ff8787 !important; }
+.delete-confirmation-copy h2 { margin: 0 0 8px; color: var(--text); font-size: 1.45rem; letter-spacing: -0.03em; }
+.delete-confirmation-copy p { margin: 0; color: var(--text-soft); font-size: 0.88rem; line-height: 1.6; }
+.delete-confirmation-item { display: flex; align-items: center; gap: 11px; margin: 22px 0; padding: 12px; border: 1px solid var(--border); border-radius: 11px; background: rgba(255, 255, 255, 0.035); }
+.delete-confirmation-item-avatar { display: grid; flex: 0 0 auto; place-items: center; width: 34px; height: 34px; border-radius: 50%; color: #ff9b9b; background: rgba(255, 112, 112, 0.14); font-size: 0.82rem; font-weight: 700; }
+.delete-confirmation-item strong, .delete-confirmation-item small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.delete-confirmation-item strong { color: var(--text); font-size: 0.86rem; }
+.delete-confirmation-item small { margin-top: 2px; color: var(--text-soft); font-size: 0.72rem; }
+.delete-confirmation-actions { display: flex; justify-content: flex-end; gap: 9px; }
+.delete-confirmation-submit { display: inline-flex; align-items: center; gap: 7px; border: 1px solid #ff7777; background: #d95757; color: #fff; }
+.delete-confirmation-submit:hover { border-color: #ff9a9a; background: #e66a6a; box-shadow: 0 8px 20px rgba(217, 87, 87, 0.24); transform: translateY(-1px); }
+@keyframes deleteBackdropIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes deleteModalIn { from { opacity: 0; transform: scale(0.96) translateY(8px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+html.light-mode .delete-confirmation { background: rgba(24, 32, 29, 0.46); }
+html.light-mode .delete-confirmation-card { background: #fff; box-shadow: 0 24px 70px rgba(31, 58, 47, 0.2); }
+html.light-mode .delete-confirmation-item { background: #fafcfa; }
+@media (max-width: 520px) { .delete-confirmation-card { padding: 23px 20px; } .delete-confirmation-actions { flex-direction: column-reverse; } .delete-confirmation-actions .btn { width: 100%; justify-content: center; } }
+
 
 
 
@@ -1269,6 +1293,29 @@ textarea:focus-visible {
 /* =====================================================
    ACCESSIBILITY: A11Y DROPDOWN & COLORBLIND MODES
    ===================================================== */
+html[data-colorblind="protanopia"] {
+    --primary: #168cff; --primary-2: #106ed4; --primary-3: #0d4f99;
+    --primary-soft: rgba(22, 140, 255, 0.16); --border: rgba(145, 190, 230, 0.24); --border-strong: rgba(145, 190, 230, 0.4);
+}
+html[data-colorblind="deuteranopia"] {
+    --primary: #2f8fff; --primary-2: #236dc4; --primary-3: #184d8d;
+    --primary-soft: rgba(47, 143, 255, 0.16); --border: rgba(150, 190, 230, 0.24); --border-strong: rgba(150, 190, 230, 0.4);
+}
+html[data-colorblind="tritanopia"] {
+    --primary: #e56b2f; --primary-2: #c45321; --primary-3: #913b18;
+    --primary-soft: rgba(229, 107, 47, 0.16); --border: rgba(220, 175, 140, 0.24); --border-strong: rgba(220, 175, 140, 0.4);
+}
+html[data-colorblind="monochrome"] {
+    --bg: #070707; --bg-2: #151515; --panel: rgba(25, 25, 25, 0.98); --panel-strong: #202020;
+    --primary: #ffffff; --primary-2: #e4e4e4; --primary-3: #bdbdbd; --primary-soft: rgba(255, 255, 255, 0.14);
+    --text: #ffffff; --text-soft: #e0e0e0; --border: rgba(255, 255, 255, 0.42); --border-strong: rgba(255, 255, 255, 0.7);
+}
+.a11y-toggle { position: relative; }
+.a11y-active-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--primary); box-shadow: 0 0 7px var(--primary); transition: background var(--transition), box-shadow var(--transition); }
+.a11y-option { display: block; width: 100%; padding: 8px 10px; border: 0; border-radius: 7px; color: var(--text-soft); background: transparent; text-align: left; cursor: pointer; }
+.a11y-option:hover, .a11y-option:focus-visible { color: var(--text); background: var(--primary-soft); outline: none; }
+.a11y-option.active { color: var(--primary); background: var(--primary-soft); font-weight: 700; }
+html[data-colorblind="monochrome"] .status-badge, html[data-colorblind="monochrome"] .badge-green, html[data-colorblind="monochrome"] .badge-yellow, html[data-colorblind="monochrome"] .badge-red { color: #fff; border-color: var(--border-strong); background: #303030; }
 /* =====================================================
    DASHBOARD HERO & LIVE HEADER
    ===================================================== */

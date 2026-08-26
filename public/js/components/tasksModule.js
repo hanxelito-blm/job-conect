@@ -1,6 +1,7 @@
 // public/js/components/tasksModule.js
 import { api } from '../services/apiService.js';
 import { Toast } from '../services/toastService.js';
+import { Confirmation } from '../services/confirmationService.js';
 import { tasks as seedTasks } from '../mockData.js';
 
 export const TasksModule = {
@@ -239,17 +240,8 @@ export const TasksModule = {
     },
 
     async handleDelete(id) {
-        const result = await Swal.fire({
-            title: '¿Estás seguro?',
-            text: 'Esta tarea será eliminada permanentemente.',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3ee6ab',
-            cancelButtonColor: '#374151',
-            confirmButtonText: 'Sí, eliminar',
-            cancelButtonText: 'Cancelar'
-        });
-        if (!result.isConfirmed) return;
+        const item = this.state.items.find((task) => task.id == id);
+        if (!await Confirmation.confirm({ type: 'tarea', name: item?.todo || 'Tarea', id })) return;
 
         try {
             await api.delete(`/todos/${id}`);

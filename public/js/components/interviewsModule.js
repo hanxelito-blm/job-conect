@@ -1,6 +1,7 @@
 // public/js/components/interviewsModule.js
 import { api } from '../services/apiService.js';
 import { Toast } from '../services/toastService.js';
+import { Confirmation } from '../services/confirmationService.js';
 import { interviews as seedInterviews, candidates as seedCandidates, vacancies as seedVacancies } from '../mockData.js';
 
 export const InterviewsModule = {
@@ -262,17 +263,8 @@ export const InterviewsModule = {
     },
 
     async handleDelete(id) {
-        const result = await Swal.fire({
-            title: '¿Estás seguro?',
-            text: 'Esta entrevista será eliminada permanentemente.',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3ee6ab',
-            cancelButtonColor: '#374151',
-            confirmButtonText: 'Sí, eliminar',
-            cancelButtonText: 'Cancelar'
-        });
-        if (!result.isConfirmed) return;
+        const item = this.state.items.find((interview) => interview.id == id);
+        if (!await Confirmation.confirm({ type: 'entrevista', name: item?.candidateName || 'Entrevista', id })) return;
 
         try {
             await api.delete(`/comments/${id}`);

@@ -1,6 +1,7 @@
 // public/js/components/companiesModule.js
 import { api } from '../services/apiService.js';
 import { Toast } from '../services/toastService.js';
+import { Confirmation } from '../services/confirmationService.js';
 import { companies as seedCompanies } from '../mockData.js';
 
 export const CompaniesModule = {
@@ -242,17 +243,8 @@ export const CompaniesModule = {
     },
 
     async handleDelete(id) {
-        const result = await Swal.fire({
-            title: '¿Estás seguro?',
-            text: 'Esta empresa será eliminada permanentemente.',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3ee6ab',
-            cancelButtonColor: '#374151',
-            confirmButtonText: 'Sí, eliminar',
-            cancelButtonText: 'Cancelar'
-        });
-        if (!result.isConfirmed) return;
+        const item = this.state.items.find((company) => company.id == id);
+        if (!await Confirmation.confirm({ type: 'empresa', name: item?.nombre || 'Empresa', id })) return;
 
         try {
             await api.delete(`/carts/${id}`);

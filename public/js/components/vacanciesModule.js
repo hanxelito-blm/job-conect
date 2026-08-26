@@ -1,6 +1,7 @@
 // public/js/components/vacanciesModule.js
 import { api } from '../services/apiService.js';
 import { Toast } from '../services/toastService.js';
+import { Confirmation } from '../services/confirmationService.js';
 import { vacancies as seedVacancies, companies as seedCompanies } from '../mockData.js';
 
 const escapeHtml = (value = '') => String(value).replace(/[&<>'"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[char]));
@@ -251,17 +252,8 @@ export const VacanciesModule = {
     },
 
     async handleDelete(id) {
-        const result = await Swal.fire({
-            title: '¿Estás seguro?',
-            text: 'Esta vacante será eliminada permanentemente.',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3ee6ab',
-            cancelButtonColor: '#374151',
-            confirmButtonText: 'Sí, eliminar',
-            cancelButtonText: 'Cancelar'
-        });
-        if (!result.isConfirmed) return;
+        const item = this.state.items.find((vacancy) => vacancy.id == id);
+        if (!await Confirmation.confirm({ type: 'vacante', name: item?.title || 'Vacante', id })) return;
 
         try {
             await api.delete(`/products/${id}`);
