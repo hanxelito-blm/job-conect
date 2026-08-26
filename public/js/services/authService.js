@@ -145,5 +145,19 @@ export const AuthService = {
 
     getCurrentCandidateId() {
         return localStorage.getItem('jc_currentCandidateId') || 'can-001';
+    },
+
+    getRegisteredUsers() {
+        try {
+            return JSON.parse(localStorage.getItem('jobConnect_users')) || [];
+        } catch {
+            return [];
+        }
+    },
+
+    register({ username, email, password, role }) {
+        const users = this.getRegisteredUsers();
+        users.push({ username, email, password, role, createdAt: new Date().toISOString() });
+        localStorage.setItem('jobConnect_users', JSON.stringify(users));
     }
 };
