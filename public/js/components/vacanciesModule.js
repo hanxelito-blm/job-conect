@@ -66,12 +66,21 @@ export const VacanciesModule = {
         });
     },
 
+    getDeletedIds() {
+        try { return JSON.parse(localStorage.getItem('jc_deleted_vacancies')) || []; } catch { return []; }
+    },
+
+    saveDeletedIds(ids) {
+        localStorage.setItem('jc_deleted_vacancies', JSON.stringify(ids));
+    },
+
     async loadData(force = false) {
         if (this.state.items.length > 0 && !force) return;
         if (this.loader) this.loader.classList.remove('hidden');
 
         try {
-            this.state.items = seedVacancies.map((vacancy) => ({
+            const deletedIds = this.getDeletedIds();
+            this.state.items = seedVacancies.filter(v => !deletedIds.includes(v.id)).map((vacancy) => ({
                 ...vacancy,
                 title: vacancy.titulo,
                 brand: seedCompanies.find((company) => company.id === vacancy.empresaId)?.nombre || 'Empresa',
@@ -255,14 +264,16 @@ export const VacanciesModule = {
         const item = this.state.items.find((vacancy) => vacancy.id == id);
         if (!await Confirmation.confirm({ type: 'vacante', name: item?.title || 'Vacante', id })) return;
 
+        this.state.items = this.state.items.filter((item) => item.id != id);
+        const deletedIds = this.getDeletedIds();
+        if (!deletedIds.includes(id)) deletedIds.push(id);
+        this.saveDeletedIds(deletedIds);
+        this.render();
+        this.updateStats();
+        Toast.show('Vacante eliminada correctamente', 'success');
+
         try {
             await api.delete(`/products/${id}`);
-            this.state.items = this.state.items.filter((item) => item.id != id);
-            this.render();
-            this.updateStats();
-            Toast.show('Vacante eliminada correctamente', 'success');
-        } catch (error) {
-            Toast.show('Error al eliminar: ' + error.message, 'error');
-        }
+        } catch (_) { /* API no disponible para datos locales */ }
     }
 };
