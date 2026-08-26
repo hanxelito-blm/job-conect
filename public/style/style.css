@@ -844,6 +844,62 @@ html.light-mode .btn-login {
 }
 
 /* =====================================================
+   REMEMBER ME
+   ===================================================== */
+.remember-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--text-soft);
+    user-select: none;
+}
+.remember-row input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.remember-check {
+    position: relative;
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(148, 185, 171, 0.4);
+    border-radius: 5px;
+    background: rgba(4, 13, 11, 0.5);
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+.remember-check::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 5px;
+    width: 5px;
+    height: 9px;
+    border: solid var(--primary);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg) scale(0);
+    transition: transform 0.2s ease;
+}
+.remember-row input:checked + .remember-check {
+    border-color: var(--primary);
+    background: rgba(62, 230, 171, 0.15);
+}
+.remember-row input:checked + .remember-check::after {
+    transform: rotate(45deg) scale(1);
+}
+.remember-row:hover .remember-check {
+    border-color: var(--primary);
+}
+html.light-mode .remember-check {
+    background: #f0f4f2;
+    border-color: rgba(26, 138, 106, 0.35);
+}
+
+/* =====================================================
    ROLE SELECTOR
    ===================================================== */
 .role-select-hint {
@@ -1297,10 +1353,16 @@ textarea:focus-visible {
     color: var(--text-soft);
 }
 .quick-buttons-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    display: flex;
     gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(62, 230, 171, 0.3) transparent;
 }
+.quick-buttons-row::-webkit-scrollbar { height: 6px; }
+.quick-buttons-row::-webkit-scrollbar-track { background: transparent; }
+.quick-buttons-row::-webkit-scrollbar-thumb { background: rgba(62, 230, 171, 0.3); border-radius: 3px; }
 .btn-quick-action {
     display: flex;
     align-items: center;
@@ -1315,6 +1377,8 @@ textarea:focus-visible {
     text-align: left;
     transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
+    flex: 0 0 auto;
+    white-space: nowrap;
 }
 .btn-quick-action:hover {
     background: rgba(20, 48, 40, 0.95);
