@@ -54,27 +54,56 @@ Para iniciar sesión en el portal utiliza las credenciales por defecto de DummyJ
 ```
 job-conect/
 ├── package.json               # Configuración de dependencias y scripts de Node
-├── server.js                  # Servidor Express para servir archivos estáticos
+├── server.js                  # Servidor Express con rutas MPA y archivos estáticos
 ├── README.md                  # Documentación del proyecto
 └── public/
     ├── pages/
-    │   └── index.html         # Documento HTML principal (Landing, Login, Dashboard y Modales)
+    │   ├── landing.html       # Página de inicio / aterrizaje
+    │   ├── login.html         # Inicio de sesión con roles
+    │   ├── dashboard.html     # Panel de control principal
+    │   ├── companies.html     # Módulo Empresas Clientes
+    │   ├── vacancies.html     # Módulo Vacantes
+    │   ├── candidates.html    # Módulo Candidatos
+    │   ├── applications.html  # Módulo Postulaciones
+    │   ├── interviews.html    # Módulo Entrevistas y Notas
+    │   ├── tasks.html         # Módulo Tareas
+    │   ├── tracking.html      # Módulo Seguimiento / Pipeline
+    │   ├── profile.html       # Mi Perfil
+    │   └── my-applications.html # Mis Postulaciones
     ├── style/
-    │   └── style.css          # Estilos globales, temas, componentes y responsive layout
-    └── js/
-        ├── index.js           # Orquestador principal, autenticación, rutas y Dashboard
-        ├── services/
-        │   ├── apiService.js  # Cliente HTTP asíncrono (GET, POST, PUT, PATCH, DELETE)
-        │   └── toastService.js# Notificaciones visuales flotantes (Toast)
-        └── components/
-            ├── candidatesModule.js   # Módulo Candidatos (/users)
-            ├── vacanciesModule.js    # Módulo Vacantes (/products)
-            ├── companiesModule.js    # Módulo Empresas Clientes (/carts)
-            ├── applicationsModule.js # Módulo Postulaciones (/posts)
-            ├── interviewsModule.js   # Módulo Entrevistas y Notas (/comments - PATCH)
-            ├── tasksModule.js        # Módulo Tareas (/todos)
-            ├── themeLanguage.js      # Control de Modo Oscuro/Claro e Idioma (ES/EN)
-            └── loginAnimation.js     # Animación Canvas de fondo para pantalla de Login
+    │   ├── style.css              # Estilos globales, temas, componentes y responsive
+    │   ├── empresas.css           # Estilos específicos del módulo empresas
+    │   ├── login.css              # Estilos del login
+    │   └── driver-overrides.css   # Overrides del tour guiado (Driver.js)
+    ├── js/
+    │   ├── app-page.js            # Entry point MPA: auth, sidebar, módulos dinámicos
+    │   ├── index.js               # Orquestador SPA legacy
+    │   ├── landing.js             # Lógica de la landing page
+    │   ├── login-page.js          # Lógica del login
+    │   ├── mockData.js            # Datos semilla (empresas, vacantes, candidatos, etc.)
+    │   ├── services/
+    │   │   ├── apiService.js      # Cliente HTTP asíncrono (GET, POST, PUT, PATCH, DELETE)
+    │   │   ├── authService.js     # Autenticación, roles y control de acceso
+    │   │   └── toastService.js    # Notificaciones visuales flotantes (Toast)
+    │   └── components/
+    │       ├── dashboardModule.js      # Panel de control y KPIs
+    │       ├── companiesModule.js      # Módulo Empresas Clientes (/carts)
+    │       ├── vacanciesModule.js      # Módulo Vacantes (/products)
+    │       ├── candidatesModule.js     # Módulo Candidatos (/users)
+    │       ├── applicationsModule.js   # Módulo Postulaciones (/posts)
+    │       ├── interviewsModule.js     # Módulo Entrevistas y Notas (/comments)
+    │       ├── tasksModule.js          # Módulo Tareas (/todos)
+    │       ├── trackingModule.js       # Seguimiento de pipeline
+    │       ├── profileModule.js        # Perfil de usuario
+    │       ├── myApplicationsModule.js # Mis postulaciones (candidato)
+    │       ├── userManagementModule.js # Gestión de usuarios
+    │       ├── themeLanguage.js        # Modo Oscuro/Claro e Idioma (ES/EN)
+    │       ├── accessibilityModule.js  # Modo daltónico / accesibilidad visual
+    │       ├── tourModule.js           # Tour guiado con Driver.js
+    │       └── loginAnimation.js       # Animación Canvas de fondo para Login
+    └── vendor/
+        ├── sweetalert2/        # Librería de alertas (SweetAlert2)
+        └── driver.js/          # Librería de tour guiado (Driver.js)
 ```
 
 ---

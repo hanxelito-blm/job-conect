@@ -46,12 +46,21 @@ export const ApplicationsModule = {
         if (this.clearFiltersBtn) this.clearFiltersBtn.addEventListener('click', () => this.clearFilters());
     },
 
+    getDeletedIds() {
+        try { return JSON.parse(localStorage.getItem('jc_deleted_applications')) || []; } catch { return []; }
+    },
+
+    saveDeletedIds(ids) {
+        localStorage.setItem('jc_deleted_applications', JSON.stringify(ids));
+    },
+
     async loadData(force = false) {
         if (this.state.posts.length > 0 && !force) return;
 
         if (this.loader) this.loader.classList.remove('hidden');
         try {
-            this.state.posts = seedApplications.map((application) => ({
+            const deletedIds = this.getDeletedIds();
+            this.state.posts = seedApplications.filter(a => !deletedIds.includes(a.id)).map((application) => ({
                 ...application,
                 title: seedVacancies.find((vacancy) => vacancy.id === application.vacanteId)?.titulo || application.vacanteId,
                 body: application.cartaPresentacion,
@@ -250,14 +259,16 @@ export const ApplicationsModule = {
         const post = this.state.posts.find((application) => application.id == id);
         if (!await Confirmation.confirm({ type: 'postulación', name: post?.candidateName || post?.title || 'Postulación', id })) return;
 
+        this.state.posts = this.state.posts.filter(p => p.id != id);
+        const deletedIds = this.getDeletedIds();
+        if (!deletedIds.includes(id)) deletedIds.push(id);
+        this.saveDeletedIds(deletedIds);
+        this.render();
+        this.updateStats();
+        Toast.show('Postulación eliminada correctamente', 'success');
+
         try {
             await api.delete(`/posts/${id}`);
-            this.state.posts = this.state.posts.filter(p => p.id != id);
-            this.render();
-            this.updateStats();
-            Toast.show('Postulación eliminada correctamente', 'success');
-        } catch (error) {
-            Toast.show('Error al eliminar: ' + error.message, 'error');
-        }
+        } catch (_) { /* API no disponible para datos locales */ }
     }
 };
