@@ -1,5 +1,17 @@
 // chatbot.js - Widget de Chat IA para JobConnect
 
+const ICONS = {
+    briefcase: '<svg class="chatbot-msg-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>',
+    file: '<svg class="chatbot-msg-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
+    calendar: '<svg class="chatbot-msg-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
+    users: '<svg class="chatbot-msg-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+    check: '<svg class="chatbot-msg-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 1"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>',
+    building: '<svg class="chatbot-msg-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V7l9-4 9 4v14"/><path d="M9 21v-8h6v8"/><path d="M3 7h18"/></svg>',
+    user: '<svg class="chatbot-msg-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+    activity: '<svg class="chatbot-msg-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>',
+    wave: '<svg class="chatbot-msg-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11l1.5-4.5a1.5 1.5 0 0 1 2.8-1l1.2 3.5"/><path d="M11 10l1.5-4.5a1.5 1.5 0 0 1 2.8-1L17 11"/><path d="M15 9.5l1-3a1.5 1.5 0 0 1 2.8-1L20 10v1a9 9 0 0 1-9 9h-1a9 9 0 0 1-9-9V9.5a1.5 1.5 0 0 1 2.8-1L7 11"/></svg>'
+};
+
 class JobConnectChatbot {
     constructor() {
         this.messages = [];
@@ -120,12 +132,12 @@ class JobConnectChatbot {
             <div class="chatbot-message-content">
                 ¡Hola! Bienvenido/a a <strong>JobConnect</strong>. Soy <strong>JobBot</strong>, tu asistente virtual. ¿En qué puedo ayudarte?<br><br>
                 <div class="chatbot-suggestions">
-                    <button class="chatbot-suggestion-btn" data-msg="Quiero ver las vacantes disponibles">📋 Ver vacantes</button>
-                    <button class="chatbot-suggestion-btn" data-msg="Quiero ver mis postulaciones">📄 Mis postulaciones</button>
-                    <button class="chatbot-suggestion-btn" data-msg="Quiero agendar una entrevista">📅 Agendar entrevista</button>
-                    <button class="chatbot-suggestion-btn" data-msg="Quiero gestionar candidatos">👥 Gestionar candidatos</button>
-                    <button class="chatbot-suggestion-btn" data-msg="Quiero ver mis tareas pendientes">✅ Mis tareas</button>
-                    <button class="chatbot-suggestion-btn" data-msg="Quiero ver las empresas registradas">🏢 Empresas</button>
+                    <button class="chatbot-suggestion-btn" data-msg="Quiero ver las vacantes disponibles">${ICONS.briefcase} Ver vacantes</button>
+                    <button class="chatbot-suggestion-btn" data-msg="Quiero ver mis postulaciones">${ICONS.file} Mis postulaciones</button>
+                    <button class="chatbot-suggestion-btn" data-msg="Quiero agendar una entrevista">${ICONS.calendar} Agendar entrevista</button>
+                    <button class="chatbot-suggestion-btn" data-msg="Quiero gestionar candidatos">${ICONS.users} Gestionar candidatos</button>
+                    <button class="chatbot-suggestion-btn" data-msg="Quiero ver mis tareas pendientes">${ICONS.check} Mis tareas</button>
+                    <button class="chatbot-suggestion-btn" data-msg="Quiero ver las empresas registradas">${ICONS.building} Empresas</button>
                 </div>
             </div>
         `;
@@ -146,43 +158,43 @@ class JobConnectChatbot {
         const responses = [
             {
                 keywords: ['vacante', 'vacantes', 'empleo', 'trabajo', 'puesto'],
-                answer: '📋 Puedo ayudarte con vacantes. En **JobConnect** puedes:\n\n- Ver todas las vacantes activas en la sección **Vacantes**\n- Filtrar por empresa, categoría o ubicación\n- Postularte directamente desde la plataforma\n\n¿Te gustaría que te guíe hacia la página de vacantes?'
+                answer: `${ICONS.briefcase} Puedo ayudarte con vacantes. En **JobConnect** puedes:\n\n- Ver todas las vacantes activas en la sección **Vacantes**\n- Filtrar por empresa, categoría o ubicación\n- Postularte directamente desde la plataforma\n\n¿Te gustaría que te guíe hacia la página de vacantes?`
             },
             {
                 keywords: ['postulacion', 'postulaciones', 'candidatura', 'aplicar', 'aplique'],
-                answer: '📄 Para ver tus postulaciones, ve a **Mis Postulaciones** desde el menú lateral. Allí podrás:\n\n- Seguir el estado de cada postulación (Pendiente, En revisión, Entrevista, Aceptada, Rechazada)\n- Ver detalles de cada proceso\n- Actualizar tu perfil para mejorar tus oportunidades'
+                answer: `${ICONS.file} Para ver tus postulaciones, ve a **Mis Postulaciones** desde el menú lateral. Allí podrás:\n\n- Seguir el estado de cada postulación (Pendiente, En revisión, Entrevista, Aceptada, Rechazada)\n- Ver detalles de cada proceso\n- Actualizar tu perfil para mejorar tus oportunidades`
             },
             {
                 keywords: ['entrevista', 'entrevistas', 'agendar', 'cita', 'reunion'],
-                answer: '📅 Para agendar o ver entrevistas:\n\n- Ve a la sección **Entrevistas** desde el menú lateral\n- Puedes ver entrevistas programadas y pendientes\n- Los reclutadores pueden crear nuevas entrevistas desde ahí\n\n¿Necesitas ayuda con algo específico sobre entrevistas?'
+                answer: `${ICONS.calendar} Para agendar o ver entrevistas:\n\n- Ve a la sección **Entrevistas** desde el menú lateral\n- Puedes ver entrevistas programadas y pendientes\n- Los reclutadores pueden crear nuevas entrevistas desde ahí\n\n¿Necesitas ayuda con algo específico sobre entrevistas?`
             },
             {
                 keywords: ['candidato', 'candidatos', 'talento', 'perfil'],
-                answer: '👥 En la sección **Candidatos** puedes:\n\n- Explorar el talento disponible en la plataforma\n- Ver perfiles profesionales detallados\n- Filtrar por habilidades, experiencia y más\n\nSi eres candidato, asegúrate de completar tu perfil en **Mi Perfil** para destacar.'
+                answer: `${ICONS.users} En la sección **Candidatos** puedes:\n\n- Explorar el talento disponible en la plataforma\n- Ver perfiles profesionales detallados\n- Filtrar por habilidades, experiencia y más\n\nSi eres candidato, asegúrate de completar tu perfil en **Mi Perfil** para destacar.`
             },
             {
                 keywords: ['tarea', 'tareas', 'pendiente', 'pendientes'],
-                answer: '✅ En **Mis Tareas** puedes gestionar tus actividades pendientes:\n\n- Crear nuevas tareas de reclutamiento\n- Marcar tareas como completadas\n- Organizar tu flujo de trabajo diario'
+                answer: `${ICONS.check} En **Mis Tareas** puedes gestionar tus actividades pendientes:\n\n- Crear nuevas tareas de reclutamiento\n- Marcar tareas como completadas\n- Organizar tu flujo de trabajo diario`
             },
             {
                 keywords: ['empresa', 'empresas', 'compañia', 'compañia'],
-                answer: '🏢 En la sección **Empresas** puedes:\n\n- Ver todas las empresas registradas en JobConnect\n- Explorar las vacantes de cada empresa\n- Conocer más sobre cada organización'
+                answer: `${ICONS.building} En la sección **Empresas** puedes:\n\n- Ver todas las empresas registradas en JobConnect\n- Explorar las vacantes de cada empresa\n- Conocer más sobre cada organización`
             },
             {
                 keywords: ['perfil', 'mi perfil', 'datos', 'editar perfil', 'informacion personal'],
-                answer: '👤 Para gestionar tu perfil:\n\n- Ve a **Mi Perfil** desde el menú lateral\n- Actualiza tu información personal\n- Agrega experiencia, habilidades y educación\n- Un perfil completo aumenta tus oportunidades'
+                answer: `${ICONS.user} Para gestionar tu perfil:\n\n- Ve a **Mi Perfil** desde el menú lateral\n- Actualiza tu información personal\n- Agrega experiencia, habilidades y educación\n- Un perfil completo aumenta tus oportunidades`
             },
             {
                 keywords: ['seguimiento', 'tracking', 'pipeline', 'proceso'],
-                answer: '📊 El **Pipeline de Seguimiento** te permite:\n\n- Ver el flujo completo de candidatos por etapa\n- Mover candidatos entre fases del proceso\n- Hacer seguimiento en tiempo real de cada postulación'
+                answer: `${ICONS.activity} El **Pipeline de Seguimiento** te permite:\n\n- Ver el flujo completo de candidatos por etapa\n- Mover candidatos entre fases del proceso\n- Hacer seguimiento en tiempo real de cada postulación`
             },
             {
                 keywords: ['hola', 'buenos dias', 'buenas tardes', 'hey', 'hi'],
-                answer: '¡Hola! 👋 ¿Cómo puedo ayudarte? Puedo asistirte con:\n\n- 📋 **Vacantes** disponibles\n- 📄 **Mis postulaciones**\n- 📅 **Entrevistas**\n- 👥 **Candidatos**\n- ✅ **Tareas** pendientes\n- 🏢 **Empresas** registradas\n\nSolo pregúntame lo que necesites.'
+                answer: `¡Hola! ${ICONS.wave} ¿Cómo puedo ayudarte? Puedo asistirte con:\n\n- ${ICONS.briefcase} **Vacantes** disponibles\n- ${ICONS.file} **Mis postulaciones**\n- ${ICONS.calendar} **Entrevistas**\n- ${ICONS.users} **Candidatos**\n- ${ICONS.check} **Tareas** pendientes\n- ${ICONS.building} **Empresas** registradas\n\nSolo pregúntame lo que necesites.`
             },
             {
                 keywords: ['ayuda', 'help', 'como funciona', 'que puedes hacer', 'que puedes'],
-                answer: '🤖 Soy **JobBot**, tu asistente virtual de **JobConnect**. Puedo ayudarte con:\n\n- 📋 Información sobre **vacantes** disponibles\n- 📄 Consultar el estado de tus **postulaciones**\n- 📅 Gestionar tus **entrevistas**\n- 👥 Explorar **candidatos** y talento\n- ✅ Revisar tus **tareas** pendientes\n- 🏢 Conocer las **empresas** registradas\n- 👤 Gestionar tu **perfil**\n\n¿Sobre qué tema necesitas ayuda?'
+                answer: `Soy **JobBot**, tu asistente virtual de **JobConnect**. Puedo ayudarte con:\n\n- ${ICONS.briefcase} Información sobre **vacantes** disponibles\n- ${ICONS.file} Consultar el estado de tus **postulaciones**\n- ${ICONS.calendar} Gestionar tus **entrevistas**\n- ${ICONS.users} Explorar **candidatos** y talento\n- ${ICONS.check} Revisar tus **tareas** pendientes\n- ${ICONS.building} Conocer las **empresas** registradas\n- ${ICONS.user} Gestionar tu **perfil**\n\n¿Sobre qué tema necesitas ayuda?`
             }
         ];
 
@@ -192,7 +204,7 @@ class JobConnectChatbot {
             }
         }
 
-        return 'Entiendo tu consulta. Actualmente puedo ayudarte con:\n\n- 📋 **Vacantes** disponibles\n- 📄 **Mis postulaciones**\n- 📅 **Entrevistas**\n- 👥 **Candidatos**\n- ✅ **Tareas** pendientes\n- 🏢 **Empresas**\n\n¿Sobre cuál de estos temas te gustaría más información?';
+        return `Entiendo tu consulta. Actualmente puedo ayudarte con:\n\n- ${ICONS.briefcase} **Vacantes** disponibles\n- ${ICONS.file} **Mis postulaciones**\n- ${ICONS.calendar} **Entrevistas**\n- ${ICONS.users} **Candidatos**\n- ${ICONS.check} **Tareas** pendientes\n- ${ICONS.building} **Empresas**\n\n¿Sobre cuál de estos temas te gustaría más información?`;
     }
 
     toggleChat() {

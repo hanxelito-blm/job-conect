@@ -571,3 +571,14 @@ html.light-mode .chatbot-suggestion-btn {
 html.light-mode .chatbot-suggestion-btn:hover {
     background: rgba(26, 138, 106, 0.14);
 }
+
+/* ========================================
+   INLINE MESSAGE ICONS
+   ======================================== */
+.chatbot-msg-icon {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 2px;
+    margin-top: -2px;
+    flex-shrink: 0;
+}
