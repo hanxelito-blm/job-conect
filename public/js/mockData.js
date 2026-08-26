@@ -295,6 +295,129 @@ export const tasks = [
     { id: "task-006", titulo: "Consolidar feedback de candidatos", responsable: "Equipo de talento", fechaLimite: "2026-08-31", prioridad: "Media", completada: false }
 ];
 
-export const mockData = { companies, vacancies, candidates, applications, interviews, tasks };
+export const users = [
+    {
+        id: "usr-001",
+        nombre: "Emily Johnson",
+        username: "emilys",
+        email: "emily.johnson@jobconnect.com",
+        telefono: "+1 (555) 234-5678",
+        rol: "administrador",
+        departamento: "Recursos Humanos",
+        estado: "activo",
+        fechaCreacion: "2026-01-15",
+        ultimoAcceso: "2026-08-26 09:12",
+        ip: "192.168.1.45",
+        avatarUrl: ""
+    },
+    {
+        id: "usr-002",
+        nombre: "Carlos Mendoza",
+        username: "carlosm",
+        email: "carlos.mendoza@jobconnect.com",
+        telefono: "+52 55 4120 8830",
+        rol: "reclutador",
+        departamento: "Talento IT",
+        estado: "activo",
+        fechaCreacion: "2026-02-20",
+        ultimoAcceso: "2026-08-25 17:45",
+        ip: "192.168.2.110",
+        avatarUrl: ""
+    },
+    {
+        id: "usr-003",
+        nombre: "Valentina Rojas Mendoza",
+        username: "valentinar",
+        email: "valentina.rojas@example.com",
+        telefono: "+52 55 2148 9031",
+        rol: "candidato",
+        departamento: "",
+        estado: "activo",
+        fechaCreacion: "2026-06-10",
+        ultimoAcceso: "2026-08-24 14:20",
+        ip: "10.0.0.88",
+        avatarUrl: ""
+    },
+    {
+        id: "usr-004",
+        nombre: "Mariana Solis",
+        username: "marianas",
+        email: "mariana.solis@prismastudio.co",
+        telefono: "+57 301 998 2213",
+        rol: "empresa",
+        departamento: "Prisma Studio",
+        estado: "activo",
+        fechaCreacion: "2026-03-05",
+        ultimoAcceso: "2026-08-23 11:30",
+        ip: "192.168.5.22",
+        avatarUrl: ""
+    },
+    {
+        id: "usr-005",
+        nombre: "Rafael Mendez",
+        username: "rafaelm",
+        email: "rafael.mendez@orbitanalytics.ar",
+        telefono: "+54 11 6080 4412",
+        rol: "reclutador",
+        departamento: "Orbit Analytics",
+        estado: "inactivo",
+        fechaCreacion: "2026-04-18",
+        ultimoAcceso: "2026-07-15 08:50",
+        ip: "172.16.0.14",
+        avatarUrl: ""
+    },
+    {
+        id: "usr-006",
+        nombre: "Diego Morales Paredes",
+        username: "diegom",
+        email: "diego.morales@example.com",
+        telefono: "+54 11 5274 6308",
+        rol: "candidato",
+        departamento: "",
+        estado: "activo",
+        fechaCreacion: "2026-05-22",
+        ultimoAcceso: "2026-08-26 08:05",
+        ip: "10.0.1.77",
+        avatarUrl: ""
+    }
+];
+
+export const userActivityLogs = [
+    // Emily Johnson (admin)
+    { userId: "usr-001", tipo: "login", descripcion: "Inicio de sesión exitoso", fecha: "2026-08-26", hora: "09:12", ip: "192.168.1.45", modulo: "" },
+    { userId: "usr-001", tipo: "modulo", descripcion: "Visitó módulo Dashboard", fecha: "2026-08-26", hora: "09:13", ip: "192.168.1.45", modulo: "dashboardSection" },
+    { userId: "usr-001", tipo: "modulo", descripcion: "Visitó módulo Candidatos", fecha: "2026-08-26", hora: "09:18", ip: "192.168.1.45", modulo: "candidatesSection" },
+    { userId: "usr-001", tipo: "accion", descripcion: "Editó estado de candidato Valentina Rojas a 'En revisión'", fecha: "2026-08-26", hora: "09:22", ip: "192.168.1.45", modulo: "candidatesSection" },
+    { userId: "usr-001", tipo: "login", descripcion: "Inicio de sesión exitoso", fecha: "2026-08-25", hora: "14:30", ip: "192.168.1.45", modulo: "" },
+    { userId: "usr-001", tipo: "modulo", descripcion: "Visitó módulo Vacantes", fecha: "2026-08-25", hora: "14:35", ip: "192.168.1.45", modulo: "vacanciesSection" },
+    { userId: "usr-001", tipo: "accion", descripcion: "Publicó nueva vacante 'Backend Engineer Node.js'", fecha: "2026-08-25", hora: "15:01", ip: "192.168.1.45", modulo: "vacanciesSection" },
+    { userId: "usr-001", tipo: "perfil", descripcion: "Actualizó su número de teléfono", fecha: "2026-08-24", hora: "10:45", ip: "192.168.1.45", modulo: "profileSection" },
+    // Carlos Mendoza (reclutador)
+    { userId: "usr-002", tipo: "login", descripcion: "Inicio de sesión exitoso", fecha: "2026-08-25", hora: "17:45", ip: "192.168.2.110", modulo: "" },
+    { userId: "usr-002", tipo: "modulo", descripcion: "Visitó módulo Entrevistas", fecha: "2026-08-25", hora: "17:48", ip: "192.168.2.110", modulo: "interviewsSection" },
+    { userId: "usr-002", tipo: "accion", descripcion: "Agendó entrevista con Sofia Navarro", fecha: "2026-08-25", hora: "17:55", ip: "192.168.2.110", modulo: "interviewsSection" },
+    { userId: "usr-002", tipo: "modulo", descripcion: "Visitó módulo Seguimiento", fecha: "2026-08-25", hora: "18:10", ip: "192.168.2.110", modulo: "trackingSection" },
+    { userId: "usr-002", tipo: "login", descripcion: "Inicio de sesión exitoso", fecha: "2026-08-24", hora: "09:00", ip: "192.168.2.110", modulo: "" },
+    { userId: "usr-002", tipo: "accion", descripcion: "Revisó CV de Mateo Fernandez", fecha: "2026-08-24", hora: "09:20", ip: "192.168.2.110", modulo: "candidatesSection" },
+    // Valentina Rojas (candidato)
+    { userId: "usr-003", tipo: "login", descripcion: "Inicio de sesión exitoso", fecha: "2026-08-24", hora: "14:20", ip: "10.0.0.88", modulo: "" },
+    { userId: "usr-003", tipo: "modulo", descripcion: "Visitó Mi Perfil", fecha: "2026-08-24", hora: "14:22", ip: "10.0.0.88", modulo: "profileSection" },
+    { userId: "usr-003", tipo: "perfil", descripcion: "Actualizó habilidades del perfil", fecha: "2026-08-24", hora: "14:30", ip: "10.0.0.88", modulo: "profileSection" },
+    { userId: "usr-003", tipo: "modulo", descripcion: "Visitó Mis Postulaciones", fecha: "2026-08-24", hora: "14:35", ip: "10.0.0.88", modulo: "myApplicationsSection" },
+    // Mariana Solis (empresa)
+    { userId: "usr-004", tipo: "login", descripcion: "Inicio de sesión exitoso", fecha: "2026-08-23", hora: "11:30", ip: "192.168.5.22", modulo: "" },
+    { userId: "usr-004", tipo: "modulo", descripcion: "Visitó módulo Empresas", fecha: "2026-08-23", hora: "11:32", ip: "192.168.5.22", modulo: "companiesSection" },
+    { userId: "usr-004", tipo: "accion", descripcion: "Actualizó información de Prisma Studio", fecha: "2026-08-23", hora: "11:40", ip: "192.168.5.22", modulo: "companiesSection" },
+    // Rafael Mendez (inactivo)
+    { userId: "usr-005", tipo: "login", descripcion: "Inicio de sesión exitoso", fecha: "2026-07-15", hora: "08:50", ip: "172.16.0.14", modulo: "" },
+    { userId: "usr-005", tipo: "modulo", descripcion: "Visitó módulo Dashboard", fecha: "2026-07-15", hora: "08:52", ip: "172.16.0.14", modulo: "dashboardSection" },
+    // Diego Morales (candidato)
+    { userId: "usr-006", tipo: "login", descripcion: "Inicio de sesión exitoso", fecha: "2026-08-26", hora: "08:05", ip: "10.0.1.77", modulo: "" },
+    { userId: "usr-006", tipo: "modulo", descripcion: "Visitó Mis Postulaciones", fecha: "2026-08-26", hora: "08:08", ip: "10.0.1.77", modulo: "myApplicationsSection" },
+    { userId: "usr-006", tipo: "perfil", descripcion: "Actualizó su resumen profesional", fecha: "2026-08-25", hora: "16:30", ip: "10.0.1.77", modulo: "profileSection" },
+    { userId: "usr-006", tipo: "login", descripcion: "Inicio de sesión exitoso", fecha: "2026-08-25", hora: "16:25", ip: "10.0.1.77", modulo: "" }
+];
+
+export const mockData = { companies, vacancies, candidates, applications, interviews, tasks, users, userActivityLogs };
 
 export default mockData;
