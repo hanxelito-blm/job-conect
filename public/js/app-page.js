@@ -32,8 +32,8 @@ const PAGE_MODULES = {
 };
 
 function getCurrentPage() {
-    const file = window.location.pathname.split('/').pop() || 'dashboard.html';
-    return file.replace('.html', '');
+    const segment = window.location.pathname.split('/').filter(Boolean).pop() || 'dashboard';
+    return segment.replace('.html', '');
 }
 
 async function initPage() {
@@ -42,14 +42,14 @@ async function initPage() {
 
     // Auth check
     if (!AuthService.isAuthenticated()) {
-        window.location.href = 'login.html';
+        window.location.href = '/login';
         return;
     }
 
     // Access check
     if (sectionId && !AuthService.canAccess(sectionId)) {
         Toast.show('No tienes acceso a este módulo.', 'error');
-        window.location.href = 'dashboard.html';
+        window.location.href = '/dashboard';
         return;
     }
 
@@ -95,7 +95,7 @@ async function initPage() {
         logoutBtn.addEventListener('click', () => {
             AuthService.logout();
             Toast.show('Sesión cerrada correctamente.', 'info');
-            window.location.href = 'login.html';
+            window.location.href = '/login';
         });
     }
 

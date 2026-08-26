@@ -39,7 +39,7 @@
                 </svg>
                 <span class="lang-label" data-i18n="lang.code">ES</span>
             </button>
-            <a href="landing.html" class="btn btn-ghost" aria-label="Volver al inicio">
+            <a href="/" class="btn btn-ghost" aria-label="Volver al inicio">
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
                 <span>Volver</span>
             </a>
@@ -130,6 +130,11 @@
                         </div>
                         <span class="error-msg" id="passwordError" role="alert" aria-live="polite"></span>
                     </div>
+                    <label class="remember-row">
+                        <input type="checkbox" id="rememberMe" name="rememberMe">
+                        <span class="remember-check" aria-hidden="true"></span>
+                        <span data-i18n="login.remember">Recordar usuario</span>
+                    </label>
                     <button type="submit" class="btn btn-primary btn-login full-width" id="loginSubmitBtn">
                         <span class="btn-text" data-i18n="login.btn">Ingresar</span>
                         <span class="loader hidden" aria-label="Cargando..." role="status"></span>

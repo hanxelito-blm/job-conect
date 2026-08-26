@@ -1,6 +1,7 @@
 const TOKEN_KEY = 'jobConnectToken';
 const ROLE_KEY = 'jobconnect_role';
 const USER_KEY = 'jobconnect_user';
+const REMEMBER_USER_KEY = 'jobConnect_rememberedUser';
 
 const ROLE_ACCESS = {
     candidato: {
@@ -63,10 +64,12 @@ const ROLE_LABELS = {
 const callbacks = [];
 
 export const AuthService = {
-    login(token, role, username) {
-        localStorage.setItem(TOKEN_KEY, token);
-        localStorage.setItem(ROLE_KEY, role);
-        localStorage.setItem(USER_KEY, username || '');
+    login(token, role, username, remember = true) {
+        const store = remember ? localStorage : sessionStorage;
+        store.setItem(TOKEN_KEY, token);
+        store.setItem(ROLE_KEY, role);
+        store.setItem(USER_KEY, username || '');
+        localStorage.setItem(REMEMBER_USER_KEY, username || '');
         callbacks.forEach(fn => fn());
     },
 
@@ -74,23 +77,34 @@ export const AuthService = {
         localStorage.removeItem(TOKEN_KEY);
         localStorage.removeItem(ROLE_KEY);
         localStorage.removeItem(USER_KEY);
+        sessionStorage.removeItem(TOKEN_KEY);
+        sessionStorage.removeItem(ROLE_KEY);
+        sessionStorage.removeItem(USER_KEY);
         callbacks.forEach(fn => fn());
     },
 
+    _getFromAny(key) {
+        return localStorage.getItem(key) || sessionStorage.getItem(key);
+    },
+
     getToken() {
-        return localStorage.getItem(TOKEN_KEY);
+        return this._getFromAny(TOKEN_KEY);
     },
 
     getRole() {
-        return localStorage.getItem(ROLE_KEY) || 'candidato';
+        return this._getFromAny(ROLE_KEY) || 'candidato';
     },
 
     getUsername() {
-        return localStorage.getItem(USER_KEY) || '';
+        return this._getFromAny(USER_KEY) || '';
     },
 
     isAuthenticated() {
-        return !!localStorage.getItem(TOKEN_KEY);
+        return !!(localStorage.getItem(TOKEN_KEY) || sessionStorage.getItem(TOKEN_KEY));
+    },
+
+    getStoredUsername() {
+        return localStorage.getItem(REMEMBER_USER_KEY) || '';
     },
 
     getRoleConfig() {

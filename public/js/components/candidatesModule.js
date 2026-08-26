@@ -42,7 +42,7 @@ export const CandidatesModule = {
         this.drawerClose?.addEventListener('click', () => this.closeDrawer()); this.drawerBackdrop?.addEventListener('click', () => this.closeDrawer());
         this.drawerStatusSelect?.addEventListener('change', (event) => this.updateStatus(event.target.value));
         document.getElementById('candidateSaveNotes')?.addEventListener('click', () => { if (this.state.selected) { this.state.selected.notes = this.drawerNotes.value.trim(); Toast.show('Nota interna guardada.', 'success'); } });
-        document.getElementById('candidateScheduleInterview')?.addEventListener('click', () => { Toast.show('Candidato listo para agendar una entrevista.', 'success'); window.location.href = 'interviews.html'; });
+        document.getElementById('candidateScheduleInterview')?.addEventListener('click', () => { Toast.show('Candidato listo para agendar una entrevista.', 'success'); window.location.href = '/interviews'; });
         document.addEventListener('keydown', (event) => { if (event.key === 'Escape') this.closeDrawer(); });
     },
     async loadData(force = false) {

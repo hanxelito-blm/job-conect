@@ -189,7 +189,7 @@ export const TrackingModule = {
 
         this.tableBody.querySelectorAll('.tracking-detail-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                window.location.href = 'candidates.html';
+                window.location.href = '/candidates';
             });
         });
     },

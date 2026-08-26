@@ -305,7 +305,7 @@ export const DashboardModule = {
                     </button>
                 </td>
                 <td class="text-right">
-                    <a href="vacancies.html" class="btn-dash-action" title="Gestionar vacante">
+                    <a href="/vacancies" class="btn-dash-action" title="Gestionar vacante">
                         <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
                     </a>
                 </td>
@@ -399,7 +399,7 @@ export const DashboardModule = {
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
                         ${comp.status}
                     </span>
-                    <a href="companies.html" class="btn-company-view">
+                    <a href="/companies" class="btn-company-view">
                         Ver perfil
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
                     </a>

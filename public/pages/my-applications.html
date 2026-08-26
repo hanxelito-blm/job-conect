@@ -23,23 +23,23 @@
             <button id="logoutBtn" class="btn btn-secondary" aria-label="Cerrar sesión"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg><span data-i18n="topbar.logout">Cerrar Sesión</span></button>
         </nav>
     </header>
+    <div class="app-layout">
+        <aside class="sidebar" id="sidebar" aria-label="Menú lateral">
+            <nav>
+                <a href="/dashboard" class="sidebar-btn" data-page="dashboard">PRINCIPAL</a>
+                <a href="/companies" class="sidebar-btn" data-page="companies">MÓDULOS</a>
+                <a href="/vacancies" class="sidebar-btn" data-page="vacancies">Vacantes</a>
+                <a href="/interviews" class="sidebar-btn" data-page="interviews">Entrevistas</a>
+                <a href="/candidates" class="sidebar-btn" data-page="candidates">Candidatos</a>
+                <a href="/applications" class="sidebar-btn" data-page="applications">Postulaciones</a>
+                <a href="/tasks" class="sidebar-btn" data-page="tasks">Tareas</a>
+                <a href="/tracking" class="sidebar-btn" data-page="tracking">Seguimiento</a>
+                <a href="/profile" class="sidebar-btn" data-page="profile">Mi Perfil</a>
+                <a href="/my-applications" class="sidebar-btn active" data-page="my-applications" aria-current="page">Mis Postulaciones</a>
+            </nav>
+        </aside>
 
-    <aside class="sidebar" id="sidebar" aria-label="Menú lateral">
-        <nav>
-            <a href="dashboard.html" class="sidebar-btn" data-page="dashboard">PRINCIPAL</a>
-            <a href="companies.html" class="sidebar-btn" data-page="companies">MÓDULOS</a>
-            <a href="vacancies.html" class="sidebar-btn" data-page="vacancies">Vacantes</a>
-            <a href="interviews.html" class="sidebar-btn" data-page="interviews">Entrevistas</a>
-            <a href="candidates.html" class="sidebar-btn" data-page="candidates">Candidatos</a>
-            <a href="applications.html" class="sidebar-btn" data-page="applications">Postulaciones</a>
-            <a href="tasks.html" class="sidebar-btn" data-page="tasks">Tareas</a>
-            <a href="tracking.html" class="sidebar-btn" data-page="tracking">Seguimiento</a>
-            <a href="profile.html" class="sidebar-btn" data-page="profile">Mi Perfil</a>
-            <a href="my-applications.html" class="sidebar-btn active" data-page="my-applications" aria-current="page">Mis Postulaciones</a>
-        </nav>
-    </aside>
-
-    <main class="main-content" id="mainContent">
+        <main class="main-content" id="mainContent">
         <section id="myApplicationsSection" class="view-section" aria-label="Mis postulaciones">
             <div class="page-header">
                 <div><p class="eyebrow">MI CUENTA / SEGUIMIENTO</p><h1 data-i18n="myApps.title">Mis Postulaciones</h1><p data-i18n="myApps.subtitle">Seguimiento en tiempo real de tus aplicaciones</p></div>
@@ -52,6 +52,7 @@
             <div class="my-apps-timeline" id="myAppsTimeline"></div>
         </section>
     </main>
+    </div>
 
     <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="true"></div>
 

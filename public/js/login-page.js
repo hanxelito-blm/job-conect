@@ -14,7 +14,7 @@ let selectedRole = 'candidato';
 function initLogin() {
     // If already logged in, redirect to dashboard
     if (AuthService.isAuthenticated()) {
-        window.location.href = 'dashboard.html';
+        window.location.href = '/dashboard';
         return;
     }
 
@@ -27,6 +27,13 @@ function initLogin() {
     const passwordInput   = document.getElementById('password');
     const loginSubmitBtn  = document.getElementById('loginSubmitBtn');
     const loginAlert      = document.getElementById('loginAlert');
+    const rememberMe      = document.getElementById('rememberMe');
+
+    // Pre-fill remembered username
+    const storedUser = AuthService.getStoredUsername();
+    if (storedUser && usernameInput) {
+        usernameInput.value = storedUser;
+    }
 
     // Role selector
     const roleCards = document.querySelectorAll('.role-card');
@@ -72,11 +79,11 @@ function initLogin() {
 
         try {
             const data = await api.post('/auth/login', { username, password });
-            AuthService.login(data.token, selectedRole, username);
+            AuthService.login(data.token, selectedRole, username, rememberMe.checked);
             registerAccessLog(username);
             loginForm.reset();
             Toast.show(`¡Bienvenido, ${username}! (${AuthService.getRoleLabel()})`, 'success');
-            window.location.href = 'dashboard.html';
+            window.location.href = '/dashboard';
         } catch (err) {
             const msg = err.message || 'Credenciales incorrectas';
             loginAlert.textContent = msg;

@@ -81,6 +81,7 @@ const I18N = {
         'login.selectRole':       'Selecciona tu rol para acceder',
         'login.loginAs':          'Iniciar como',
         'login.back':             '← Volver',
+        'login.remember':         'Recordar usuario',
         // Sidebar
         'sidebar.tracking':       'Seguimiento',
         'sidebar.profile':        'Mi Perfil',
@@ -189,6 +190,7 @@ const I18N = {
         'login.selectRole':       'Select your role to access',
         'login.loginAs':          'Sign in as',
         'login.back':             '← Back',
+        'login.remember':         'Remember username',
         // Sidebar
         'sidebar.tracking':       'Tracking',
         'sidebar.profile':        'My Profile',
