@@ -95,12 +95,21 @@ export const InterviewsModule = {
         return items;
     },
 
+    getDeletedIds() {
+        try { return JSON.parse(localStorage.getItem('jc_deleted_interviews')) || []; } catch { return []; }
+    },
+
+    saveDeletedIds(ids) {
+        localStorage.setItem('jc_deleted_interviews', JSON.stringify(ids));
+    },
+
     async loadData(force = false) {
         if (this.state.items.length > 0 && !force) return;
         if (this.loader) this.loader.classList.remove('hidden');
 
         try {
-            this.state.items = seedInterviews.map((interview) => ({
+            const deletedIds = this.getDeletedIds();
+            this.state.items = seedInterviews.filter(i => !deletedIds.includes(i.id)).map((interview) => ({
                 ...interview,
                 candidateName: seedCandidates.find((candidate) => candidate.id === interview.candidatoId)?.nombreCompleto || interview.candidatoId,
                 vacancyTitle: seedVacancies.find((vacancy) => vacancy.id === interview.vacanteId)?.titulo || interview.vacanteId,
@@ -274,14 +283,16 @@ export const InterviewsModule = {
         });
         if (!result.isConfirmed) return;
 
+        this.state.items = this.state.items.filter((item) => item.id != id);
+        const deletedIds = this.getDeletedIds();
+        if (!deletedIds.includes(id)) deletedIds.push(id);
+        this.saveDeletedIds(deletedIds);
+        this.render();
+        this.updateStats();
+        Toast.show('Entrevista eliminada correctamente', 'success');
+
         try {
             await api.delete(`/comments/${id}`);
-            this.state.items = this.state.items.filter((item) => item.id != id);
-            this.render();
-            this.updateStats();
-            Toast.show('Entrevista eliminada correctamente', 'success');
-        } catch (error) {
-            Toast.show('Error al eliminar: ' + error.message, 'error');
-        }
+        } catch (_) { /* API no disponible para datos locales */ }
     }
 };

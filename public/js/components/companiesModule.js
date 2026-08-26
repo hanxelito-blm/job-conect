@@ -67,12 +67,21 @@ export const CompaniesModule = {
         });
     },
 
+    getDeletedIds() {
+        try { return JSON.parse(localStorage.getItem('jc_deleted_companies')) || []; } catch { return []; }
+    },
+
+    saveDeletedIds(ids) {
+        localStorage.setItem('jc_deleted_companies', JSON.stringify(ids));
+    },
+
     async loadData(force = false) {
         if (this.state.items.length > 0 && !force) return;
         if (this.loader) this.loader.classList.remove('hidden');
 
         try {
-            this.state.items = seedCompanies.map((company) => ({
+            const deletedIds = this.getDeletedIds();
+            this.state.items = seedCompanies.filter(c => !deletedIds.includes(c.id)).map((company) => ({
                 ...company,
                 userId: company.id,
                 products: Array.from({ length: company.vacantesActivasCount }, (_, index) => ({ id: `${company.id}-vac-${index + 1}` })),
@@ -254,14 +263,16 @@ export const CompaniesModule = {
         });
         if (!result.isConfirmed) return;
 
+        this.state.items = this.state.items.filter((item) => item.id != id);
+        const deletedIds = this.getDeletedIds();
+        if (!deletedIds.includes(id)) deletedIds.push(id);
+        this.saveDeletedIds(deletedIds);
+        this.render();
+        this.updateStats();
+        Toast.show('Empresa eliminada correctamente', 'success');
+
         try {
             await api.delete(`/carts/${id}`);
-            this.state.items = this.state.items.filter((item) => item.id != id);
-            this.render();
-            this.updateStats();
-            Toast.show('Empresa eliminada correctamente', 'success');
-        } catch (error) {
-            Toast.show('Error al eliminar: ' + error.message, 'error');
-        }
+        } catch (_) { /* API no disponible para datos locales */ }
     }
 };

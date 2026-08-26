@@ -2074,6 +2074,63 @@ html.light-mode .stage-bar {
 }
 
 /* =====================================================
+   DROPDOWN A11Y (DALTONISMO)
+   ===================================================== */
+.a11y-wrapper { position: relative; }
+.a11y-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 220px;
+    background: var(--panel-strong);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow);
+    padding: 6px;
+    z-index: 100;
+}
+.a11y-title {
+    margin: 0;
+    padding: 10px 12px 6px;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    font-weight: 600;
+}
+.a11y-option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 10px 12px;
+    border: none;
+    background: transparent;
+    color: var(--text-soft);
+    font-size: 0.85rem;
+    font-weight: 500;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background var(--transition), color var(--transition);
+}
+.a11y-option:hover {
+    background: var(--primary-soft);
+    color: var(--text);
+}
+.a11y-option.active {
+    background: var(--primary-soft);
+    color: var(--primary);
+    box-shadow: inset 2px 0 0 var(--primary);
+}
+html.light-mode .a11y-dropdown {
+    background: #fff;
+    border-color: rgba(26, 138, 106, 0.25);
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12);
+}
+html.light-mode .a11y-option { color: var(--text-soft); }
+html.light-mode .a11y-option:hover { background: var(--primary-soft); color: var(--text); }
+html.light-mode .a11y-option.active { color: var(--primary); background: var(--primary-soft); }
+
+/* =====================================================
    ACCESIBILIDAD DALTONICA
    ===================================================== */
 [data-colorblind="deuteranopia"] {

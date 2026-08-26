@@ -16,9 +16,10 @@ const ROLE_ACCESS = {
     },
     empresa: {
         label: 'Empresa',
-        sidebar: ['dashboardSection', 'companiesSection', 'vacanciesSection', 'candidatesSection'],
+        sidebar: ['dashboardSection', 'profileSection', 'companiesSection', 'vacanciesSection', 'candidatesSection'],
         modules: {
             dashboardSection: 'read',
+            profileSection: 'read',
             companiesSection: 'read',
             vacanciesSection: 'full',
             candidatesSection: 'read'
@@ -26,9 +27,10 @@ const ROLE_ACCESS = {
     },
     reclutador: {
         label: 'Reclutador',
-        sidebar: ['dashboardSection', 'companiesSection', 'vacanciesSection', 'interviewsSection', 'candidatesSection', 'applicationsSection', 'tasksSection', 'trackingSection', 'userManagementSection'],
+        sidebar: ['dashboardSection', 'profileSection', 'companiesSection', 'vacanciesSection', 'interviewsSection', 'candidatesSection', 'applicationsSection', 'tasksSection', 'trackingSection', 'userManagementSection'],
         modules: {
             dashboardSection: 'read',
+            profileSection: 'read',
             companiesSection: 'read',
             vacanciesSection: 'full',
             interviewsSection: 'full',
@@ -41,9 +43,10 @@ const ROLE_ACCESS = {
     },
     administrador: {
         label: 'Administrador',
-        sidebar: ['dashboardSection', 'companiesSection', 'vacanciesSection', 'interviewsSection', 'candidatesSection', 'applicationsSection', 'tasksSection', 'trackingSection', 'userManagementSection'],
+        sidebar: ['dashboardSection', 'profileSection', 'companiesSection', 'vacanciesSection', 'interviewsSection', 'candidatesSection', 'applicationsSection', 'tasksSection', 'trackingSection', 'userManagementSection'],
         modules: {
             dashboardSection: 'full',
+            profileSection: 'full',
             companiesSection: 'full',
             vacanciesSection: 'full',
             interviewsSection: 'full',
