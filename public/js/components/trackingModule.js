@@ -189,11 +189,7 @@ export const TrackingModule = {
 
         this.tableBody.querySelectorAll('.tracking-detail-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                const candidateId = btn.dataset.id;
-                document.querySelector(`[data-target="candidatesSection"]`)?.click();
-                setTimeout(() => {
-                    document.querySelector(`.candidate-person[data-id="${candidateId}"]`)?.click();
-                }, 300);
+                window.location.href = 'candidates.html';
             });
         });
     },

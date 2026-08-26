@@ -1,80 +1,149 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JobConnect - Autenticación</title>
-<link rel="stylesheet" href="../style/login.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="JobConnect – Portal corporativo de gestión de talento, vacantes y entrevistas.">
+    <title>JobConnect – Iniciar Sesión</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style/style.css">
+    <link rel="stylesheet" href="../vendor/driver.js/driver.css">
+    <link rel="stylesheet" href="../style/driver-overrides.css">
 </head>
 <body>
 
-  <!-- ===================== PANTALLA: SELECCIÓN DE ROL ===================== -->
-  <section id="screen-role-select">
-    <h1>JobConnect</h1>
-    <p>Selecciona tu tipo de acceso</p>
-    <button id="btn-role-user" type="button">USUARIO</button>
-    <button id="btn-role-admin" type="button">ADMINISTRADOR</button>
-    <button id="btn-role-company" type="button">EMPRESA</button>
-  </section>
+    <!-- TOPBAR -->
+    <header class="topbar" id="topbar" role="banner">
+        <div class="topbar-left">
+            <div class="logo" aria-label="JobConnect">
+                <svg class="logo-mark" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+                JobConnect
+            </div>
+        </div>
+        <nav class="topbar-right" id="topbarNav" aria-label="Opciones globales">
+            <button id="themeToggleBtn" class="btn-icon" title="Cambiar tema" aria-label="Cambiar entre tema claro y oscuro">
+                <svg id="themeIcon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </button>
+            <button id="langToggleBtn" class="btn-icon" title="Cambiar idioma" aria-label="Cambiar idioma del portal">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="2" y1="12" x2="22" y2="12"/>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                </svg>
+                <span class="lang-label" data-i18n="lang.code">ES</span>
+            </button>
+            <a href="landing.html" class="btn btn-ghost" aria-label="Volver al inicio">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+                <span>Volver</span>
+            </a>
+        </nav>
+    </header>
 
-  <!-- ===================== FORMULARIO: USUARIO ===================== -->
-  <section id="screen-form-user" hidden>
-    <h2>Acceso Usuario</h2>
-    <form id="form-user">
-      <label for="user-username">Usuario</label>
-      <input type="text" id="user-username" name="username" autocomplete="username" required>
+    <!-- LOGIN -->
+    <section id="loginSection" class="login-wrapper" aria-label="Iniciar sesión">
+        <canvas id="loginCanvas" aria-hidden="true"></canvas>
+        <div class="login-card" role="region" aria-label="Formulario de acceso">
+            <!-- Screen: Role Selector -->
+            <div id="loginRoleSelect">
+                <div class="login-brand">
+                    <span class="login-logo">
+                        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                        JobConnect
+                    </span>
+                    <p data-i18n="login.subtitle">Portal Corporativo</p>
+                </div>
+                <h2 data-i18n="login.selectRole">¿Quién eres?</h2>
+                <p class="role-select-hint" data-i18n="login.selectRoleHint">Selecciona tu perfil para continuar</p>
+                <div class="role-grid">
+                    <button class="role-card" data-role="candidato" type="button">
+                        <span class="role-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        </span>
+                        <strong>Candidato</strong>
+                        <small>Busco empleo</small>
+                    </button>
+                    <button class="role-card" data-role="empresa" type="button">
+                        <span class="role-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V7l9-4 9 4v14"/><path d="M9 21v-8h6v8"/><path d="M3 7h18"/></svg>
+                        </span>
+                        <strong>Empresa</strong>
+                        <small>Contrato talento</small>
+                    </button>
+                    <button class="role-card" data-role="reclutador" type="button">
+                        <span class="role-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        </span>
+                        <strong>Reclutador</strong>
+                        <small>Gestiono candidatos</small>
+                    </button>
+                    <button class="role-card" data-role="administrador" type="button">
+                        <span class="role-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        </span>
+                        <strong>Administrador</strong>
+                        <small>Control total</small>
+                    </button>
+                </div>
+            </div>
 
-      <label for="user-password">Contraseña</label>
-      <input type="password" id="user-password" name="password" autocomplete="current-password" required>
+            <!-- Screen: Login Form -->
+            <div id="loginFormScreen" class="hidden">
+                <button class="btn-back-role" id="btnBackToRoles" type="button" aria-label="Volver a selección de rol">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+                    Volver
+                </button>
+                <div class="login-brand">
+                    <span class="login-logo">
+                        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                        JobConnect
+                    </span>
+                    <p id="loginRoleLabel" class="login-role-badge">Candidato</p>
+                </div>
+                <h2 data-i18n="login.title">Iniciar Sesión</h2>
+                <form id="loginForm" novalidate aria-label="Formulario de inicio de sesión">
+                    <div class="form-group">
+                        <label for="username" data-i18n="login.user">USUARIO</label>
+                        <div class="input-wrap">
+                            <svg class="input-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            <input type="text" id="username" name="username" placeholder="emilys" required autocomplete="username" aria-required="true" aria-describedby="usernameError">
+                        </div>
+                        <span class="error-msg" id="usernameError" role="alert" aria-live="polite"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" data-i18n="login.pass">CONTRASEÑA</label>
+                        <div class="input-wrap">
+                            <svg class="input-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            <input type="password" id="password" name="password" placeholder="••••••••" required autocomplete="current-password" aria-required="true" aria-describedby="passwordError">
+                        </div>
+                        <span class="error-msg" id="passwordError" role="alert" aria-live="polite"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-login full-width" id="loginSubmitBtn">
+                        <span class="btn-text" data-i18n="login.btn">Ingresar</span>
+                        <span class="loader hidden" aria-label="Cargando..." role="status"></span>
+                    </button>
+                </form>
+                <div id="loginAlert" class="alert hidden" role="alert" aria-live="assertive"></div>
+            </div>
+        </div>
+    </section>
 
-      <button type="submit" id="btn-login-user">Iniciar sesión</button>
-      <button type="button" class="btn-back" data-back="role-select">Regresar</button>
-    </form>
-  </section>
+    <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="false"></div>
 
-  <!-- ===================== FORMULARIO: ADMINISTRADOR ===================== -->
-  <section id="screen-form-admin" hidden>
-    <h2>Acceso Administrador</h2>
-    <form id="form-admin">
-      <label for="admin-password">Contraseña privada de administrador</label>
-      <input type="password" id="admin-password" name="adminPassword" autocomplete="current-password" required>
-
-      <button type="submit" id="btn-login-admin">Iniciar sesión</button>
-      <button type="button" class="btn-back" data-back="role-select">Regresar</button>
-    </form>
-  </section>
-
-  <!-- ===================== FORMULARIO: EMPRESA ===================== -->
-  <section id="screen-form-company" hidden>
-    <h2>Acceso Empresa</h2>
-    <form id="form-company">
-      <label for="company-name">Nombre de la empresa</label>
-      <input type="text" id="company-name" name="companyName" autocomplete="organization" required>
-
-      <label for="company-password">Contraseña</label>
-      <input type="password" id="company-password" name="password" autocomplete="current-password" required>
-
-      <label for="company-employer-code">Código de empleador</label>
-      <input type="text" id="company-employer-code" name="employerCode" required>
-
-      <button type="submit" id="btn-login-company">Iniciar sesión</button>
-      <button type="button" class="btn-back" data-back="role-select">Regresar</button>
-    </form>
-  </section>
-
-  <!-- ===================== ÁREA DE MENSAJES ===================== -->
-  <div id="message-area" role="alert" aria-live="polite" hidden></div>
-
-  <!-- ===================== DASHBOARD (PROTEGIDO) ===================== -->
-  <section id="screen-dashboard" hidden>
-    <h2>Dashboard</h2> 
-    <p id="dashboard-welcome"></p>
-    <div id="dashboard-content">
-      <!-- Contenido protegido / módulos privados van aquí -->
-    </div>
-    <button id="btn-logout" type="button">Cerrar sesión</button>
-  </section>
-
-  <script src="../js/login.js"></script>
+    <script src="../vendor/sweetalert2/sweetalert2.min.js"></script>
+    <script src="../vendor/driver.js/driver.js"></script>
+    <script type="module" src="../js/login-page.js"></script>
 </body>
 </html>
