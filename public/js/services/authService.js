@@ -25,7 +25,7 @@ const ROLE_ACCESS = {
     },
     reclutador: {
         label: 'Reclutador',
-        sidebar: ['dashboardSection', 'companiesSection', 'vacanciesSection', 'interviewsSection', 'candidatesSection', 'applicationsSection', 'tasksSection', 'trackingSection'],
+        sidebar: ['dashboardSection', 'companiesSection', 'vacanciesSection', 'interviewsSection', 'candidatesSection', 'applicationsSection', 'tasksSection', 'trackingSection', 'userManagementSection'],
         modules: {
             dashboardSection: 'read',
             companiesSection: 'read',
@@ -34,12 +34,13 @@ const ROLE_ACCESS = {
             candidatesSection: 'full',
             applicationsSection: 'full',
             tasksSection: 'full',
-            trackingSection: 'read'
+            trackingSection: 'read',
+            userManagementSection: 'read'
         }
     },
     administrador: {
         label: 'Administrador',
-        sidebar: ['dashboardSection', 'companiesSection', 'vacanciesSection', 'interviewsSection', 'candidatesSection', 'applicationsSection', 'tasksSection', 'trackingSection'],
+        sidebar: ['dashboardSection', 'companiesSection', 'vacanciesSection', 'interviewsSection', 'candidatesSection', 'applicationsSection', 'tasksSection', 'trackingSection', 'userManagementSection'],
         modules: {
             dashboardSection: 'full',
             companiesSection: 'full',
@@ -48,7 +49,8 @@ const ROLE_ACCESS = {
             candidatesSection: 'full',
             applicationsSection: 'full',
             tasksSection: 'full',
-            trackingSection: 'full'
+            trackingSection: 'full',
+            userManagementSection: 'full'
         }
     }
 };
