@@ -107,10 +107,92 @@ class JobConnectChatbot {
     }
 
     addWelcomeMessage() {
-        this.addMessage(
-            'bot',
-            '¡Hola! Bienvenido/a a **JobConnect**. Soy **JobBot**, tu asistente virtual. ¿En qué puedo ayudarte hoy?'
-        );
+        const welcomeEl = document.createElement('div');
+        welcomeEl.className = 'chatbot-message chatbot-message--bot';
+        welcomeEl.innerHTML = `
+            <div class="chatbot-message-avatar">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                    <path d="M2 17l10 5 10-5"/>
+                    <path d="M2 12l10 5 10-5"/>
+                </svg>
+            </div>
+            <div class="chatbot-message-content">
+                ¡Hola! Bienvenido/a a <strong>JobConnect</strong>. Soy <strong>JobBot</strong>, tu asistente virtual. ¿En qué puedo ayudarte?<br><br>
+                <div class="chatbot-suggestions">
+                    <button class="chatbot-suggestion-btn" data-msg="Quiero ver las vacantes disponibles">📋 Ver vacantes</button>
+                    <button class="chatbot-suggestion-btn" data-msg="Quiero ver mis postulaciones">📄 Mis postulaciones</button>
+                    <button class="chatbot-suggestion-btn" data-msg="Quiero agendar una entrevista">📅 Agendar entrevista</button>
+                    <button class="chatbot-suggestion-btn" data-msg="Quiero gestionar candidatos">👥 Gestionar candidatos</button>
+                    <button class="chatbot-suggestion-btn" data-msg="Quiero ver mis tareas pendientes">✅ Mis tareas</button>
+                    <button class="chatbot-suggestion-btn" data-msg="Quiero ver las empresas registradas">🏢 Empresas</button>
+                </div>
+            </div>
+        `;
+        document.getElementById('chatbotMessages').appendChild(welcomeEl);
+
+        welcomeEl.querySelectorAll('.chatbot-suggestion-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const input = document.getElementById('chatbotInput');
+                input.value = btn.dataset.msg;
+                this.sendMessage();
+            });
+        });
+    }
+
+    getLocalResponse(message) {
+        const msg = message.toLowerCase();
+
+        const responses = [
+            {
+                keywords: ['vacante', 'vacantes', 'empleo', 'trabajo', 'puesto'],
+                answer: '📋 Puedo ayudarte con vacantes. En **JobConnect** puedes:\n\n- Ver todas las vacantes activas en la sección **Vacantes**\n- Filtrar por empresa, categoría o ubicación\n- Postularte directamente desde la plataforma\n\n¿Te gustaría que te guíe hacia la página de vacantes?'
+            },
+            {
+                keywords: ['postulacion', 'postulaciones', 'candidatura', 'aplicar', 'aplique'],
+                answer: '📄 Para ver tus postulaciones, ve a **Mis Postulaciones** desde el menú lateral. Allí podrás:\n\n- Seguir el estado de cada postulación (Pendiente, En revisión, Entrevista, Aceptada, Rechazada)\n- Ver detalles de cada proceso\n- Actualizar tu perfil para mejorar tus oportunidades'
+            },
+            {
+                keywords: ['entrevista', 'entrevistas', 'agendar', 'cita', 'reunion'],
+                answer: '📅 Para agendar o ver entrevistas:\n\n- Ve a la sección **Entrevistas** desde el menú lateral\n- Puedes ver entrevistas programadas y pendientes\n- Los reclutadores pueden crear nuevas entrevistas desde ahí\n\n¿Necesitas ayuda con algo específico sobre entrevistas?'
+            },
+            {
+                keywords: ['candidato', 'candidatos', 'talento', 'perfil'],
+                answer: '👥 En la sección **Candidatos** puedes:\n\n- Explorar el talento disponible en la plataforma\n- Ver perfiles profesionales detallados\n- Filtrar por habilidades, experiencia y más\n\nSi eres candidato, asegúrate de completar tu perfil en **Mi Perfil** para destacar.'
+            },
+            {
+                keywords: ['tarea', 'tareas', 'pendiente', 'pendientes'],
+                answer: '✅ En **Mis Tareas** puedes gestionar tus actividades pendientes:\n\n- Crear nuevas tareas de reclutamiento\n- Marcar tareas como completadas\n- Organizar tu flujo de trabajo diario'
+            },
+            {
+                keywords: ['empresa', 'empresas', 'compañia', 'compañia'],
+                answer: '🏢 En la sección **Empresas** puedes:\n\n- Ver todas las empresas registradas en JobConnect\n- Explorar las vacantes de cada empresa\n- Conocer más sobre cada organización'
+            },
+            {
+                keywords: ['perfil', 'mi perfil', 'datos', 'editar perfil', 'informacion personal'],
+                answer: '👤 Para gestionar tu perfil:\n\n- Ve a **Mi Perfil** desde el menú lateral\n- Actualiza tu información personal\n- Agrega experiencia, habilidades y educación\n- Un perfil completo aumenta tus oportunidades'
+            },
+            {
+                keywords: ['seguimiento', 'tracking', 'pipeline', 'proceso'],
+                answer: '📊 El **Pipeline de Seguimiento** te permite:\n\n- Ver el flujo completo de candidatos por etapa\n- Mover candidatos entre fases del proceso\n- Hacer seguimiento en tiempo real de cada postulación'
+            },
+            {
+                keywords: ['hola', 'buenos dias', 'buenas tardes', 'hey', 'hi'],
+                answer: '¡Hola! 👋 ¿Cómo puedo ayudarte? Puedo asistirte con:\n\n- 📋 **Vacantes** disponibles\n- 📄 **Mis postulaciones**\n- 📅 **Entrevistas**\n- 👥 **Candidatos**\n- ✅ **Tareas** pendientes\n- 🏢 **Empresas** registradas\n\nSolo pregúntame lo que necesites.'
+            },
+            {
+                keywords: ['ayuda', 'help', 'como funciona', 'que puedes hacer', 'que puedes'],
+                answer: '🤖 Soy **JobBot**, tu asistente virtual de **JobConnect**. Puedo ayudarte con:\n\n- 📋 Información sobre **vacantes** disponibles\n- 📄 Consultar el estado de tus **postulaciones**\n- 📅 Gestionar tus **entrevistas**\n- 👥 Explorar **candidatos** y talento\n- ✅ Revisar tus **tareas** pendientes\n- 🏢 Conocer las **empresas** registradas\n- 👤 Gestionar tu **perfil**\n\n¿Sobre qué tema necesitas ayuda?'
+            }
+        ];
+
+        for (const r of responses) {
+            if (r.keywords.some(kw => msg.includes(kw))) {
+                return r.answer;
+            }
+        }
+
+        return 'Entiendo tu consulta. Actualmente puedo ayudarte con:\n\n- 📋 **Vacantes** disponibles\n- 📄 **Mis postulaciones**\n- 📅 **Entrevistas**\n- 👥 **Candidatos**\n- ✅ **Tareas** pendientes\n- 🏢 **Empresas**\n\n¿Sobre cuál de estos temas te gustaría más información?';
     }
 
     toggleChat() {
@@ -128,12 +210,14 @@ class JobConnectChatbot {
         const iconOpen = toggleBtn.querySelector('.chatbot-icon-open');
         const iconClose = toggleBtn.querySelector('.chatbot-icon-close');
         const input = document.getElementById('chatbotInput');
+        const sendBtn = document.getElementById('chatbotSend');
 
         window.classList.add('chatbot-window--open');
         toggleBtn.classList.add('chatbot-toggle--active');
         iconOpen.style.display = 'none';
         iconClose.style.display = 'block';
         input.disabled = false;
+        sendBtn.disabled = false;
         input.focus();
     }
 
@@ -180,11 +264,10 @@ class JobConnectChatbot {
             this.addMessage('bot', data.message);
             this.messages.push({ role: 'assistant', content: data.message });
         } catch (error) {
-            console.error('Error:', error);
-            this.addMessage(
-                'bot',
-                'Lo siento, hubo un error al procesar tu mensaje. Por favor, intenta de nuevo o déjame tu correo electrónico para que un asesor te contacte.'
-            );
+            console.warn('API no disponible, usando respuestas locales:', error.message);
+            const localReply = this.getLocalResponse(message);
+            this.addMessage('bot', localReply);
+            this.messages.push({ role: 'assistant', content: localReply });
         } finally {
             this.setLoading(false);
         }
