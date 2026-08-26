@@ -1,9 +1,5 @@
 // public/js/components/dashboardModule.js
 import { api } from '../services/apiService.js';
-import { VacanciesModule } from './vacanciesModule.js';
-import { InterviewsModule } from './interviewsModule.js';
-import { CompaniesModule } from './companiesModule.js';
-import { CandidatesModule } from './candidatesModule.js';
 import { companies as seedCompanies, vacancies as seedVacancies, candidates as seedCandidates, interviews as seedInterviews } from '../mockData.js';
 
 export const DashboardModule = {
@@ -53,68 +49,10 @@ export const DashboardModule = {
             this.refreshBtn.addEventListener('click', () => this.loadData(true));
         }
 
-        if (this.qaNewVacancy) {
-            this.qaNewVacancy.addEventListener('click', () => {
-                if (VacanciesModule.openModal) {
-                    VacanciesModule.openModal();
-                } else {
-                    const btn = document.getElementById('btnNewVacancy');
-                    if (btn) btn.click();
-                }
-            });
-        }
-
-        if (this.qaNewInterview) {
-            this.qaNewInterview.addEventListener('click', () => {
-                if (InterviewsModule.openModal) {
-                    InterviewsModule.openModal();
-                } else {
-                    const btn = document.getElementById('btnNewInterview');
-                    if (btn) btn.click();
-                }
-            });
-        }
-
-        if (this.qaNewCompany) {
-            this.qaNewCompany.addEventListener('click', () => {
-                if (CompaniesModule.openModal) {
-                    CompaniesModule.openModal();
-                } else {
-                    const btn = document.getElementById('btnNewCompany');
-                    if (btn) btn.click();
-                }
-            });
-        }
-
-        if (this.qaNewCandidate) {
-            this.qaNewCandidate.addEventListener('click', () => {
-                if (CandidatesModule.openModal) {
-                    CandidatesModule.openModal();
-                } else {
-                    const btn = document.getElementById('btnNewCandidate');
-                    if (btn) btn.click();
-                }
-            });
-        }
-
-        // Sincronización cuando se creen o editen datos en otros módulos
-        window.addEventListener('jobconnect:datachange', () => {
-            if (this.state.isLoaded) {
-                this.loadData(true);
-            }
-        });
-
-        // Delegación de eventos para navegación y cambios de estado en widgets
+        // Delegación de eventos para cambios de estado en widgets
         const dashboardSection = document.getElementById('dashboardSection');
         if (dashboardSection) {
             dashboardSection.addEventListener('click', (e) => {
-                const navTarget = e.target.closest('[data-dash-nav]');
-                if (navTarget) {
-                    const targetId = navTarget.getAttribute('data-dash-nav');
-                    const sidebarBtn = document.querySelector(`.sidebar-btn[data-target="${targetId}"]`);
-                    if (sidebarBtn) sidebarBtn.click();
-                }
-
                 // Cambiar estado de entrevista rápido
                 const interviewStatusBtn = e.target.closest('.interview-status-toggle');
                 if (interviewStatusBtn) {
@@ -367,9 +305,9 @@ export const DashboardModule = {
                     </button>
                 </td>
                 <td class="text-right">
-                    <button class="btn-dash-action" data-dash-nav="vacanciesSection" title="Gestionar vacante">
+                    <a href="/vacancies" class="btn-dash-action" title="Gestionar vacante">
                         <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
-                    </button>
+                    </a>
                 </td>
             `;
             this.vacanciesTableBody.appendChild(tr);
@@ -461,10 +399,10 @@ export const DashboardModule = {
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
                         ${comp.status}
                     </span>
-                    <button class="btn-company-view" data-dash-nav="companiesSection">
+                    <a href="/companies" class="btn-company-view">
                         Ver perfil
                         <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
-                    </button>
+                    </a>
                 </div>
             `;
             this.companiesGrid.appendChild(card);
