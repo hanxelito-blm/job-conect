@@ -66,6 +66,55 @@ const I18N = {
         'a11y.monochrome':        'Alto Contraste',
         // Loading
         'loading.candidates':     'Cargando candidatos...',
+        // Tour
+        'tour.guide':             'Guía',
+        // Filters
+        'filter.all':             'Todos',
+        'filter.clear':           'Limpiar',
+        'filter.noResults':       'No se encontraron resultados con estos filtros.',
+        'filter.search.placeholder': 'Buscar...',
+        // Roles
+        'role.candidato':         'Candidato',
+        'role.empresa':           'Empresa',
+        'role.reclutador':        'Reclutador',
+        'role.administrador':     'Administrador',
+        'login.selectRole':       'Selecciona tu rol para acceder',
+        'login.loginAs':          'Iniciar como',
+        'login.back':             '← Volver',
+        // Sidebar
+        'sidebar.tracking':       'Seguimiento',
+        'sidebar.profile':        'Mi Perfil',
+        'sidebar.myApplications': 'Mis Postulaciones',
+        // Profile
+        'profile.title':          'Mi Perfil',
+        'profile.subtitle':       'Administra tu información personal y profesional',
+        'profile.firstName':      'Nombre',
+        'profile.lastName':       'Apellido',
+        'profile.email':          'Correo electrónico',
+        'profile.phone':          'Teléfono',
+        'profile.titleField':     'Título profesional',
+        'profile.location':       'Ubicación',
+        'profile.summary':        'Resumen profesional',
+        'profile.linkedin':       'LinkedIn URL',
+        'profile.github':         'GitHub URL',
+        'profile.portfolio':      'Portafolio URL',
+        'profile.cvUrl':          'URL del CV',
+        'profile.skills':         'Habilidades',
+        'profile.addSkill':       'Agregar',
+        'profile.addSkillPlaceholder': 'Agregar habilidad...',
+        'profile.save':           'Guardar cambios',
+        'profile.saved':          'Perfil guardado correctamente',
+        // My Applications
+        'myApps.title':           'Mis Postulaciones',
+        'myApps.subtitle':        'Seguimiento en tiempo real de tus aplicaciones',
+        'myApps.search':          'Buscar por vacante o empresa...',
+        'myApps.allStatuses':     'Todos los estados',
+        'myApps.clear':           'Limpiar',
+        'myApps.empty':           'No se encontraron postulaciones',
+        'myApps.interview':       'Entrevista',
+        // Tracking
+        'tracking.title':         'Seguimiento de Candidatos',
+        'tracking.subtitle':      'Pipeline de reclutamiento y progreso de candidatos',
     },
     en: {
         'lang.code':              'EN',
@@ -125,6 +174,55 @@ const I18N = {
         'a11y.monochrome':        'High Contrast',
         // Loading
         'loading.candidates':     'Loading candidates...',
+        // Tour
+        'tour.guide':             'Guide',
+        // Filters
+        'filter.all':             'All',
+        'filter.clear':           'Clear',
+        'filter.noResults':       'No results found with these filters.',
+        'filter.search.placeholder': 'Search...',
+        // Roles
+        'role.candidato':         'Candidate',
+        'role.empresa':           'Company',
+        'role.reclutador':        'Recruiter',
+        'role.administrador':     'Administrator',
+        'login.selectRole':       'Select your role to access',
+        'login.loginAs':          'Sign in as',
+        'login.back':             '← Back',
+        // Sidebar
+        'sidebar.tracking':       'Tracking',
+        'sidebar.profile':        'My Profile',
+        'sidebar.myApplications': 'My Applications',
+        // Profile
+        'profile.title':          'My Profile',
+        'profile.subtitle':       'Manage your personal and professional information',
+        'profile.firstName':      'First Name',
+        'profile.lastName':       'Last Name',
+        'profile.email':          'Email',
+        'profile.phone':          'Phone',
+        'profile.titleField':     'Professional Title',
+        'profile.location':       'Location',
+        'profile.summary':        'Professional Summary',
+        'profile.linkedin':       'LinkedIn URL',
+        'profile.github':         'GitHub URL',
+        'profile.portfolio':      'Portfolio URL',
+        'profile.cvUrl':          'CV URL',
+        'profile.skills':         'Skills',
+        'profile.addSkill':       'Add',
+        'profile.addSkillPlaceholder': 'Add skill...',
+        'profile.save':           'Save Changes',
+        'profile.saved':          'Profile saved successfully',
+        // My Applications
+        'myApps.title':           'My Applications',
+        'myApps.subtitle':        'Real-time tracking of your applications',
+        'myApps.search':          'Search by vacancy or company...',
+        'myApps.allStatuses':     'All statuses',
+        'myApps.clear':           'Clear',
+        'myApps.empty':           'No applications found',
+        'myApps.interview':       'Interview',
+        // Tracking
+        'tracking.title':         'Candidate Tracking',
+        'tracking.subtitle':      'Recruitment pipeline and candidate progress',
     }
 };
 

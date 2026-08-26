@@ -28,12 +28,52 @@ export const TasksModule = {
         this.userIdInput = document.getElementById('taskUserId');
         this.completedInput = document.getElementById('taskCompleted');
         this.modalTitle = document.getElementById('taskModalTitle');
+
+        this.searchInput = document.getElementById('tasksSearch');
+        this.statusFilter = document.getElementById('tasksStatusFilter');
+        this.priorityFilter = document.getElementById('tasksPriorityFilter');
+        this.clearFiltersBtn = document.getElementById('tasksClearFilters');
     },
 
     bindEvents() {
         if (this.btnNew) this.btnNew.addEventListener('click', () => this.openModal());
         if (this.cancelBtn) this.cancelBtn.addEventListener('click', () => this.closeModal());
         if (this.form) this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+
+        if (this.searchInput) this.searchInput.addEventListener('input', () => this.render());
+        [this.statusFilter, this.priorityFilter].forEach(control => {
+            if (control) control.addEventListener('change', () => this.render());
+        });
+        if (this.clearFiltersBtn) this.clearFiltersBtn.addEventListener('click', () => this.clearFilters());
+    },
+
+    clearFilters() {
+        if (this.searchInput) this.searchInput.value = '';
+        if (this.statusFilter) this.statusFilter.value = '';
+        if (this.priorityFilter) this.priorityFilter.value = '';
+        this.render();
+    },
+
+    getFilteredItems() {
+        let items = [...this.state.items];
+        const searchText = this.searchInput ? this.searchInput.value.trim().toLowerCase() : '';
+        const statusValue = this.statusFilter ? this.statusFilter.value : '';
+        const priorityValue = this.priorityFilter ? this.priorityFilter.value : '';
+
+        if (searchText) {
+            items = items.filter((item) => item.todo && item.todo.toLowerCase().includes(searchText));
+        }
+
+        if (statusValue) {
+            const completed = statusValue === 'completed';
+            items = items.filter((item) => item.completed === completed);
+        }
+
+        if (priorityValue) {
+            items = items.filter((item) => item.prioridad === priorityValue);
+        }
+
+        return items;
     },
 
     async loadData(force = false) {
@@ -45,7 +85,8 @@ export const TasksModule = {
                 ...task,
                 todo: task.titulo,
                 userId: task.responsable,
-                completed: task.completada
+                completed: task.completada,
+                prioridad: task.prioridad
             }));
             this.render();
             this.updateStats();
@@ -79,28 +120,32 @@ export const TasksModule = {
         if (!this.tbody) return;
         this.tbody.innerHTML = '';
 
-        if (this.state.items.length === 0) {
+        const filteredItems = this.getFilteredItems();
+
+        if (filteredItems.length === 0) {
+            const hasFilters = (this.searchInput && this.searchInput.value.trim()) || (this.statusFilter && this.statusFilter.value);
             this.tbody.innerHTML = `
                 <tr>
                     <td colspan="5" class="empty-state-cell">
                         <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3L22 1"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-                        <p>No hay tareas registradas.</p>
+                        <p>${hasFilters ? 'No se encontraron tareas con los filtros aplicados.' : 'No hay tareas registradas.'}</p>
                     </td>
                 </tr>
             `;
             return;
         }
 
-        this.state.items.forEach((item) => {
+        filteredItems.forEach((item) => {
             const tr = document.createElement('tr');
             const estado = item.completed ? 'Completada' : 'Pendiente';
             const badgeClass = item.completed ? 'badge-green' : 'badge-yellow';
+            const priorityClass = item.prioridad === 'Alta' ? 'badge-red' : item.prioridad === 'Media' ? 'badge-yellow' : 'badge-green';
 
             tr.innerHTML = `
                 <td>${item.id}</td>
                 <td>${item.todo}</td>
                 <td><span class="${badgeClass}">${estado}</span></td>
-                <td>ID Usuario: ${item.userId}</td>
+                <td><span class="${priorityClass}">${item.prioridad || 'Normal'}</span></td>
                 <td>
                     <button class="btn btn-small btn-primary edit-btn" data-id="${item.id}">Editar</button>
                     <button class="btn btn-small btn-secondary delete-btn" data-id="${item.id}">Eliminar</button>
@@ -194,7 +239,17 @@ export const TasksModule = {
     },
 
     async handleDelete(id) {
-        if (!confirm('¿Estás seguro de eliminar esta tarea?')) return;
+        const result = await Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Esta tarea será eliminada permanentemente.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3ee6ab',
+            cancelButtonColor: '#374151',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        });
+        if (!result.isConfirmed) return;
 
         try {
             await api.delete(`/todos/${id}`);

@@ -3,6 +3,8 @@ import { api } from '../services/apiService.js';
 import { Toast } from '../services/toastService.js';
 import { vacancies as seedVacancies, companies as seedCompanies } from '../mockData.js';
 
+const escapeHtml = (value = '') => String(value).replace(/[&<>'"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[char]));
+
 export const VacanciesModule = {
     state: {
         items: []
@@ -10,6 +12,7 @@ export const VacanciesModule = {
 
     init() {
         this.cacheDOM();
+        this.populateDeptFilter();
         this.bindEvents();
     },
 
@@ -23,6 +26,12 @@ export const VacanciesModule = {
         this.statsElem = document.getElementById('statsVacancies');
         this.submitBtn = this.form ? this.form.querySelector('button[type="submit"]') : null;
 
+        this.search = document.getElementById('vacancySearch');
+        this.deptFilter = document.getElementById('vacancyDeptFilter');
+        this.statusFilter = document.getElementById('vacancyStatusFilter');
+        this.locationFilter = document.getElementById('vacancyLocationFilter');
+        this.clearFilters = document.getElementById('vacancyClearFilters');
+
         this.idInput = document.getElementById('vacancyId');
         this.titleInput = document.getElementById('vacancyTitle');
         this.brandInput = document.getElementById('vacancyBrand');
@@ -30,10 +39,30 @@ export const VacanciesModule = {
         this.modalTitle = document.getElementById('vacancyModalTitle');
     },
 
+    populateDeptFilter() {
+        if (!this.deptFilter) return;
+        const departments = [...new Set(seedVacancies.map((vacancy) => vacancy.departamento).filter(Boolean))];
+        this.deptFilter.innerHTML = '<option value="">Todos los departamentos</option>';
+        departments.forEach((department) => this.deptFilter.insertAdjacentHTML('beforeend', `<option value="${escapeHtml(department)}">${escapeHtml(department)}</option>`));
+    },
+
     bindEvents() {
         if (this.btnNew) this.btnNew.addEventListener('click', () => this.openModal());
         if (this.cancelBtn) this.cancelBtn.addEventListener('click', () => this.closeModal());
         if (this.form) this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+
+        this.search?.addEventListener('input', () => this.render());
+        [this.deptFilter, this.statusFilter, this.locationFilter].forEach((control) => {
+            if (!control) return;
+            control.addEventListener('change', () => this.render());
+        });
+        if (this.clearFilters) this.clearFilters.addEventListener('click', () => {
+            if (this.search) this.search.value = '';
+            if (this.deptFilter) this.deptFilter.value = '';
+            if (this.statusFilter) this.statusFilter.value = '';
+            if (this.locationFilter) this.locationFilter.value = '';
+            this.render();
+        });
     },
 
     async loadData(force = false) {
@@ -47,7 +76,9 @@ export const VacanciesModule = {
                 brand: seedCompanies.find((company) => company.id === vacancy.empresaId)?.nombre || 'Empresa',
                 category: vacancy.departamento,
                 price: Number(vacancy.rangoSalarial.match(/[\d,]+/)?.[0].replace(',', '') || 0),
-                applicants: vacancy.postulantesCount
+                applicants: vacancy.postulantesCount,
+                estado: vacancy.estado,
+                ubicacion: vacancy.ubicacion
             }));
             this.render();
             this.updateStats();
@@ -77,6 +108,19 @@ export const VacanciesModule = {
         `;
     },
 
+    getFilteredItems() {
+        const query = (this.search ? this.search.value : '').trim().toLowerCase();
+        const department = this.deptFilter ? this.deptFilter.value : '';
+        const status = this.statusFilter ? this.statusFilter.value : '';
+        const location = this.locationFilter ? this.locationFilter.value : '';
+        return this.state.items.filter((item) =>
+            (!query || `${item.title || ''} ${item.brand || ''}`.toLowerCase().includes(query)) &&
+            (!department || item.category === department) &&
+            (!status || item.estado === status) &&
+            (!location || item.ubicacion === location)
+        );
+    },
+
     render() {
         if (!this.tbody) return;
         this.tbody.innerHTML = '';
@@ -93,13 +137,27 @@ export const VacanciesModule = {
             return;
         }
 
-        this.state.items.forEach((item) => {
+        const items = this.getFilteredItems();
+        if (items.length === 0) {
+            this.tbody.innerHTML = `
+                <tr>
+                    <td colspan="5" class="empty-state-cell">
+                        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+                        <p>No hay vacantes con estos filtros.</p>
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        items.forEach((item) => {
             const tr = document.createElement('tr');
+            const statusClass = (item.estado || 'Activa').toLowerCase().replaceAll(' ', '-');
             tr.innerHTML = `
                 <td>${item.id}</td>
-                <td><strong>${item.title}</strong><br><small>${item.category || 'General'}</small></td>
+                <td><strong>${item.title}</strong><br><small>${item.category || 'General'}</small><br><small class="table-muted">${item.ubicacion || ''}</small></td>
                 <td>${item.brand || 'N/A'}</td>
-                <td>$${Number(item.price || 0).toFixed(2)}</td>
+                <td><span class="status-badge status-${statusClass}">${item.estado || 'Activa'}</span><br><small>$${Number(item.price || 0).toFixed(2)}</small></td>
                 <td>
                     <button class="btn btn-small btn-primary edit-btn" data-id="${item.id}">Editar</button>
                     <button class="btn btn-small btn-secondary delete-btn" data-id="${item.id}">Eliminar</button>
@@ -193,7 +251,17 @@ export const VacanciesModule = {
     },
 
     async handleDelete(id) {
-        if (!confirm('¿Estás seguro de eliminar esta vacante?')) return;
+        const result = await Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Esta vacante será eliminada permanentemente.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3ee6ab',
+            cancelButtonColor: '#374151',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        });
+        if (!result.isConfirmed) return;
 
         try {
             await api.delete(`/products/${id}`);

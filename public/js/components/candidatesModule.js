@@ -36,7 +36,8 @@ export const CandidatesModule = {
     },
     bindEvents() {
         this.btnNew?.addEventListener('click', () => this.openModal()); this.cancelBtn?.addEventListener('click', () => this.closeModal()); this.form?.addEventListener('submit', (event) => this.handleSubmit(event));
-        [this.search, this.vacancyFilter, this.statusFilter, this.dateFilter].forEach((control) => control?.addEventListener('input', () => this.render()));
+        this.search?.addEventListener('input', () => this.render());
+        [this.vacancyFilter, this.statusFilter, this.dateFilter].forEach((control) => control?.addEventListener('change', () => this.render()));
         this.clearFilters?.addEventListener('click', () => { this.search.value = ''; this.vacancyFilter.value = ''; this.statusFilter.value = ''; this.dateFilter.value = ''; this.render(); });
         this.drawerClose?.addEventListener('click', () => this.closeDrawer()); this.drawerBackdrop?.addEventListener('click', () => this.closeDrawer());
         this.drawerStatusSelect?.addEventListener('change', (event) => this.updateStatus(event.target.value));
