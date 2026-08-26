@@ -1,6 +1,7 @@
 // public/js/components/companiesModule.js
 import { api } from '../services/apiService.js';
 import { Toast } from '../services/toastService.js';
+import { Confirmation } from '../services/confirmationService.js';
 import { companies as seedCompanies } from '../mockData.js';
 
 export const CompaniesModule = {
@@ -192,7 +193,8 @@ export const CompaniesModule = {
     },
 
     async handleDelete(id) {
-        if (!confirm('¿Estás seguro de eliminar esta empresa?')) return;
+        const item = this.state.items.find((company) => company.id == id);
+        if (!await Confirmation.confirm({ type: 'empresa', name: item?.nombre || 'Empresa', id })) return;
 
         try {
             await api.delete(`/carts/${id}`);

@@ -1,6 +1,7 @@
 // public/js/components/applicationsModule.js
 import { api } from '../services/apiService.js';
 import { Toast } from '../services/toastService.js';
+import { Confirmation } from '../services/confirmationService.js';
 import { applications as seedApplications, candidates as seedCandidates, vacancies as seedVacancies } from '../mockData.js';
 
 export const ApplicationsModule = {
@@ -192,7 +193,8 @@ export const ApplicationsModule = {
     },
 
     async handleDelete(id) {
-        if (!confirm('¿Estás seguro de eliminar esta postulación?')) return;
+        const post = this.state.posts.find((application) => application.id == id);
+        if (!await Confirmation.confirm({ type: 'postulación', name: post?.candidateName || post?.title || 'Postulación', id })) return;
 
         try {
             await api.delete(`/posts/${id}`);

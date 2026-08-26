@@ -1,6 +1,7 @@
 // public/js/components/vacanciesModule.js
 import { api } from '../services/apiService.js';
 import { Toast } from '../services/toastService.js';
+import { Confirmation } from '../services/confirmationService.js';
 import { vacancies as seedVacancies, companies as seedCompanies } from '../mockData.js';
 
 export const VacanciesModule = {
@@ -193,7 +194,8 @@ export const VacanciesModule = {
     },
 
     async handleDelete(id) {
-        if (!confirm('¿Estás seguro de eliminar esta vacante?')) return;
+        const item = this.state.items.find((vacancy) => vacancy.id == id);
+        if (!await Confirmation.confirm({ type: 'vacante', name: item?.title || 'Vacante', id })) return;
 
         try {
             await api.delete(`/products/${id}`);
