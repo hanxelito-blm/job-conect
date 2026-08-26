@@ -149,7 +149,19 @@
                     <span class="sidebar-icon" aria-hidden="true">
                         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
                     </span>
-                    <span>Seguimiento</span>
+                    <span data-i18n="sidebar.tracking">Seguimiento</span>
+                </button>
+                <button class="sidebar-btn" data-target="profileSection" title="Mi perfil personal">
+                    <span class="sidebar-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </span>
+                    <span data-i18n="sidebar.profile">Mi Perfil</span>
+                </button>
+                <button class="sidebar-btn" data-target="myApplicationsSection" title="Mis postulaciones y seguimiento">
+                    <span class="sidebar-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    </span>
+                    <span data-i18n="sidebar.myApplications">Mis Postulaciones</span>
                 </button>
             </nav>
 
@@ -205,40 +217,93 @@
             <section id="loginSection" class="login-wrapper fade-in hidden" aria-label="Iniciar sesión">
                 <canvas id="loginCanvas" aria-hidden="true"></canvas>
                 <div class="login-card" role="region" aria-label="Formulario de acceso">
-                    <div class="login-brand">
-                        <span class="login-logo">
-                            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
-                                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                            </svg>
-                            JobConnect
-                        </span>
-                        <p data-i18n="login.subtitle">Portal Corporativo</p>
+                    <!-- Screen: Role Selector -->
+                    <div id="loginRoleSelect">
+                        <div class="login-brand">
+                            <span class="login-logo">
+                                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                </svg>
+                                JobConnect
+                            </span>
+                            <p data-i18n="login.subtitle">Portal Corporativo</p>
+                        </div>
+                        <h2 data-i18n="login.selectRole">¿Quién eres?</h2>
+                        <p class="role-select-hint" data-i18n="login.selectRole">Selecciona tu perfil para continuar</p>
+                        <div class="role-grid">
+                            <button class="role-card" data-role="candidato" type="button">
+                                <span class="role-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                </span>
+                                <strong>Candidato</strong>
+                                <small>Busco empleo</small>
+                            </button>
+                            <button class="role-card" data-role="empresa" type="button">
+                                <span class="role-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V7l9-4 9 4v14"/><path d="M9 21v-8h6v8"/><path d="M3 7h18"/></svg>
+                                </span>
+                                <strong>Empresa</strong>
+                                <small>Contrato talento</small>
+                            </button>
+                            <button class="role-card" data-role="reclutador" type="button">
+                                <span class="role-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                                </span>
+                                <strong>Reclutador</strong>
+                                <small>Gestiono candidatos</small>
+                            </button>
+                            <button class="role-card" data-role="administrador" type="button">
+                                <span class="role-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                </span>
+                                <strong>Administrador</strong>
+                                <small>Control total</small>
+                            </button>
+                        </div>
                     </div>
-                    <h2 data-i18n="login.title">Iniciar Sesión</h2>
-                    <form id="loginForm" novalidate aria-label="Formulario de inicio de sesión">
-                        <div class="form-group">
-                            <label for="username" data-i18n="login.user">USUARIO</label>
-                            <div class="input-wrap">
-                                <svg class="input-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                                <input type="text" id="username" name="username" placeholder="emilys" required autocomplete="username" aria-required="true" aria-describedby="usernameError">
-                            </div>
-                            <span class="error-msg" id="usernameError" role="alert" aria-live="polite"></span>
-                        </div>
-                        <div class="form-group">
-                            <label for="password" data-i18n="login.pass">CONTRASEÑA</label>
-                            <div class="input-wrap">
-                                <svg class="input-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                                <input type="password" id="password" name="password" placeholder="••••••••" required autocomplete="current-password" aria-required="true" aria-describedby="passwordError">
-                            </div>
-                            <span class="error-msg" id="passwordError" role="alert" aria-live="polite"></span>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-login full-width" id="loginSubmitBtn">
-                            <span class="btn-text" data-i18n="login.btn">Ingresar</span>
-                            <span class="loader hidden" aria-label="Cargando..." role="status"></span>
+
+                    <!-- Screen: Login Form -->
+                    <div id="loginFormScreen" class="hidden">
+                        <button class="btn-back-role" id="btnBackToRoles" type="button" aria-label="Volver a selección de rol">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+                            Volver
                         </button>
-                    </form>
-                    <div id="loginAlert" class="alert hidden" role="alert" aria-live="assertive"></div>
+                        <div class="login-brand">
+                            <span class="login-logo">
+                                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                </svg>
+                                JobConnect
+                            </span>
+                            <p id="loginRoleLabel" class="login-role-badge">Candidato</p>
+                        </div>
+                        <h2 data-i18n="login.title">Iniciar Sesión</h2>
+                        <form id="loginForm" novalidate aria-label="Formulario de inicio de sesión">
+                            <div class="form-group">
+                                <label for="username" data-i18n="login.user">USUARIO</label>
+                                <div class="input-wrap">
+                                    <svg class="input-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                    <input type="text" id="username" name="username" placeholder="emilys" required autocomplete="username" aria-required="true" aria-describedby="usernameError">
+                                </div>
+                                <span class="error-msg" id="usernameError" role="alert" aria-live="polite"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" data-i18n="login.pass">CONTRASEÑA</label>
+                                <div class="input-wrap">
+                                    <svg class="input-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                    <input type="password" id="password" name="password" placeholder="••••••••" required autocomplete="current-password" aria-required="true" aria-describedby="passwordError">
+                                </div>
+                                <span class="error-msg" id="passwordError" role="alert" aria-live="polite"></span>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-login full-width" id="loginSubmitBtn">
+                                <span class="btn-text" data-i18n="login.btn">Ingresar</span>
+                                <span class="loader hidden" aria-label="Cargando..." role="status"></span>
+                            </button>
+                        </form>
+                        <div id="loginAlert" class="alert hidden" role="alert" aria-live="assertive"></div>
+                    </div>
                 </div>
             </section>
 
@@ -770,6 +835,102 @@
                         </table>
                     </div>
                 </div>
+            </section>
+
+            <!-- MI PERFIL -->
+            <section id="profileSection" class="view-section hidden fade-in" aria-label="Mi perfil">
+                <div class="page-header">
+                    <div>
+                        <p class="eyebrow">MI CUENTA / PERFIL</p>
+                        <h1 data-i18n="profile.title">Mi Perfil</h1>
+                        <p data-i18n="profile.subtitle">Administra tu información personal y profesional</p>
+                    </div>
+                </div>
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <div class="profile-avatar" id="profileAvatar">--</div>
+                        <div class="profile-header-info">
+                            <h2 id="profileDisplayName">Candidato</h2>
+                            <p id="profileDisplayRole">Rol profesional</p>
+                        </div>
+                    </div>
+                    <form id="profileForm" novalidate>
+                        <div class="profile-form">
+                            <div class="form-group">
+                                <label for="profileFirstName" data-i18n="profile.firstName">Nombre</label>
+                                <input type="text" id="profileFirstName" placeholder="Tu nombre">
+                            </div>
+                            <div class="form-group">
+                                <label for="profileLastName" data-i18n="profile.lastName">Apellido</label>
+                                <input type="text" id="profileLastName" placeholder="Tu apellido">
+                            </div>
+                            <div class="form-group">
+                                <label for="profileEmail" data-i18n="profile.email">Correo electrónico</label>
+                                <input type="email" id="profileEmail" placeholder="correo@ejemplo.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="profilePhone" data-i18n="profile.phone">Teléfono</label>
+                                <input type="tel" id="profilePhone" placeholder="+52 55 0000 0000">
+                            </div>
+                            <div class="form-group">
+                                <label for="profileTitle" data-i18n="profile.titleField">Título profesional</label>
+                                <input type="text" id="profileTitle" placeholder="Ej. Frontend Developer">
+                            </div>
+                            <div class="form-group">
+                                <label for="profileLocation" data-i18n="profile.location">Ubicación</label>
+                                <input type="text" id="profileLocation" placeholder="Ciudad de México">
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="profileSummary" data-i18n="profile.summary">Resumen profesional</label>
+                                <textarea id="profileSummary" rows="3" placeholder="Breve descripción de tu experiencia y habilidades..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="profileLinkedin" data-i18n="profile.linkedin">LinkedIn URL</label>
+                                <input type="url" id="profileLinkedin" placeholder="https://linkedin.com/in/tu-perfil">
+                            </div>
+                            <div class="form-group">
+                                <label for="profileGithub" data-i18n="profile.github">GitHub URL</label>
+                                <input type="url" id="profileGithub" placeholder="https://github.com/tu-usuario">
+                            </div>
+                            <div class="form-group">
+                                <label for="profilePortfolio" data-i18n="profile.portfolio">Portafolio URL</label>
+                                <input type="url" id="profilePortfolio" placeholder="https://tu-portafolio.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="profileCvUrl" data-i18n="profile.cvUrl">URL del CV</label>
+                                <input type="url" id="profileCvUrl" placeholder="https://example.com/cv.pdf">
+                            </div>
+                            <div class="form-group full-width">
+                                <label data-i18n="profile.skills">Habilidades</label>
+                                <div class="profile-skills" id="profileSkills"></div>
+                                <div style="display:flex; gap:8px; margin-top:8px;">
+                                    <input type="text" id="profileSkillInput" data-i18n-placeholder="profile.addSkillPlaceholder" placeholder="Agregar habilidad..." style="flex:1;">
+                                    <button type="button" class="btn btn-ghost" id="profileAddSkillBtn" data-i18n="profile.addSkill">Agregar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile-actions">
+                            <button type="submit" class="btn btn-primary" data-i18n="profile.save">Guardar cambios</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- MIS POSTULACIONES -->
+            <section id="myApplicationsSection" class="view-section hidden fade-in" aria-label="Mis postulaciones">
+                <div class="page-header">
+                    <div>
+                        <p class="eyebrow">MI CUENTA / SEGUIMIENTO</p>
+                        <h1 data-i18n="myApps.title">Mis Postulaciones</h1>
+                        <p data-i18n="myApps.subtitle">Seguimiento en tiempo real de tus aplicaciones</p>
+                    </div>
+                </div>
+                <div class="module-toolbar" role="search" aria-label="Filtrar mis postulaciones">
+                    <label class="search-field"><span class="sr-only">Buscar postulación</span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="myAppsSearch" type="search" placeholder="Buscar por vacante o empresa..." autocomplete="off"></label>
+                    <label><span class="sr-only">Filtrar por estado</span><select id="myAppsStatusFilter"><option value="">Todos los estados</option><option value="Postulado">Postulado</option><option value="En revisión">En revisión</option><option value="Entrevista">Entrevista</option><option value="Aceptado">Aceptado</option><option value="Contratado">Contratado</option><option value="Rechazado">Rechazado</option></select></label>
+                    <button class="btn btn-ghost module-clear" id="myAppsClearFilters" type="button">Limpiar</button>
+                </div>
+                <div class="my-apps-timeline" id="myAppsTimeline"></div>
             </section>
 
         </main>

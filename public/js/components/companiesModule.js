@@ -43,6 +43,11 @@ export const CompaniesModule = {
         if (this.clearFiltersBtn) this.clearFiltersBtn.addEventListener('click', () => this.clearFilters());
     },
 
+    canEdit() {
+        const role = localStorage.getItem('jobconnect_role') || 'candidato';
+        return role === 'reclutador' || role === 'administrador';
+    },
+
     clearFilters() {
         if (this.searchInput) this.searchInput.value = '';
         if (this.sectorFilter) this.sectorFilter.value = '';
@@ -107,6 +112,9 @@ export const CompaniesModule = {
         this.tbody.innerHTML = '';
 
         const filteredItems = this.getFilteredItems();
+        const editable = this.canEdit();
+
+        if (this.btnNew) this.btnNew.classList.toggle('hidden', !editable);
 
         const searchText = this.searchInput ? this.searchInput.value.trim() : '';
 
@@ -142,8 +150,8 @@ export const CompaniesModule = {
                 <td>${item.ubicacion || 'N/A'}</td>
                 <td>${item.vacantesActivasCount || 0} vacantes</td>
                 <td>
-                    <button class="btn btn-small btn-primary edit-btn" data-id="${item.id}">Editar</button>
-                    <button class="btn btn-small btn-secondary delete-btn" data-id="${item.id}">Eliminar</button>
+                    ${editable ? `<button class="btn btn-small btn-primary edit-btn" data-id="${item.id}">Editar</button>` : ''}
+                    ${editable ? `<button class="btn btn-small btn-secondary delete-btn" data-id="${item.id}">Eliminar</button>` : ''}
                 </td>
             `;
             this.tbody.appendChild(tr);
