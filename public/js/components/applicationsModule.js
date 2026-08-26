@@ -23,7 +23,11 @@ export const ApplicationsModule = {
         this.statsElem = document.getElementById('statsApplications');
         this.submitBtn = this.form ? this.form.querySelector('button[type="submit"]') : null;
         
-        // Modal inputs
+        this.searchInput = document.getElementById('applicationsSearch');
+        this.vacancyFilter = document.getElementById('applicationsVacancyFilter');
+        this.statusFilter = document.getElementById('applicationsStatusFilter');
+        this.clearFiltersBtn = document.getElementById('applicationsClearFilters');
+
         this.idInput = document.getElementById('applicationId');
         this.titleInput = document.getElementById('appTitle');
         this.bodyInput = document.getElementById('appBody');
@@ -35,6 +39,10 @@ export const ApplicationsModule = {
         if (this.btnNew) this.btnNew.addEventListener('click', () => this.openModal());
         if (this.cancelBtn) this.cancelBtn.addEventListener('click', () => this.closeModal());
         if (this.form) this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+        if (this.searchInput) this.searchInput.addEventListener('input', () => this.render());
+        if (this.vacancyFilter) this.vacancyFilter.addEventListener('change', () => this.render());
+        if (this.statusFilter) this.statusFilter.addEventListener('change', () => this.render());
+        if (this.clearFiltersBtn) this.clearFiltersBtn.addEventListener('click', () => this.clearFilters());
     },
 
     async loadData(force = false) {
@@ -47,8 +55,10 @@ export const ApplicationsModule = {
                 title: seedVacancies.find((vacancy) => vacancy.id === application.vacanteId)?.titulo || application.vacanteId,
                 body: application.cartaPresentacion,
                 userId: application.candidatoId,
-                candidateName: seedCandidates.find((candidate) => candidate.id === application.candidatoId)?.nombreCompleto || application.candidatoId
+                candidateName: seedCandidates.find((candidate) => candidate.id === application.candidatoId)?.nombreCompleto || application.candidatoId,
+                vacancyTitle: seedVacancies.find((vacancy) => vacancy.id === application.vacanteId)?.titulo || ''
             }));
+            this.populateVacancyFilter();
             this.render();
             this.updateStats();
         } catch (error) {
@@ -77,31 +87,75 @@ export const ApplicationsModule = {
         `;
     },
 
+    populateVacancyFilter() {
+        if (!this.vacancyFilter) return;
+        const uniqueTitles = [...new Set(this.state.posts.map(post => post.vacancyTitle).filter(Boolean))];
+        this.vacancyFilter.innerHTML = '<option value="">Todas las vacantes</option>';
+        uniqueTitles.forEach(title => {
+            const option = document.createElement('option');
+            option.value = title;
+            option.textContent = title;
+            this.vacancyFilter.appendChild(option);
+        });
+    },
+
+    getFilteredItems() {
+        const searchText = (this.searchInput ? this.searchInput.value : '').toLowerCase().trim();
+        const statusValue = this.statusFilter ? this.statusFilter.value : '';
+        const vacancyValue = this.vacancyFilter ? this.vacancyFilter.value : '';
+
+        return this.state.posts.filter(post => {
+            const matchesSearch = !searchText || 
+                (post.title || '').toLowerCase().includes(searchText) ||
+                (post.candidateName || '').toLowerCase().includes(searchText);
+
+            const matchesStatus = !statusValue || (post.estado || 'Postulado') === statusValue;
+            const matchesVacancy = !vacancyValue || post.vacancyTitle === vacancyValue;
+
+            return matchesSearch && matchesStatus && matchesVacancy;
+        });
+    },
+
+    clearFilters() {
+        if (this.searchInput) this.searchInput.value = '';
+        if (this.vacancyFilter) this.vacancyFilter.value = '';
+        if (this.statusFilter) this.statusFilter.value = '';
+        this.render();
+    },
+
     render() {
         if (!this.tbody) return;
         this.tbody.innerHTML = '';
 
-        if (this.state.posts.length === 0) {
+        const filteredItems = this.getFilteredItems();
+
+        if (filteredItems.length === 0) {
+            const hasFilters = (this.searchInput && this.searchInput.value.trim()) || (this.statusFilter && this.statusFilter.value);
+            const message = hasFilters 
+                ? 'No se encontraron postulaciones con los filtros aplicados.'
+                : 'No hay postulaciones registradas.';
+            
             this.tbody.innerHTML = `
                 <tr>
                     <td colspan="5" class="empty-state-cell">
                         <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                        <p>No hay postulaciones registradas.</p>
+                        <p>${message}</p>
                     </td>
                 </tr>
             `;
             return;
         }
         
-        this.state.posts.forEach(post => {
+        filteredItems.forEach(post => {
             const tr = document.createElement('tr');
             const estado = post.estado || 'Postulado';
+            const statusClass = estado.toLowerCase().replaceAll(' ', '-');
             
             tr.innerHTML = `
                 <td>${post.id}</td>
-                <td><strong>${post.title}</strong><br><small>${post.candidateName || `Ref: ${post.userId}`}</small></td>
-                <td>${(post.body || '').substring(0, 50)}${(post.body || '').length > 50 ? '...' : ''}</td>
-                <td><span style="color:var(--primary); font-weight:bold;">${estado}</span></td>
+                <td><strong>${post.candidateName || `Ref: ${post.userId}`}</strong></td>
+                <td><strong>${post.title}</strong></td>
+                <td><span class="status-badge status-${statusClass}">${estado}</span></td>
                 <td>
                     <button class="btn btn-small btn-primary edit-btn" data-id="${post.id}">Editar</button>
                     <button class="btn btn-small btn-secondary delete-btn" data-id="${post.id}">Eliminar</button>
@@ -192,7 +246,17 @@ export const ApplicationsModule = {
     },
 
     async handleDelete(id) {
-        if (!confirm('¿Estás seguro de eliminar esta postulación?')) return;
+        const result = await Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Esta postulación será eliminada permanentemente.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3ee6ab',
+            cancelButtonColor: '#374151',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        });
+        if (!result.isConfirmed) return;
 
         try {
             await api.delete(`/posts/${id}`);

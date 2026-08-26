@@ -8,9 +8,11 @@ import { DashboardModule } from './components/dashboardModule.js';
 import { InterviewsModule } from './components/interviewsModule.js';
 import { LoginAnimation } from './components/loginAnimation.js';
 import { TasksModule } from './components/tasksModule.js';
+import { TrackingModule } from './components/trackingModule.js';
 import { ThemeModule, LangModule } from './components/themeLanguage.js';
 import { AccessibilityModule } from './components/accessibilityModule.js';
 import { VacanciesModule } from './components/vacanciesModule.js';
+import { TourModule } from './components/tourModule.js';
 
 
 const TOKEN_KEY = 'jobConnectToken';
@@ -142,7 +144,8 @@ async function syncDashboardStats() {
             CompaniesModule.loadData(),
             ApplicationsModule.loadData(),
             InterviewsModule.loadData(),
-            TasksModule.loadData()
+            TasksModule.loadData(),
+            TrackingModule.loadData()
         ]);
 
         CandidatesModule.updateStats();
@@ -208,7 +211,8 @@ function navigateTo(targetId) {
         companiesSection: () => CompaniesModule.loadData(),
         applicationsSection: () => ApplicationsModule.loadData(),
         interviewsSection: () => InterviewsModule.loadData(),
-        tasksSection: () => TasksModule.loadData()
+        tasksSection: () => TasksModule.loadData(),
+        trackingSection: () => TrackingModule.loadData()
     };
     moduleLoaders[targetId]?.();
 
@@ -236,6 +240,7 @@ function initApp() {
     ApplicationsModule.init();
     InterviewsModule.init();
     TasksModule.init();
+    TrackingModule.init();
     DashboardModule.loadData();
 
 
@@ -245,7 +250,6 @@ function initApp() {
 ThemeModule.init();
 LangModule.init();
 AccessibilityModule.init();
+TourModule.init();
 initApp();
-console.log(estoesunaprueba);
-
 

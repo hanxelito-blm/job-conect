@@ -15,6 +15,20 @@
   --error-color: #ff5252;
 }
 
+/* ===== MODO CLARO ===== */
+html.light-mode {
+  --bg-color: #f0f4f2;
+  --glow-color: #e3ede8;
+  --card-bg: #ffffff;
+  --card-border: rgba(26, 138, 106, 0.22);
+  --text-main: #0d1f1a;
+  --text-muted: #3a5a4e;
+  --brand-green: #1a8a6a;
+  --brand-green-hover: #14705a;
+  --input-bg: #f7fbf9;
+  --error-color: #d32f2f;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;

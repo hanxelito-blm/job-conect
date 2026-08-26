@@ -22,4 +22,3 @@ app.listen(PORT, () => {
     console.log(`✅ JobConnect corriendo en http://localhost:${PORT}`);
 });
 
-console.log("Esto es una prueba");

@@ -66,6 +66,13 @@ const I18N = {
         'a11y.monochrome':        'Alto Contraste',
         // Loading
         'loading.candidates':     'Cargando candidatos...',
+        // Tour
+        'tour.guide':             'Guía',
+        // Filters
+        'filter.all':             'Todos',
+        'filter.clear':           'Limpiar',
+        'filter.noResults':       'No se encontraron resultados con estos filtros.',
+        'filter.search.placeholder': 'Buscar...',
     },
     en: {
         'lang.code':              'EN',
@@ -125,6 +132,13 @@ const I18N = {
         'a11y.monochrome':        'High Contrast',
         // Loading
         'loading.candidates':     'Loading candidates...',
+        // Tour
+        'tour.guide':             'Guide',
+        // Filters
+        'filter.all':             'All',
+        'filter.clear':           'Clear',
+        'filter.noResults':       'No results found with these filters.',
+        'filter.search.placeholder': 'Search...',
     }
 };
 
