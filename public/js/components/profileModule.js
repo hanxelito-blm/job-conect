@@ -1,4 +1,5 @@
 import { Toast } from '../services/toastService.js';
+import { AuthService } from '../services/authService.js';
 
 const escapeHtml = (value = '') => String(value).replace(/[&<>'"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[char]));
 
@@ -8,6 +9,10 @@ export const ProfileModule = {
     init() {
         this.cacheDOM();
         this.bindEvents();
+    },
+
+    loadData() {
+        this.loadProfile();
     },
 
     cacheDOM() {
@@ -42,17 +47,43 @@ export const ProfileModule = {
         });
     },
 
-    loadProfile(candidateId) {
-        const stored = localStorage.getItem('jc_profile_' + candidateId);
+    getProfileKey() {
+        const role = AuthService.getRole();
+        const username = AuthService.getUsername();
+        return `jc_profile_${role}_${username}`;
+    },
+
+    loadProfile() {
+        const key = this.getProfileKey();
+        const stored = localStorage.getItem(key);
         if (stored) {
             this.state.profile = JSON.parse(stored);
         } else {
-            this.state.profile = this.buildDefaultProfile(candidateId);
+            this.state.profile = this.buildDefaultProfile();
         }
         this.render();
     },
 
-    buildDefaultProfile(candidateId) {
+    buildDefaultProfile() {
+        const role = AuthService.getRole();
+        if (role !== 'candidato') {
+            const username = AuthService.getUsername();
+            return {
+                firstName: username || '',
+                lastName: '',
+                email: '',
+                phone: '',
+                title: AuthService.getRoleLabel(),
+                location: '',
+                summary: '',
+                linkedin: '',
+                github: '',
+                portfolio: '',
+                cvUrl: '',
+                skills: []
+            };
+        }
+        const candidateId = localStorage.getItem('jc_currentCandidateId') || 'can-001';
         const candidates = JSON.parse(localStorage.getItem('jc_candidates') || '[]');
         const candidate = candidates.find(c => c.id === candidateId) || candidates[0];
         if (!candidate) {
@@ -144,8 +175,7 @@ export const ProfileModule = {
             cvUrl: this.cvUrlInput.value.trim(),
             skills: [...this.state.profile.skills]
         };
-        const candidateId = localStorage.getItem('jc_currentCandidateId') || 'can-001';
-        localStorage.setItem('jc_profile_' + candidateId, JSON.stringify(this.state.profile));
+        localStorage.setItem(this.getProfileKey(), JSON.stringify(this.state.profile));
         this.render();
         Toast.show('Perfil guardado correctamente', 'success');
     }

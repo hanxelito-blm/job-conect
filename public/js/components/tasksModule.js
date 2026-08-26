@@ -77,12 +77,21 @@ export const TasksModule = {
         return items;
     },
 
+    getDeletedIds() {
+        try { return JSON.parse(localStorage.getItem('jc_deleted_tasks')) || []; } catch { return []; }
+    },
+
+    saveDeletedIds(ids) {
+        localStorage.setItem('jc_deleted_tasks', JSON.stringify(ids));
+    },
+
     async loadData(force = false) {
         if (this.state.items.length > 0 && !force) return;
         if (this.loader) this.loader.classList.remove('hidden');
 
         try {
-            this.state.items = seedTasks.map((task) => ({
+            const deletedIds = this.getDeletedIds();
+            this.state.items = seedTasks.filter(t => !deletedIds.includes(t.id)).map((task) => ({
                 ...task,
                 todo: task.titulo,
                 userId: task.responsable,
@@ -243,14 +252,16 @@ export const TasksModule = {
         const item = this.state.items.find((task) => task.id == id);
         if (!await Confirmation.confirm({ type: 'tarea', name: item?.todo || 'Tarea', id })) return;
 
+        this.state.items = this.state.items.filter((item) => item.id != id);
+        const deletedIds = this.getDeletedIds();
+        if (!deletedIds.includes(id)) deletedIds.push(id);
+        this.saveDeletedIds(deletedIds);
+        this.render();
+        this.updateStats();
+        Toast.show('Tarea eliminada correctamente', 'success');
+
         try {
             await api.delete(`/todos/${id}`);
-            this.state.items = this.state.items.filter((item) => item.id != id);
-            this.render();
-            this.updateStats();
-            Toast.show('Tarea eliminada correctamente', 'success');
-        } catch (error) {
-            Toast.show('Error al eliminar: ' + error.message, 'error');
-        }
+        } catch (_) { /* API no disponible para datos locales */ }
     }
 };
