@@ -24,19 +24,64 @@
         </nav>
     </header>
     <div class="app-layout">
-        <aside class="sidebar" id="sidebar" aria-label="Menú lateral">
-            <nav>
-                <a href="/dashboard" class="sidebar-btn" data-page="dashboard">PRINCIPAL</a>
-                <a href="/companies" class="sidebar-btn" data-page="companies">MÓDULOS</a>
-                <a href="/vacancies" class="sidebar-btn" data-page="vacancies">Vacantes</a>
-                <a href="/interviews" class="sidebar-btn active" data-page="interviews" aria-current="page">Entrevistas</a>
-                <a href="/candidates" class="sidebar-btn" data-page="candidates">Candidatos</a>
-                <a href="/applications" class="sidebar-btn" data-page="applications">Postulaciones</a>
-                <a href="/tasks" class="sidebar-btn" data-page="tasks">Tareas</a>
-                <a href="/tracking" class="sidebar-btn" data-page="tracking">Seguimiento</a>
-                <a href="/profile" class="sidebar-btn" data-page="profile">Mi Perfil</a>
-                <a href="/my-applications" class="sidebar-btn" data-page="my-applications">Mis Postulaciones</a>
+        <aside class="sidebar" id="sidebar" aria-label="Menú de navegación">
+            <div class="sidebar-user" id="sidebarUser">
+                <div class="avatar-circle" id="avatarCircle" aria-hidden="true">U</div>
+                <div class="sidebar-user-meta">
+                    <span id="sidebarUsername">Usuario</span>
+                    <span class="user-role-badge">Admin</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav" aria-label="Secciones del portal">
+                <p class="sidebar-section-label" data-i18n="sidebar.principal">PRINCIPAL</p>
+                <a href="/dashboard" class="sidebar-btn" data-page="dashboard">
+                    <span class="sidebar-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg></span>
+                    <span data-i18n="sidebar.home">Inicio / Dashboard</span>
+                </a>
+                <p class="sidebar-section-label" data-i18n="sidebar.modules">MÓDULOS</p>
+                <a href="/companies" class="sidebar-btn" data-page="companies" title="Gestión y directorio de empresas">
+                    <span class="sidebar-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V7l9-4 9 4v14"/><path d="M9 21v-8h6v8"/><path d="M3 7h18"/></svg></span>
+                    <span data-i18n="sidebar.companies">Empresas</span>
+                </a>
+                <a href="/vacancies" class="sidebar-btn" data-page="vacancies" title="Creación y flujo de ofertas laborales">
+                    <span class="sidebar-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
+                    <span data-i18n="sidebar.vacancies">Vacantes</span>
+                </a>
+                <a href="/interviews" class="sidebar-btn active" data-page="interviews" aria-current="page" title="Calendario y seguimiento de candidatos">
+                    <span class="sidebar-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+                    <span data-i18n="sidebar.interviews">Entrevistas</span>
+                </a>
+                <a href="/candidates" class="sidebar-btn" data-page="candidates" title="Gestión de candidatos y perfiles">
+                    <span class="sidebar-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+                    <span data-i18n="sidebar.candidates">Candidatos</span>
+                </a>
+                <a href="/applications" class="sidebar-btn" data-page="applications" title="Seguimiento de postulaciones en curso">
+                    <span class="sidebar-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span>
+                    <span data-i18n="sidebar.applications">Postulaciones</span>
+                </a>
+                <a href="/tasks" class="sidebar-btn" data-page="tasks" title="Tareas y pendientes">
+                    <span class="sidebar-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 1"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+                    <span data-i18n="sidebar.tasks">Tareas</span>
+                </a>
+                <a href="/tracking" class="sidebar-btn" data-page="tracking" title="Seguimiento de candidatos en el pipeline">
+                    <span class="sidebar-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>
+                    <span data-i18n="sidebar.tracking">Seguimiento</span>
+                </a>
+                <a href="/profile" class="sidebar-btn" data-page="profile" title="Mi perfil personal">
+                    <span class="sidebar-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+                    <span data-i18n="sidebar.profile">Mi Perfil</span>
+                </a>
+                <a href="/my-applications" class="sidebar-btn" data-page="my-applications" title="Mis postulaciones y seguimiento">
+                    <span class="sidebar-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span>
+                    <span data-i18n="sidebar.myApplications">Mis Postulaciones</span>
+                </a>
             </nav>
+            <div class="sidebar-footer">
+                <div class="log-badge" id="logBadge" aria-live="polite">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <span data-i18n="sidebar.log">Bitácora</span>: <span id="logCount">0</span>
+                </div>
+            </div>
         </aside>
 
         <main class="main-content" id="mainContent">
