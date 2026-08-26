@@ -103,6 +103,13 @@ async function initPage() {
     const sidebarToggle = document.getElementById('sidebarToggle');
     const sidebar = document.getElementById('sidebar');
     const mainContent = document.getElementById('mainContent');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+    function closeMobileSidebar() {
+        if (sidebar) sidebar.classList.remove('open');
+        if (sidebarOverlay) sidebarOverlay.style.display = '';
+    }
+
     if (sidebarToggle && sidebar) {
         sidebarToggle.addEventListener('click', () => {
             const isMobile = window.innerWidth <= 768;
@@ -114,6 +121,23 @@ async function initPage() {
             }
         });
     }
+
+    if (sidebarOverlay) {
+        sidebarOverlay.addEventListener('click', closeMobileSidebar);
+    }
+
+    document.querySelectorAll('.sidebar-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (window.innerWidth <= 768) closeMobileSidebar();
+        });
+    });
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768 && sidebar) {
+            sidebar.classList.remove('open');
+            if (sidebarOverlay) sidebarOverlay.style.display = '';
+        }
+    });
 }
 
 function filterSidebarByRole() {

@@ -132,9 +132,18 @@ function initLogin() {
         try {
             const registeredUsers = AuthService.getRegisteredUsers();
             const localUser = registeredUsers.find(u => u.username === username);
+            const demoUsers = ['emilys', 'sophiaw', 'james', 'oliviab'];
+            const isDemoUser = demoUsers.includes(username);
 
             if (localUser && localUser.password === password) {
                 const fakeToken = 'local_' + btoa(username + ':' + Date.now());
+                AuthService.login(fakeToken, selectedRole, username, rememberMe.checked);
+                registerAccessLog(username);
+                loginForm.reset();
+                Toast.show(`¡Bienvenido, ${username}! (${AuthService.getRoleLabel()})`, 'success');
+                window.location.href = '/dashboard';
+            } else if (isDemoUser) {
+                const fakeToken = 'demo_' + btoa(username + ':' + Date.now());
                 AuthService.login(fakeToken, selectedRole, username, rememberMe.checked);
                 registerAccessLog(username);
                 loginForm.reset();
