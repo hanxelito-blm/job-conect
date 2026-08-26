@@ -7,11 +7,13 @@ const OpenAI = require('openai');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Configurar OpenAI para usar OpenRouter
-const openai = new OpenAI({
-    apiKey: process.env.OPENROUTER_API_KEY,
-    baseURL: 'https://openrouter.ai/api/v1',
-});
+// Configurar OpenAI para usar OpenRouter (solo si hay API key)
+const openai = process.env.OPENROUTER_API_KEY
+    ? new OpenAI({
+        apiKey: process.env.OPENROUTER_API_KEY,
+        baseURL: 'https://openrouter.ai/api/v1',
+    })
+    : null;
 
 // Middleware para parsing JSON
 app.use(express.json());
@@ -51,6 +53,10 @@ app.post('/api/chat', async (req, res) => {
 
         if (!messages || !Array.isArray(messages)) {
             return res.status(400).json({ error: 'Se requiere un array de mensajes' });
+        }
+
+        if (!openai) {
+            return res.status(503).json({ error: 'Chatbot no configurado. Falta OPENROUTER_API_KEY en .env' });
         }
 
         const completion = await openai.chat.completions.create({
